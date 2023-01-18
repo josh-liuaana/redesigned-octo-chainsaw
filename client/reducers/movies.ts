@@ -6,6 +6,7 @@ interface MovieState {
   error: string | undefined
   data: Movie[]
 }
+
 const initalState: MovieState = { pending: true, error: undefined, data: [] }
 
 function reducer(state = initalState, action: MovieAction): MovieState {
