@@ -5,9 +5,7 @@
   "repository": "https://https://github.com/dev-academy-challenges/todo-full-stack",
   "main": "server/index.ts",
   "scripts": {
-    "build": "run-p build:client build:server",
-    "build:client": "npm run webpack -- --mode production",
-    "build:server": "npm run knex -- migrate:latest",
+    "build": "npm run webpack -- --mode production",
     "start": "ts-node server/index.ts",
     "test": "jest",
     "test:watch": "jest --noStackTrace --watchAll",
