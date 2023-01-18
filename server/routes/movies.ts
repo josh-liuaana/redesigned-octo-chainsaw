@@ -27,7 +27,11 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const data = await db.byId(+req.params.id)
-    res.json(data)
+    if (data == null) {
+      res.sendStatus(404)
+    } else {
+      res.json(data)
+    }
   } catch (e) {
     console.error(`Database error: ${e}`)
     res.sendStatus(500)
