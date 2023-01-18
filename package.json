@@ -1,7 +1,7 @@
 {
-  "name": "my-fullstack-collection",
+  "name": "movie-facts",
   "version": "0.1.0",
-  "description": "Todo Full Stack",
+  "description": "Some facts about movies",
   "repository": "https://https://github.com/dev-academy-challenges/todo-full-stack",
   "main": "server/index.ts",
   "scripts": {
