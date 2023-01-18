@@ -7,9 +7,9 @@ router.get('/', async (req, res) => {
   const category = Number(req.query.category)
   const withCategories = !!req.query.withCategories
   try {
+    // TODO: I don't really like this, maybe it should be a different end point
     if (withCategories) {
       const data = await db.allWithCategories()
-      console.log(`withCategories`, data)
       res.json(data)
     } else if (!isNaN(category)) {
       const data = await db.byCategory(category)
