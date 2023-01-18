@@ -5,12 +5,19 @@ const router = Router()
 
 router.get('/', async (req, res) => {
   const category = Number(req.query.category)
+  const withCategories = !!req.query.withCategories
   try {
-    const data = isNaN(category)
-      ? await db.all()
-      : await db.byCategory(category)
-
-    res.json(data)
+    if (withCategories) {
+      const data = await db.allWithCategories()
+      console.log(`withCategories`, data)
+      res.json(data)
+    } else if (!isNaN(category)) {
+      const data = await db.byCategory(category)
+      res.json(data)
+    } else {
+      const data = await db.all()
+      res.json(data)
+    }
   } catch (e) {
     console.error(`Database error: ${e}`)
     res.sendStatus(500)
