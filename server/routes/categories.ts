@@ -5,7 +5,7 @@ const router = Router()
 
 router.get('/', async (req, res) => {
   try {
-    const data = await db.all()
+    const data = await db.getAll()
     res.json(data)
   } catch (e) {
     console.error(`Database error: ${e}`)

@@ -18,7 +18,7 @@ describe('Movies DB', () => {
   describe('.all', () => {
     it('fetches all the things', async () => {
       expect.assertions(2)
-      const result = await movies.all()
+      const result = await movies.getAll()
 
       expect(result).toHaveLength(28)
       expect(result[12]).toMatchInlineSnapshot(`
@@ -92,75 +92,64 @@ describe('Movies DB', () => {
   describe('.byCategoriesAny', () => {
     it('fetches movies that match any of the categories', async () => {
       const result = await movies.byCategoriesAny([3, 8])
-      expect(result).toMatchInlineSnapshot(`
+      expect(result).toHaveLength(13)
+    })
+  })
+
+  describe('deleting a movie', () => {
+    it('removes the movie from the database', async () => {
+      await movies.delete$(3)
+      const rows = await movies.getAll()
+      expect(rows).toHaveLength(27)
+    })
+  })
+
+  describe('creating a movie', () => {
+    it('adds a new movie to the database', async () => {
+      const id = await movies.create({
+        title: 'Ghostbusters',
+        release_year: 1984,
+      })
+      expect(id).toBe(29)
+      const rows = await movies.getAll()
+
+      expect(rows).toHaveLength(29)
+      expect(rows[28]).toMatchInlineSnapshot(`
+        {
+          "id": 29,
+          "release_year": 1984,
+          "title": "Ghostbusters",
+        }
+      `)
+    })
+  })
+
+  describe('Adding a category to ta movie', () => {
+    it('adds a new relationship', async () => {
+      await movies.addCategoryToMovie(10, 8)
+      const results = await movies.byCategory(8)
+      expect(results).toMatchInlineSnapshot(`
         [
-          {
-            "id": 2,
-            "release_year": 2010,
-            "title": "The Social Network",
-          },
-          {
-            "id": 3,
-            "release_year": 2010,
-            "title": "Black Swan",
-          },
-          {
-            "id": 4,
-            "release_year": 2010,
-            "title": "The King's Speech",
-          },
-          {
-            "id": 5,
-            "release_year": 2011,
-            "title": "The Help",
-          },
-          {
-            "id": 9,
-            "release_year": 2012,
-            "title": "Silver Linings Playbook",
-          },
-          {
-            "id": 10,
-            "release_year": 2012,
-            "title": "Django Unchained",
-          },
-          {
-            "id": 12,
-            "release_year": 2013,
-            "title": "12 Years a Slave",
-          },
-          {
-            "id": 14,
-            "release_year": 2014,
-            "title": "The Grand Budapest Hotel",
-          },
-          {
-            "id": 15,
-            "release_year": 2014,
-            "title": "Boyhood",
-          },
           {
             "id": 16,
             "release_year": 2014,
             "title": "Whiplash",
           },
           {
-            "id": 18,
-            "release_year": 2015,
-            "title": "The Big Short",
-          },
-          {
-            "id": 19,
-            "release_year": 2015,
-            "title": "The Revenant",
-          },
-          {
-            "id": 20,
-            "release_year": 2016,
-            "title": "Moonlight",
+            "id": 10,
+            "release_year": 2012,
+            "title": "Django Unchained",
           },
         ]
       `)
+    })
+  })
+
+  describe('Removing a category from a movie', () => {
+    it('removes a relationship', async () => {
+      await movies.removeCategoryFromMovie(16, 8)
+      const results = await movies.byCategory(8)
+      expect(results).toEqual([])
     })
   })
 })

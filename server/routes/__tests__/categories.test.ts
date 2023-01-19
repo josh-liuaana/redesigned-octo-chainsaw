@@ -2,7 +2,7 @@
 import request from 'supertest'
 import server from '../../server'
 import connection from '../../db/connection'
-import { byId, all } from '../../db/categories'
+import { byId, getAll } from '../../db/categories'
 
 jest.mock('../../db/categories')
 
@@ -21,7 +21,7 @@ afterAll(async () => {
 
 describe('/', () => {
   it('responds with a list of categories', async () => {
-    jest.mocked(all).mockResolvedValue([
+    jest.mocked(getAll).mockResolvedValue([
       { id: 1, name: 'Drama' },
       { id: 2, name: 'Comedy' },
     ])
@@ -32,7 +32,7 @@ describe('/', () => {
   it('responds with a 500', async () => {
     jest.spyOn(console, 'error').mockImplementation(() => {})
 
-    jest.mocked(all).mockRejectedValue(new Error('Database error'))
+    jest.mocked(getAll).mockRejectedValue(new Error('Database error'))
     const res = await request(server).get('/api/v1/categories')
     expect(res.statusCode).toBe(500)
   })

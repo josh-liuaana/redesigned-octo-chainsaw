@@ -17,7 +17,7 @@ afterAll(async () => {
 describe('categories', () => {
   describe('.all', () => {
     it('gets all the categories', async () => {
-      const data = await categories.all()
+      const data = await categories.getAll()
       expect(data).toHaveLength(9)
       expect(data[0]).toMatchInlineSnapshot(`
         {

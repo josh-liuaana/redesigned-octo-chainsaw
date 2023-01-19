@@ -14,6 +14,13 @@ function reducer(state = initalState, action: MovieAction): MovieState {
     case 'movies/failed':
       return { pending: false, error: action.payload, data: [] }
 
+    case 'movies/created':
+      return {
+        pending: false,
+        error: undefined,
+        data: [...state.data, action.payload],
+      }
+
     case 'movies/pending':
       return { pending: true, error: undefined, data: [] }
 

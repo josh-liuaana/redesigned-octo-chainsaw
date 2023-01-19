@@ -3,7 +3,7 @@ import request from 'supertest'
 
 import server from '../../server'
 import connection from '../../db/connection'
-import { byId, all, allWithCategories, byCategory } from '../../db/movies'
+import { byId, getAll, allWithCategories, byCategory } from '../../db/movies'
 
 jest.mock('../../db/movies')
 
@@ -22,7 +22,7 @@ afterAll(async () => {
 
 describe('/', () => {
   it('responds with a list of movies', async () => {
-    jest.mocked(all).mockResolvedValue([
+    jest.mocked(getAll).mockResolvedValue([
       { id: 1, title: 'The Great Escape', release_year: 1964 },
       { id: 2, title: 'Return to Oz', release_year: 1971 },
       { id: 3, title: 'Around the World in 80 Days', release_year: 1973 },
@@ -92,7 +92,7 @@ describe('/', () => {
   it('responds with a 500', async () => {
     jest.spyOn(console, 'error').mockImplementation(() => {})
 
-    jest.mocked(all).mockRejectedValue(new Error('Database Error'))
+    jest.mocked(getAll).mockRejectedValue(new Error('Database Error'))
     const res = await request(server).get('/api/v1/movies')
     expect(res.statusCode).toBe(500)
   })

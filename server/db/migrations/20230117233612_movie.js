@@ -19,8 +19,11 @@ exports.up = async (knex) => {
     t.integer('category_id')
     t.primary(['movie_id', 'category_id'])
 
-    t.foreign('movie_id').references('id').inTable('movie')
-    t.foreign('category_id').references('id').inTable('category')
+    t.foreign('movie_id').references('id').inTable('movie').onDelete('CASCADE')
+    t.foreign('category_id')
+      .references('id')
+      .inTable('category')
+      .onDelete('CASCADE')
   })
 }
 
