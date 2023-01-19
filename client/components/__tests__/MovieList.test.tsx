@@ -30,9 +30,7 @@ describe('<MovieList />', () => {
   })
 
   it('fails to show a list of movies', async () => {
-    const scope = nock('http://localhost')
-      .get('/api/v1/movies')
-      .reply(500, 'Fuck shit')
+    const scope = nock('http://localhost').get('/api/v1/movies').reply(500)
 
     render(
       <Provider store={store}>
@@ -40,8 +38,10 @@ describe('<MovieList />', () => {
       </Provider>
     )
 
-    const title = await screen.findByText(/Failed: Internal Server Error/)
-    expect(title).toBeVisible()
+    const errorMessage = await screen.findByText(
+      /Failed: Internal Server Error/
+    )
+    expect(errorMessage).toBeVisible()
     expect(scope.isDone()).toBeTruthy()
   })
 })

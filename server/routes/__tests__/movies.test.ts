@@ -3,20 +3,9 @@ import request from 'supertest'
 
 import server from '../../server'
 import connection from '../../db/connection'
-import { byId, all } from '../../db/movies'
+import { byId, all, allWithCategories, byCategory } from '../../db/movies'
 
-// TODO: maybe use mock return values for all of these?
-jest.mock('../../db/movies', () => {
-  const original = jest.requireActual('../../db/movies')
-
-  return {
-    __esModule: true,
-    all: jest.fn(original.all),
-    byId: jest.fn(original.byId),
-    byCategory: jest.fn(original.byCategory),
-    allWithCategories: jest.fn(original.allWithCategories),
-  }
-})
+jest.mock('../../db/movies')
 
 beforeAll(async () => {
   await connection.migrate.latest()
@@ -33,13 +22,36 @@ afterAll(async () => {
 
 describe('/', () => {
   it('responds with a list of movies', async () => {
+    jest.mocked(all).mockResolvedValue([
+      { id: 1, title: 'The Great Escape', release_year: 1964 },
+      { id: 2, title: 'Return to Oz', release_year: 1971 },
+      { id: 3, title: 'Around the World in 80 Days', release_year: 1973 },
+    ])
     const res = await request(server).get('/api/v1/movies')
-    expect(res.body).toHaveLength(28)
+    expect(res.body).toHaveLength(3)
+    expect(res.body[0]).toMatchInlineSnapshot(`
+      {
+        "id": 1,
+        "release_year": 1964,
+        "title": "The Great Escape",
+      }
+    `)
   })
 
   it('responds with a list of movies and their categories', async () => {
+    jest.mocked(allWithCategories).mockResolvedValue([
+      {
+        id: 1,
+        title: 'The Great Escape',
+        release_year: 1964,
+        categories: [
+          { id: 1, name: 'Action/Adventure' },
+          { id: 2, name: 'History' },
+        ],
+      },
+    ])
     const res = await request(server).get('/api/v1/movies?withCategories=true')
-    expect(res.body).toHaveLength(28)
+    expect(res.body).toHaveLength(1)
     expect(res.body[0]).toMatchInlineSnapshot(`
       {
         "categories": [
@@ -49,24 +61,29 @@ describe('/', () => {
           },
           {
             "id": 2,
-            "name": "Sci-Fi",
+            "name": "History",
           },
         ],
         "id": 1,
-        "release_year": 2010,
-        "title": "Inception",
+        "release_year": 1964,
+        "title": "The Great Escape",
       }
     `)
   })
 
   it('filters to a specific category', async () => {
+    jest
+      .mocked(byCategory)
+      .mockResolvedValue([
+        { id: 3, title: 'Special Movie', release_year: 1923 },
+      ])
     const res = await request(server).get('/api/v1/movies?category=7')
     expect(res.body).toMatchInlineSnapshot(`
       [
         {
-          "id": 13,
-          "release_year": 2013,
-          "title": "American Hustle",
+          "id": 3,
+          "release_year": 1923,
+          "title": "Special Movie",
         },
       ]
     `)
@@ -83,6 +100,11 @@ describe('/', () => {
 
 describe('/:id', () => {
   it('responds with a specific movie', async () => {
+    jest.mocked(byId).mockResolvedValue({
+      id: 12,
+      title: '12 Years a Slave',
+      release_year: 2013,
+    })
     const res = await request(server).get('/api/v1/movies/12')
     expect(res.body).toMatchInlineSnapshot(`
       {
@@ -94,6 +116,8 @@ describe('/:id', () => {
   })
 
   it('responds with a 404', async () => {
+    jest.mocked(byId).mockResolvedValue(undefined)
+
     const res = await request(server).get('/api/v1/movies/999')
     expect(res.statusCode).toBe(404)
   })

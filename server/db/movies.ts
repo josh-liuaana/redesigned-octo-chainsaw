@@ -1,4 +1,4 @@
-import { MovieWithCategories } from '../../common/Movie'
+import { MovieWithCategories, Movie } from '../../common/Movie'
 import connection from './connection'
 
 export const all = (db = connection) => db('movie').select('*')
@@ -8,6 +8,7 @@ export const allWithCategories = async (db = connection) => {
     .leftOuterJoin('movie_category', 'movie.id', 'movie_category.movie_id')
     .leftOuterJoin('category', 'category.id', 'movie_category.category_id')
     .select('*', 'movie.id as id')
+
   const result = [] as MovieWithCategories[]
 
   let last: MovieWithCategories | undefined
@@ -38,3 +39,36 @@ export const byCategory = (category_id: number, db = connection) =>
     .select('id', 'title', 'release_year')
     .join('movie_category', 'movie.id', 'movie_category.movie_id')
     .where({ category_id })
+
+export const byCategoriesAll = (ids: number[], db = connection) =>
+  db('movie')
+    .select('movie.*')
+    .count('category_id as matches')
+    .join('movie_category', 'movie.id', 'movie_category.movie_id')
+    .join('category', 'category.id', 'movie_category.category_id')
+    .whereIn('category.id', ids)
+    .groupBy('movie.id')
+    .having('matches', '=', ids.length)
+    .then(
+      (rows) =>
+        rows.map((row) => {
+          const { id, release_year, title } = row
+          return { id, release_year, title }
+        }) as Movie[]
+    )
+
+export const byCategoriesAny = (ids: number[], db = connection) =>
+  db('movie')
+    .select('movie.*')
+    .count('category_id as matches')
+    .join('movie_category', 'movie.id', 'movie_category.movie_id')
+    .join('category', 'category.id', 'movie_category.category_id')
+    .whereIn('category.id', ids)
+    .groupBy('movie.id')
+    .then(
+      (rows) =>
+        rows.map((row) => {
+          const { id, release_year, title } = row
+          return { id, release_year, title }
+        }) as Movie[]
+    )
