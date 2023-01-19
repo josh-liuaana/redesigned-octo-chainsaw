@@ -21,6 +21,13 @@ function reducer(state = initalState, action: MovieAction): MovieState {
         data: [...state.data, action.payload],
       }
 
+    case 'movies/delete':
+      return {
+        pending: false,
+        error: undefined,
+        data: state.data.filter((movie) => movie.id !== action.payload),
+      }
+
     case 'movies/pending':
       return { pending: true, error: undefined, data: [] }
 

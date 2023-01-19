@@ -18,6 +18,7 @@ describe('fetchMovies', () => {
       { id: 2, title: 'Return to Oz', release_year: 1971 },
       { id: 3, title: 'Around the World in 80 Days', release_year: 1973 },
     ]
+
     const scope = nock('http://localhost')
       .get('/api/v1/movies')
       .reply(200, mockData)
@@ -37,6 +38,7 @@ describe('fetchMovies', () => {
     const thunk = actions.fetchMovies()
 
     await thunk(dispatch, jest.fn())
+
     expect(dispatch).toHaveBeenCalledWith(actions.pending())
     expect(dispatch).toHaveBeenCalledWith(
       actions.failed('Internal Server Error')
