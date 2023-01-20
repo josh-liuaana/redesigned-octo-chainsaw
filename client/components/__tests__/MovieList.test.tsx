@@ -2,6 +2,7 @@
 import nock from 'nock'
 import App from '../App'
 import { Provider } from 'react-redux'
+import { MemoryRouter as Router } from 'react-router-dom'
 import store from '../../store'
 
 import { screen, render } from '@testing-library/react'
@@ -17,9 +18,11 @@ describe('<MovieList />', () => {
       ])
 
     render(
-      <Provider store={store}>
-        <App />
-      </Provider>
+      <Router initialEntries={['/movie']}>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </Router>
     )
 
     const title = await screen.findByRole('heading', {
@@ -33,9 +36,11 @@ describe('<MovieList />', () => {
     const scope = nock('http://localhost').get('/api/v1/movies').reply(500)
 
     render(
-      <Provider store={store}>
-        <App />
-      </Provider>
+      <Router initialEntries={['/movie']}>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </Router>
     )
 
     const errorMessage = await screen.findByText(

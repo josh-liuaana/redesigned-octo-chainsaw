@@ -7,7 +7,7 @@ export async function all() {
   return data as Movie[]
 }
 
-export async function byId(id: string) {
+export async function byId(id: number) {
   const res = await request.get(`/api/v1/movies/${id}`)
   const data = res.body
   return data as Movie
@@ -34,4 +34,10 @@ export async function removeCategoryFromMovie(
   categoryId: number
 ) {
   await request.delete(`/api/v1/movies/${movieId}/categories/${categoryId}`)
+}
+
+export async function search(title: string, categories: number[]) {
+  return await request
+    .get('/api/v1/movies/search')
+    .query({ title, category: categories })
 }

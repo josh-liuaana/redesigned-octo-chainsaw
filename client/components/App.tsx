@@ -1,4 +1,8 @@
+import { Routes, Route } from 'react-router-dom'
 import MovieList from './MovieList'
+import Movie from './Movie'
+import Search from './Search'
+import Home from './Home'
 
 function App() {
   return (
@@ -7,7 +11,14 @@ function App() {
         <h1>My Collection</h1>
       </header>
       <section className="main">
-        <MovieList />
+        <Routes>
+          <Route index element={<Home />} />
+          <Route path="/movie">
+            <Route index element={<MovieList />} />
+            <Route path=":id" element={<Movie />} />
+          </Route>
+          <Route path="/search" element={<Search />} />
+        </Routes>
       </section>
     </>
   )

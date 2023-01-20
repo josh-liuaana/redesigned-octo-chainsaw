@@ -44,6 +44,33 @@ export function byCategory(category_id: number, db = connection) {
     .where({ category_id })
 }
 
+export async function search(
+  title: string,
+  ids: number[],
+  db = connection
+): Promise<Movie[]> {
+  const query = db('movie')
+    .select('movie.*')
+    .count('category_id as matches')
+    .join('movie_category', 'movie.id', 'movie_category.movie_id')
+    .join('category', 'category.id', 'movie_category.category_id')
+
+  if (title) {
+    query.where('movie.title', 'like', `%${title}%`)
+  }
+
+  if (ids.length) {
+    query.whereIn('category.id', ids).having('matches', '=', ids.length)
+  }
+
+  const rows = await query.groupBy('movie.id')
+
+  return rows.map((row) => {
+    const { id, release_year, title } = row
+    return { id, release_year, title } as Movie
+  })
+}
+
 export async function byCategoriesAll(
   ids: number[],
   db = connection

@@ -24,6 +24,25 @@ router.get('/', async (req, res) => {
   }
 })
 
+function ensureArray(a: unknown): unknown[] {
+  if (a == null) {
+    return []
+  }
+
+  if (!Array.isArray(a)) {
+    return [a]
+  }
+
+  return a
+}
+
+router.get('/search', async (req, res) => {
+  const { title, category } = req.query
+  const categories = ensureArray(category).map((a) => Number(a))
+  const data = await db.search(title, categories)
+  res.json(data)
+})
+
 router.get('/:id', async (req, res) => {
   try {
     const data = await db.byId(+req.params.id)
