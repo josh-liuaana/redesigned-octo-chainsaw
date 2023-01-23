@@ -5,7 +5,7 @@ import * as api from '../apis/movies'
 import * as CategoryApi from '../apis/categories'
 
 export default function Search() {
-  const [results, setResults] = useState([] as Movie[])
+  const [results, setResults] = useState(null as null | Movie[])
   const [categories, setCategories] = useState([] as Category[])
   const [formData, setFormData] = useState({
     title: '',
@@ -96,6 +96,7 @@ export default function Search() {
         </div>
       </form>
       <ol>
+        {results && <>{results.length} matching results</>}
         {results &&
           results.map((movie) => (
             <li key={movie.id}>

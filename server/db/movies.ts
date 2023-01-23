@@ -45,7 +45,7 @@ export function byCategory(category_id: number, db = connection) {
 }
 
 export async function search(
-  title: string,
+  title: string | undefined,
   ids: number[],
   db = connection
 ): Promise<Movie[]> {

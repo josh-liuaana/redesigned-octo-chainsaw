@@ -39,6 +39,11 @@ function ensureArray(a: unknown): unknown[] {
 router.get('/search', async (req, res) => {
   const { title, category } = req.query
   const categories = ensureArray(category).map((a) => Number(a))
+  if (typeof title != 'string' && title != undefined) {
+    res.sendStatus(400)
+    return
+  }
+
   const data = await db.search(title, categories)
   res.json(data)
 })
