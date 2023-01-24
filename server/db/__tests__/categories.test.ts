@@ -45,6 +45,35 @@ describe('categories', () => {
     })
   })
 
+  describe('byIdWithMovies', () => {
+    it('gets a specific category', async () => {
+      const data = await categories.byIdWithMovies(4)
+      expect(data).toMatchInlineSnapshot(`
+        {
+          "id": 4,
+          "movies": [
+            {
+              "id": 3,
+              "release_year": 2010,
+              "title": "Black Swan",
+            },
+            {
+              "id": 11,
+              "release_year": 2013,
+              "title": "Gravity",
+            },
+          ],
+          "name": "Thriller",
+        }
+      `)
+    })
+
+    it('returns undefined when there is no such category', async () => {
+      const data = await categories.byIdWithMovies(123123)
+      expect(data).toBeUndefined()
+    })
+  })
+
   describe('byName', () => {
     it('gets a specific category', async () => {
       const data = await categories.byName('Sci-Fi')

@@ -60,6 +60,30 @@ describe('Movies DB', () => {
     })
   })
 
+  describe('.byIdWithCategories', () => {
+    it('fetches a specific movie', async () => {
+      const result = await movies.byIdWithCategories(12)
+      expect(result).toMatchInlineSnapshot(`
+        {
+          "categories": [
+            {
+              "id": 3,
+              "name": "Drama",
+            },
+          ],
+          "id": 12,
+          "release_year": 2013,
+          "title": "12 Years a Slave",
+        }
+      `)
+    })
+
+    it('returns undefined for a missing ID', async () => {
+      const result = await movies.byIdWithCategories(11231232)
+      expect(result).toBeUndefined()
+    })
+  })
+
   describe('.byCategory', () => {
     it('fetches all in a specific category', async () => {
       const result = await movies.byCategory(2)
@@ -150,6 +174,56 @@ describe('Movies DB', () => {
       await movies.removeCategoryFromMovie(16, 8)
       const results = await movies.byCategory(8)
       expect(results).toEqual([])
+    })
+  })
+
+  describe('Searching by title', () => {
+    it('returns a list of matches', async () => {
+      const list = await movies.search('ven', [])
+      expect(list).toMatchInlineSnapshot(`
+        [
+          {
+            "id": 8,
+            "release_year": 2012,
+            "title": "The Avengers",
+          },
+          {
+            "id": 19,
+            "release_year": 2015,
+            "title": "The Revenant",
+          },
+        ]
+      `)
+    })
+  })
+
+  describe('Searching by categories', () => {
+    it('returns a list of matches', async () => {
+      const list = await movies.search(undefined, [3, 8])
+      expect(list).toMatchInlineSnapshot(`
+        [
+          {
+            "id": 16,
+            "release_year": 2014,
+            "title": "Whiplash",
+          },
+        ]
+      `)
+    })
+  })
+
+  describe('Searching by title and categories', () => {
+    it('returns a list of matches', async () => {
+      const list = await movies.search('Black', [4])
+      expect(list).toMatchInlineSnapshot(`
+        [
+          {
+            "id": 3,
+            "release_year": 2010,
+            "title": "Black Swan",
+          },
+        ]
+      `)
     })
   })
 })

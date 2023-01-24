@@ -42,9 +42,12 @@ router.get('/search', async (req, res) => {
     res.sendStatus(400)
     return
   }
-
-  const data = await db.search(title, categories)
-  res.json(data)
+  try {
+    const data = await db.search(title, categories)
+    res.json(data)
+  } catch (e) {
+    res.sendStatus(500)
+  }
 })
 
 router.get('/:id', async (req, res) => {
