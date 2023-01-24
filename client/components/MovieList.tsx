@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { fetchMovies } from '../actions/movies'
 import { useAppDispatch, useAppSelector } from '../hooks'
 import { Link } from 'react-router-dom'
+import CreateMovieForm from './CreateMovieForm'
 
 function MovieList() {
   const { pending, error, data } = useAppSelector((state) => state.movies)
@@ -22,6 +23,7 @@ function MovieList() {
   return (
     <div>
       <h2>All movies</h2>
+      <CreateMovieForm />
       <ul>
         {data.map((movie) => (
           <li key={movie.id}>

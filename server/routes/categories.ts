@@ -15,7 +15,16 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
   try {
-    const data = await db.byId(+req.params.id)
+    const withMovies = 'withMovies' in req.query
+    const id = Number(req.params.id)
+
+    let data
+    if (withMovies) {
+      data = await db.byIdWithMovies(id)
+    } else {
+      data = await db.byId(id)
+    }
+
     if (data == null) {
       res.sendStatus(404)
     } else {

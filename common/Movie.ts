@@ -8,4 +8,5 @@ export interface Movie {
 export interface Category {
   id: number
   name: string
+  movies?: Movie[]
 }
