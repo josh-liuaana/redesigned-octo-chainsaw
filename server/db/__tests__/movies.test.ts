@@ -1,6 +1,27 @@
 import connection from '../../db/connection'
 import * as movies from '../movies'
 
+/**
+ * For database functions, we're not mocking anything out.
+ * We're using a real sqlite database because we want to make sure that
+ * we are testing our queries.
+ *
+ * During tests, jest sets process.env.NODE_ENV to 'test' which means
+ * that we automatically get the test configuration from our knexfile.
+ *
+ * Before *all* the tests run, we run all migrations and before *each*
+ * test is run we're going to run seeds.
+ *
+ * This ensures that each test runs with the database in a standard state.
+ *
+ * After all the tests, we rollback our migrations (this is mostly for coverage)
+ * and destroy the connection.
+ *
+ * In each test, we're going to run a query and make assertions about the results.
+ *
+ * Since we're running against a standard dataset, we can use snapshot tests to
+ * assert the exact results from each query with `.toMatchInlineSnapshot(...)`
+ */
 beforeAll(() => {
   return connection.migrate.latest()
 })

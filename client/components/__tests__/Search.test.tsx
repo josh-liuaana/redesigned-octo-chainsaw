@@ -9,6 +9,21 @@ import { screen, render, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom'
 
+/**
+ * For our components we're mostly going to write integration tests, running
+ * as much of our stack as possible and mocking as little as possible.
+ *
+ * In this case it means we're going to:
+ *
+ * 1. mount the whole App for each test
+ * 2. set the current route using a MemoryRouter
+ * 3. use nock to mock out api calls (both internal and external)
+ * 4. use fireEvent or userEvent to interact with the UI
+ *
+ * All our integration tests can follow this pattern more or less, we never
+ * need to mock out the redux store or the API functions and we get coverage of those naturally.
+ */
+
 describe('<Search />', () => {
   it('Loads the categories', async () => {
     const scope = nock('http://localhost')

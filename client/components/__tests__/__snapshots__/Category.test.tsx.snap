@@ -1,0 +1,71 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Category /> Shows information about the category 1`] = `
+<div>
+  <header
+    class="header"
+  >
+    <h1>
+      Movie Facts
+    </h1>
+  </header>
+  <nav>
+    <ul>
+      <li>
+        <a
+          href="/movie"
+        >
+          All movies
+        </a>
+      </li>
+      <li>
+        <a
+          href="/category"
+        >
+          All categories
+        </a>
+      </li>
+      <li>
+        <a
+          href="/search"
+        >
+          Search
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <section
+    class="main"
+  >
+    <div>
+      <h2>
+        Category - 
+        Thriller
+      </h2>
+      <ul>
+        <li>
+          <a
+            href="/movie/3"
+          >
+            Black Swan
+             (
+            2010
+            )
+          </a>
+        </li>
+        <li>
+          <a
+            href="/movie/11"
+          >
+            Gravity
+             (
+            2013
+            )
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+</div>
+`;
+

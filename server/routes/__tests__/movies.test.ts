@@ -2,7 +2,6 @@
 import request from 'supertest'
 
 import server from '../../server'
-import connection from '../../db/connection'
 import {
   byId,
   getAll,
@@ -15,18 +14,8 @@ import {
 
 jest.mock('../../db/movies')
 
-beforeAll(async () => {
-  await connection.migrate.latest()
-})
-
-beforeEach(async () => {
+beforeEach(() => {
   jest.resetAllMocks()
-  await connection.seed.run()
-})
-
-afterAll(async () => {
-  await connection.migrate.rollback()
-  await connection.destroy()
 })
 
 describe('/', () => {

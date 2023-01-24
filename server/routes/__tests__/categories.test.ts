@@ -1,22 +1,50 @@
 /** @jest-environment node */
 import request from 'supertest'
 import server from '../../server'
-import connection from '../../db/connection'
 import { byId, getAll } from '../../db/categories'
 
+/**
+ * In each test we use supertest to load our server module and fake a request. NB I'm using
+ * async/await syntax here, tests can get complicated and I think it reads better.
+ *
+ * > const response = await request(server).get(...)
+ *
+ * for each route, we will mock out the database function it calls so that we can
+ * reliably test both success and failure.
+ *
+ * First, we want to import the database function and call `jest.mock` to mock out
+ * that module.
+ *
+ * > import { byId } from '../../db/movies'
+ * > jest.mock('../../db/')
+ *
+ * Then in the test, we use `jest.mocked` to access the mocking methods so we can
+ * set up success or failure for just that test. You do this before you run your
+ * fake request.
+ *
+ * > jest.mocked(byId).mockResolvedValue({ ... })
+ *
+ * Now that we have a response, we can assert things about it.
+ *
+ * > expect(response.status).toBe(200)
+ * > expect(response.body).toBe({ ... })
+ *
+ * And we can also check that the mocked functions were called with the right arguments
+ *
+ * > expect(byId).toHaveBeenCalledWith(13)
+ *
+ * We're also mocking out `console.error` to avoid seeing logs in our
+ * tests.
+ *
+ * I'm *not* asserting what those logs should be, but that is something
+ * you could do:
+ *
+ * > expect(console.error).toHaveBeenCalledWith('Oh no!')
+ */
 jest.mock('../../db/categories')
 
-beforeAll(async () => {
-  await connection.migrate.latest()
-})
-
-beforeEach(async () => {
-  await connection.seed.run()
-})
-
-afterAll(async () => {
-  await connection.migrate.rollback()
-  await connection.destroy()
+beforeEach(() => {
+  jest.resetAllMocks()
 })
 
 describe('/', () => {
@@ -27,6 +55,7 @@ describe('/', () => {
     ])
     const res = await request(server).get('/api/v1/categories')
     expect(res.body).toHaveLength(2)
+    expect(getAll).toHaveBeenCalled()
   })
 
   it('responds with a 500', async () => {

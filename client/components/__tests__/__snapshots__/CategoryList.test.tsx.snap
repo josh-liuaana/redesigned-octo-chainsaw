@@ -1,0 +1,112 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Category /> Shows information about the category 1`] = `
+<div>
+  <header
+    class="header"
+  >
+    <h1>
+      Movie Facts
+    </h1>
+  </header>
+  <nav>
+    <ul>
+      <li>
+        <a
+          href="/movie"
+        >
+          All movies
+        </a>
+      </li>
+      <li>
+        <a
+          href="/category"
+        >
+          All categories
+        </a>
+      </li>
+      <li>
+        <a
+          href="/search"
+        >
+          Search
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <section
+    class="main"
+  >
+    <div>
+      <h2>
+        All categories
+      </h2>
+      <ul>
+        <li>
+          <a
+            href="/category/1"
+          >
+            Action/Adventure
+          </a>
+        </li>
+        <li>
+          <a
+            href="/category/2"
+          >
+            Sci-Fi
+          </a>
+        </li>
+        <li>
+          <a
+            href="/category/3"
+          >
+            Drama
+          </a>
+        </li>
+        <li>
+          <a
+            href="/category/4"
+          >
+            Thriller
+          </a>
+        </li>
+        <li>
+          <a
+            href="/category/5"
+          >
+            Comedy
+          </a>
+        </li>
+        <li>
+          <a
+            href="/category/6"
+          >
+            Fantasy
+          </a>
+        </li>
+        <li>
+          <a
+            href="/category/7"
+          >
+            History
+          </a>
+        </li>
+        <li>
+          <a
+            href="/category/8"
+          >
+            Western
+          </a>
+        </li>
+        <li>
+          <a
+            href="/category/9"
+          >
+            Musical
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+</div>
+`;
