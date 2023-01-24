@@ -13,6 +13,12 @@ export async function byId(id: number) {
   return data as Movie
 }
 
+export async function byIdWithCategories(id: number) {
+  const res = await request.get(`/api/v1/movies/${id}?withCategories=true`)
+  const data = res.body
+  return data as Movie
+}
+
 export async function create(movie: Movie) {
   const res = await request.post('/api/v1/movies').send(movie)
   const data = res.body
@@ -40,4 +46,11 @@ export async function search(title: string, categories: number[]) {
   return await request
     .get('/api/v1/movies/search')
     .query({ title, category: categories })
+}
+
+export async function byCategory(category_id: number) {
+  const res = await request
+    .get(`/api/v1/movies`)
+    .query({ category: category_id })
+  return res.body as Movie[]
 }

@@ -1,4 +1,4 @@
-import { MovieWithCategories, Movie } from '../../common/Movie'
+import { Movie } from '../../common/Movie'
 import connection from './connection'
 
 export function getAll(db = connection) {
@@ -11,9 +11,9 @@ export async function allWithCategories(db = connection) {
     .leftOuterJoin('category', 'category.id', 'movie_category.category_id')
     .select('*', 'movie.id as id')
 
-  const result = [] as MovieWithCategories[]
+  const result = [] as Movie[]
 
-  let last: MovieWithCategories | undefined
+  let last: Movie | undefined
   for (const item of data) {
     if (last == null || item.id != last.id) {
       last = {
@@ -26,7 +26,7 @@ export async function allWithCategories(db = connection) {
     }
 
     if (item.category_id != null) {
-      last.categories.push({ id: item.category_id, name: item.name })
+      last.categories?.push({ id: item.category_id, name: item.name })
     }
   }
 
@@ -35,6 +35,35 @@ export async function allWithCategories(db = connection) {
 
 export function byId(id: number, db = connection) {
   return db('movie').select().where({ id }).first()
+}
+
+export async function byIdWithCategories(id: number, db = connection) {
+  const rows = await db('movie')
+    .leftOuterJoin('movie_category', 'movie.id', 'movie_category.movie_id')
+    .leftOuterJoin('category', 'category.id', 'movie_category.category_id')
+    .select('*', 'movie.id as id')
+    .where({ 'movie.id': id })
+
+  if (rows.length === 0) {
+    return undefined
+  }
+
+  const { id: movieId, title, release_year } = rows[0]
+  const result = {
+    id: movieId,
+    title,
+    release_year,
+    categories: [],
+  } as Movie
+
+  for (const row of rows) {
+    result.categories?.push({
+      id: row.category_id,
+      name: row.name,
+    })
+  }
+
+  return result
 }
 
 export function byCategory(category_id: number, db = connection) {

@@ -7,7 +7,6 @@ router.get('/', async (req, res) => {
   const category = Number(req.query.category)
   const withCategories = !!req.query.withCategories
   try {
-    // TODO: I don't really like this, maybe it should be a different end point
     if (withCategories) {
       const data = await db.allWithCategories()
       res.json(data)
@@ -50,7 +49,14 @@ router.get('/search', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
   try {
-    const data = await db.byId(+req.params.id)
+    const id = Number(req.params.id)
+    let data
+    if (req.query.withCategories) {
+      data = await db.byIdWithCategories(id)
+    } else {
+      data = await db.byId(id)
+    }
+
     if (data == null) {
       res.sendStatus(404)
     } else {

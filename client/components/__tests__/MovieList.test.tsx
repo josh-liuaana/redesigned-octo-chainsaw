@@ -25,7 +25,7 @@ describe('<MovieList />', () => {
       </Router>
     )
 
-    const title = await screen.findByRole('heading', {
+    const title = await screen.findByRole('link', {
       name: 'Some Movie (2021)',
     })
     expect(title).toBeVisible()

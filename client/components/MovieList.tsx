@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { fetchMovies } from '../actions/movies'
 import { useAppDispatch, useAppSelector } from '../hooks'
+import { Link } from 'react-router-dom'
 
 function MovieList() {
   const { pending, error, data } = useAppSelector((state) => state.movies)
@@ -19,15 +20,18 @@ function MovieList() {
   }
 
   return (
-    <ul>
-      {data.map((movie) => (
-        <li key={movie.id}>
-          <h2>
-            {movie.title} ({movie.release_year})
-          </h2>
-        </li>
-      ))}
-    </ul>
+    <div>
+      <h2>All movies</h2>
+      <ul>
+        {data.map((movie) => (
+          <li key={movie.id}>
+            <Link to={`/movie/${movie.id}`}>
+              {movie.title} ({movie.release_year})
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
   )
 }
 
