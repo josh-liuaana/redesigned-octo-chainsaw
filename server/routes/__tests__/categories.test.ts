@@ -1,7 +1,8 @@
 /** @jest-environment node */
 import request from 'supertest'
 import server from '../../server'
-import { byId, getAll } from '../../db/categories'
+import { byId, byIdWithMovies, getAll } from '../../db/categories'
+import { byIdWithCategories } from '../../db/movies'
 
 /**
  * In each test we use supertest to load our server module and fake a request. NB I'm using
@@ -91,5 +92,24 @@ describe('/:id', () => {
     jest.mocked(byId).mockRejectedValue(new Error('Database error'))
     const res = await request(server).get('/api/v1/categories/2')
     expect(res.statusCode).toBe(500)
+  })
+})
+
+describe('byId withMovies', () => {
+  it('responds with a specific movie', async () => {
+    jest
+      .mocked(byIdWithMovies)
+      .mockResolvedValue({ id: 3, name: 'Drama', movies: [] })
+
+    const res = await request(server)
+      .get('/api/v1/categories/3')
+      .query({ withMovies: true })
+    expect(res.body).toMatchInlineSnapshot(`
+      {
+        "id": 3,
+        "movies": [],
+        "name": "Drama",
+      }
+    `)
   })
 })

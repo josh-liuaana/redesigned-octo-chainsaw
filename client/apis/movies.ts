@@ -32,7 +32,7 @@ export async function remove(id: number) {
 export async function addCategoryToMovie(movieId: number, categoryId: number) {
   await request
     .post(`/api/v1/movies/${movieId}/categories`)
-    .send({ category_id: categoryId })
+    .send({ id: categoryId })
 }
 
 export async function removeCategoryFromMovie(

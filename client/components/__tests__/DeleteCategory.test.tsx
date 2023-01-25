@@ -5,13 +5,13 @@ import { Provider } from 'react-redux'
 import { MemoryRouter as Router } from 'react-router-dom'
 import store from '../../store'
 
-import { render, waitFor } from '@testing-library/react'
+import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 
 import '@testing-library/jest-dom'
 
 describe('<Movie />', () => {
   it('Loads and shows information about the movie', async () => {
-    const scope = nock('http://localhost')
+    const scope1 = nock('http://localhost')
       .get('/api/v1/movies/12?withCategories=true')
       .reply(200, {
         categories: [
@@ -34,7 +34,7 @@ describe('<Movie />', () => {
         },
       ])
 
-    const { container } = render(
+    render(
       <Router initialEntries={['/movie/12']}>
         <Provider store={store}>
           <App />
@@ -42,8 +42,18 @@ describe('<Movie />', () => {
       </Router>
     )
 
-    await waitFor(() => expect(scope.isDone()).toBe(true))
+    const deleteButton = await screen.findByRole('button', {
+      name: 'delete category Drama',
+    })
+    expect(deleteButton).toBeVisible()
 
-    expect(container).toMatchSnapshot()
+    const deleteScope = nock('http://localhost')
+      .delete('/api/v1/movies/12/categories/3')
+      .reply(204)
+
+    fireEvent.click(deleteButton)
+    await waitFor(() => expect(deleteButton).not.toBeVisible())
+    expect(deleteScope.isDone()).toBe(true)
+    expect(deleteButton).not.toBeInTheDocument()
   })
 })

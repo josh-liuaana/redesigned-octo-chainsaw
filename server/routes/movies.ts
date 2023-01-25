@@ -97,10 +97,10 @@ router.delete('/:id', async (req, res) => {
 // add a category to a movie
 router.post('/:movie_id/categories', async (req, res) => {
   const movie_id = Number(req.params.movie_id)
-  const { category_id } = req.body
+  const { id } = req.body
 
   try {
-    await db.addCategoryToMovie(movie_id, category_id)
+    await db.addCategoryToMovie(movie_id, id)
     res.sendStatus(201)
   } catch (e) {
     res.sendStatus(500)
@@ -113,7 +113,7 @@ router.delete('/:movie_id/categories/:category_id', async (req, res) => {
 
   try {
     await db.removeCategoryFromMovie(movie_id, category_id)
-    res.sendStatus(200)
+    res.sendStatus(204)
   } catch (e) {
     res.sendStatus(500)
   }

@@ -51,6 +51,9 @@ describe('<CreateMovieForm />', () => {
         release_year: 1984,
         categories: [],
       })
+    const scope4 = nock('http://localhost')
+      .get('/api/v1/categories')
+      .reply(200, [{ id: 1, name: 'Drama' }])
     await waitFor(() => expect(scope3.isDone()).toBe(true))
 
     // after the movie is created we navigate to it

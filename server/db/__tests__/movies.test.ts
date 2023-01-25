@@ -99,6 +99,19 @@ describe('Movies DB', () => {
       `)
     })
 
+    it('returns an empty array for movies with no categories', async () => {
+      const result = await movies.byIdWithCategories(25)
+      expect(result?.categories).toHaveLength(0)
+      expect(result).toMatchInlineSnapshot(`
+        {
+          "categories": [],
+          "id": 25,
+          "release_year": 2018,
+          "title": "Black Panther",
+        }
+      `)
+    })
+
     it('returns undefined for a missing ID', async () => {
       const result = await movies.byIdWithCategories(11231232)
       expect(result).toBeUndefined()

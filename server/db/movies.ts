@@ -1,8 +1,13 @@
-import { Movie } from '../../common/Movie'
+import { Category, Movie } from '../../common/Movie'
 import connection from './connection'
 
 export function getAll(db = connection) {
   return db('movie').select('*')
+}
+
+//
+interface MovieWithCategories extends Movie {
+  categories: Category[]
 }
 
 export async function allWithCategories(db = connection) {
@@ -13,7 +18,7 @@ export async function allWithCategories(db = connection) {
 
   const result = [] as Movie[]
 
-  let last: Movie | undefined
+  let last: MovieWithCategories | undefined
   for (const item of data) {
     if (last == null || item.id != last.id) {
       last = {
@@ -26,7 +31,7 @@ export async function allWithCategories(db = connection) {
     }
 
     if (item.category_id != null) {
-      last.categories?.push({ id: item.category_id, name: item.name })
+      last.categories.push({ id: item.category_id, name: item.name })
     }
   }
 
@@ -54,13 +59,15 @@ export async function byIdWithCategories(id: number, db = connection) {
     title,
     release_year,
     categories: [],
-  } as Movie
+  } as MovieWithCategories
 
   for (const row of rows) {
-    result.categories?.push({
-      id: row.category_id,
-      name: row.name,
-    })
+    if (row.category_id != null) {
+      result.categories.push({
+        id: row.category_id,
+        name: row.name,
+      })
+    }
   }
 
   return result

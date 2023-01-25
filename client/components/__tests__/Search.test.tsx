@@ -21,7 +21,8 @@ import '@testing-library/jest-dom'
  * 4. use fireEvent or userEvent to interact with the UI
  *
  * All our integration tests can follow this pattern more or less, we never
- * need to mock out the redux store or the API functions and we get coverage of those naturally.
+ * need to mock out the redux store or the API functions and we get coverage
+ * of those naturally.
  */
 
 describe('<Search />', () => {

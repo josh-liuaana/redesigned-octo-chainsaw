@@ -12,8 +12,12 @@ export function byId(id: number, db = connection) {
 export async function byIdWithMovies(id: number, db = connection) {
   const rows = await db('category')
     .select('*', 'category.id as id')
-    .join('movie_category', 'category.id', 'movie_category.category_id')
-    .join('movie', 'movie.id', 'movie_category.movie_id')
+    .leftOuterJoin(
+      'movie_category',
+      'category.id',
+      'movie_category.category_id'
+    )
+    .leftOuterJoin('movie', 'movie.id', 'movie_category.movie_id')
     .where('category_id', id)
 
   if (rows.length === 0) {

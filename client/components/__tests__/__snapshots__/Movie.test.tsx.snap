@@ -44,8 +44,31 @@ exports[`<Movie /> Loads and shows information about the movie 1`] = `
         2013
         )
       </h2>
+      <form>
+        <label>
+          <span>
+            New category
+          </span>
+          <select>
+            <option>
+              Choose a category
+            </option>
+          </select>
+        </label>
+        <button
+          type="submit"
+        >
+          Submit
+        </button>
+      </form>
       <ul>
         <li>
+          <button
+            aria-label="delete category Drama"
+            value="3"
+          >
+            delete
+          </button>
           <a
             href="/category/3"
           >
