@@ -9,9 +9,9 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 
 import '@testing-library/jest-dom'
 
-describe('<Movie />', () => {
-  it('Loads and shows information about the movie', async () => {
-    const scope1 = nock('http://localhost')
+describe('Delete category from movie', () => {
+  it('sends a request to delete the category', async () => {
+    nock('http://localhost')
       .get('/api/v1/movies/12?withCategories=true')
       .reply(200, {
         categories: [

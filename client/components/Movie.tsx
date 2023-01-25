@@ -4,8 +4,7 @@ import { Movie as MovieData, Category } from '../../common/Movie'
 import * as api from '../apis/movies'
 import AddCategoryForm from './AddCategoryForm'
 
-export default function Movie() {
-  const { id } = useParams()
+function useMovieData(id: number) {
   const [movie, setMovie] = useState<MovieData | null>(null)
 
   useEffect(() => {
@@ -17,32 +16,18 @@ export default function Movie() {
     fetchData()
   }, [id])
 
-  const onDeleteClicked = async (evt: UIEvent<HTMLButtonElement>) => {
-    const { value } = evt.currentTarget
-    if (isNaN(Number(id))) {
-      return
-    }
-
-    await api.removeCategoryFromMovie(Number(id), Number(value))
-
+  const removeCategory = (id: number) => {
     setMovie((previous) => {
       return (
         previous && {
           ...previous,
-          categories: previous.categories?.filter(
-            (cat) => cat.id !== Number(value)
-          ),
+          categories: previous.categories?.filter((cat) => cat.id !== id),
         }
       )
     })
   }
 
-  const handleAddCategory = async (category: Category) => {
-    if (!movie || !movie.id) {
-      return
-    }
-
-    await api.addCategoryToMovie(movie.id, category.id)
+  const addCategory = (category: Category) => {
     setMovie((previous) => {
       if (!previous) {
         return null
@@ -55,6 +40,32 @@ export default function Movie() {
         categories: [...categories, category].sort((a, b) => a.id - b.id),
       }
     })
+  }
+
+  return { movie, addCategory, removeCategory }
+}
+
+export default function Movie() {
+  const { id } = useParams()
+  const { movie, addCategory, removeCategory } = useMovieData(Number(id))
+
+  const onDeleteClicked = async (evt: UIEvent<HTMLButtonElement>) => {
+    const { value } = evt.currentTarget
+    if (isNaN(Number(id))) {
+      return
+    }
+
+    await api.removeCategoryFromMovie(Number(id), Number(value))
+    removeCategory(Number(value))
+  }
+
+  const handleAddCategory = async (category: Category) => {
+    if (!movie || !movie.id) {
+      return
+    }
+
+    await api.addCategoryToMovie(movie.id, category.id)
+    addCategory(category)
   }
 
   if (movie == null) {

@@ -48,4 +48,57 @@ describe('Movies reducer', () => {
       }
     `)
   })
+
+  it('creates a movie in redux state', () => {
+    const state = reducer(
+      { data: [], error: undefined, pending: false },
+      actions.created({
+        id: 5,
+        title: 'Puss in Boots: The Last Wish',
+        release_year: 2022,
+      })
+    )
+
+    expect(state).toMatchInlineSnapshot(`
+      {
+        "data": [
+          {
+            "id": 5,
+            "release_year": 2022,
+            "title": "Puss in Boots: The Last Wish",
+          },
+        ],
+        "error": undefined,
+        "pending": false,
+      }
+    `)
+  })
+
+  it('deletes a movie from redux state', () => {
+    const state = reducer(
+      {
+        data: [
+          { id: 1, title: 'Ghostbusters', release_year: 1984 },
+          { id: 2, title: 'The Princess Bride', release_year: 1987 },
+        ],
+        error: undefined,
+        pending: false,
+      },
+      actions.deleted(2)
+    )
+
+    expect(state).toMatchInlineSnapshot(`
+      {
+        "data": [
+          {
+            "id": 1,
+            "release_year": 1984,
+            "title": "Ghostbusters",
+          },
+        ],
+        "error": undefined,
+        "pending": false,
+      }
+    `)
+  })
 })
