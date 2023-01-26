@@ -42,10 +42,11 @@ export async function removeCategoryFromMovie(
   await request.delete(`/api/v1/movies/${movieId}/categories/${categoryId}`)
 }
 
-export async function search(title: string, categories: number[]) {
-  return await request
+export async function search(title: string | undefined, categories: number[]) {
+  const res = await request
     .get('/api/v1/movies/search')
     .query({ title, category: categories })
+  return res.body as Movie[]
 }
 
 export async function byCategory(category_id: number) {

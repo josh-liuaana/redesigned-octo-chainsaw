@@ -9,8 +9,12 @@ function useMovieData(id: number) {
 
   useEffect(() => {
     async function fetchData() {
-      const data = await api.byIdWithCategories(Number(id))
-      setMovie(data)
+      try {
+        const data = await api.byIdWithCategories(Number(id))
+        setMovie(data)
+      } catch (e) {
+        setMovie(null)
+      }
     }
 
     fetchData()

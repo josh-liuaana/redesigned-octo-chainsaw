@@ -1,59 +1,67 @@
 import { ChangeEvent, FormEvent, useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Movie, Category } from '../../common/Movie'
-import * as api from '../apis/movies'
-import * as CategoryApi from '../apis/categories'
+import * as actions from '../actions/search'
+import * as categoryActions from '../actions/categories'
+import { useAppDispatch, useAppSelector } from '../hooks'
 
-export default function Search() {
-  const [results, setResults] = useState(null as null | Movie[])
-  const [categories, setCategories] = useState([] as Category[])
-  const [formData, setFormData] = useState({
-    title: '',
-    categories: {} as Record<string, boolean>,
-  })
+function useSearch() {
+  const dispatch = useAppDispatch()
+  const { results, pending, error } = useAppSelector((state) => state.search)
+
+  function search(title: string | undefined, categories: number[]) {
+    dispatch(actions.runSearch(title, categories))
+  }
+
+  return { results, pending, error, search }
+}
+
+function useCategories() {
+  const dispatch = useAppDispatch()
+  const {
+    pending,
+    error,
+    data: categories,
+  } = useAppSelector((state) => state.categories)
 
   useEffect(() => {
-    async function fetchData() {
-      const data = await CategoryApi.all()
-      setCategories(data)
-    }
+    dispatch(categoryActions.fetchCategories())
+  }, [dispatch])
 
-    fetchData()
-  }, [])
+  return { pending, error, categories }
+}
 
-  const onCheckboxChange = useCallback((evt: ChangeEvent<HTMLInputElement>) => {
-    const { value, checked } = evt.currentTarget
-    setFormData((prev) => ({
-      ...prev,
-      categories: { ...prev.categories, [value]: checked },
-    }))
-  }, [])
+function Search() {
+  const { search, results, pending, error } = useSearch()
+  const [formData, setFormData] = useState({
+    title: '',
+    categories: [] as number[],
+  })
 
-  const onInputChange = useCallback((evt: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = evt.currentTarget
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }))
+  const handleInputChange = useCallback(
+    (evt: ChangeEvent<HTMLInputElement>) => {
+      const { name, value } = evt.currentTarget
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }))
+    },
+    []
+  )
+
+  const handleCategoryChange = useCallback((categories: number[]) => {
+    setFormData((prev) => ({ ...prev, categories }))
   }, [])
 
   const onSubmit = useCallback(
     async (evt: FormEvent<HTMLFormElement>) => {
       evt.preventDefault()
-      const includeCategories = []
-      for (const k in formData.categories) {
-        if (formData.categories[k]) {
-          includeCategories.push(Number(k))
-        }
-      }
-      const result = await api.search(formData.title, includeCategories)
-      setResults(result.body)
+      search(formData.title, formData.categories)
     },
-    [formData.title, formData.categories]
+    [search, formData.title, formData.categories]
   )
 
-  if (!categories || categories.length === 0) {
-    return <p>Loading...</p>
+  if (pending) {
+    return <>Loading...</>
   }
 
   return (
@@ -65,37 +73,23 @@ export default function Search() {
             <input
               type="text"
               name="title"
-              onChange={onInputChange}
+              onChange={handleInputChange}
               value={formData.title}
             />
           </label>
         </div>
         <div>
-          <label>
-            <span>Category</span>
-            <ul>
-              {categories.map((category) => (
-                <li key={category.name}>
-                  <label>
-                    <input
-                      type="checkbox"
-                      name={`category`}
-                      onChange={onCheckboxChange}
-                      checked={!!formData.categories[category.id]}
-                      value={category.id}
-                    />{' '}
-                    <span>{category.name}</span>
-                  </label>
-                </li>
-              ))}
-            </ul>
-          </label>
+          <CategoryPicker
+            onChange={handleCategoryChange}
+            selected={formData.categories}
+          />
         </div>
         <div>
           <button type="submit">Submit</button>
         </div>
       </form>
       <ol>
+        {error && <p>Search failed: {error}</p>}
         {results && <>{results.length} matching results</>}
         {results &&
           results.map((movie) => (
@@ -109,3 +103,60 @@ export default function Search() {
     </>
   )
 }
+
+interface CategoryPickerProps {
+  onChange: (categories: number[]) => void
+  selected: number[]
+}
+
+function CategoryPicker({ onChange, selected }: CategoryPickerProps) {
+  const onCheckboxChange = useCallback(
+    (evt: ChangeEvent<HTMLInputElement>) => {
+      const { value, checked } = evt.currentTarget
+      const id = Number(value)
+      if (isNaN(id)) {
+        return
+      }
+      if (checked) {
+        onChange([...selected, id].sort())
+      } else {
+        onChange(selected.filter((v) => v != id))
+      }
+    },
+    [onChange, selected]
+  )
+
+  const { pending, error, categories } = useCategories()
+
+  if (pending || !categories) {
+    return <>Loading...</>
+  }
+
+  if (error) {
+    return <>Failed to load categories</>
+  }
+
+  return (
+    <label>
+      <span>Category</span>
+      <ul>
+        {categories.map((category) => (
+          <li key={category.name}>
+            <label>
+              <input
+                type="checkbox"
+                name={`category`}
+                onChange={onCheckboxChange}
+                checked={selected.includes(category.id)}
+                value={category.id}
+              />{' '}
+              <span>{category.name}</span>
+            </label>
+          </li>
+        ))}
+      </ul>
+    </label>
+  )
+}
+
+export default Search

@@ -1,28 +1,33 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Category } from '../../common/Movie'
-import * as api from '../apis/categories'
+import * as actions from '../actions/categories'
+import { useAppDispatch, useAppSelector } from '../hooks'
 
 export default function CategoryList() {
-  const [categories, setCategories] = useState(null as Category[] | null)
+  const dispatch = useAppDispatch()
+  const {
+    pending,
+    error,
+    data: categories,
+  } = useAppSelector((state) => state.categories)
+
   useEffect(() => {
-    const load = async () => {
-      const data = await api.all()
-      setCategories(data)
-    }
+    dispatch(actions.fetchCategories())
+  }, [dispatch])
 
-    load()
-  }, [])
-
-  if (!categories) {
+  if (pending) {
     return <p>Loading ...</p>
+  }
+
+  if (error) {
+    return <p>Error! {error}</p>
   }
 
   return (
     <div>
       <h2>All categories</h2>
       <ul>
-        {categories.map((category) => (
+        {categories?.map((category) => (
           <li key={category.id}>
             <Link to={`/category/${category.id}`}>{category.name}</Link>
           </li>

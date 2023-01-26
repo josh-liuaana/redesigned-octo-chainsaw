@@ -3,7 +3,7 @@ import nock from 'nock'
 import App from '../App'
 import { Provider } from 'react-redux'
 import { MemoryRouter as Router } from 'react-router-dom'
-import store from '../../store'
+import { initialiseStore } from '../../store'
 
 import { screen, render, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
@@ -33,7 +33,7 @@ describe('<Search />', () => {
 
     render(
       <Router initialEntries={['/search']}>
-        <Provider store={store}>
+        <Provider store={initialiseStore()}>
           <App />
         </Provider>
       </Router>
@@ -55,7 +55,7 @@ describe('<Search />', () => {
 
     render(
       <Router initialEntries={['/search']}>
-        <Provider store={store}>
+        <Provider store={initialiseStore()}>
           <App />
         </Provider>
       </Router>
@@ -100,7 +100,7 @@ describe('<Search />', () => {
 
     render(
       <Router initialEntries={['/search']}>
-        <Provider store={store}>
+        <Provider store={initialiseStore()}>
           <App />
         </Provider>
       </Router>

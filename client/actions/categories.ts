@@ -22,8 +22,16 @@ export function failed(reason: string): CategoryAction {
 }
 
 export function fetchCategories(): ThunkAction {
-  return async (dispatch) => {
-    dispatch(pending())
-    
+  return async (dispatch, getState) => {
+    const { categories } = getState()
+    if (!categories.pending && !categories.data) {
+      dispatch(pending())
+      try {
+        const data = await api.all()
+        dispatch(receive(data))
+      } catch (e) {
+        dispatch(failed(e instanceof Error ? e.message : String(e)))
+      }
+    }
   }
 }

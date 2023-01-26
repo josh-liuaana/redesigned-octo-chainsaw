@@ -1,8 +1,8 @@
 import { Category, Movie } from '../../common/Movie'
 import connection from './connection'
 
-export function getAll(db = connection) {
-  return db('movie').select('*')
+export function getAll() {
+  return connection('movie').select('*')
 }
 
 //
