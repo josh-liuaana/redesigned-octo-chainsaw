@@ -43,9 +43,7 @@ describe('<MovieList />', () => {
       </Router>
     )
 
-    const errorMessage = await screen.findByText(
-      /Failed: Internal Server Error/
-    )
+    const errorMessage = await screen.findByText(/Error: Internal Server Error/)
     expect(errorMessage).toBeVisible()
     expect(scope.isDone()).toBeTruthy()
   })

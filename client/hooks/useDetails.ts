@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { Category } from '../../common/Movie'
 import { useAppDispatch, useAppSelector } from './redux'
-import * as actions from '../actions/movie-details'
+import * as actions from '../actions/details'
 
 function useDetails(id: number) {
   const dispatch = useAppDispatch()

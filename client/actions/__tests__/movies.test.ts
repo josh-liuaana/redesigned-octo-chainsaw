@@ -41,7 +41,7 @@ describe('fetchMovies', () => {
 
     expect(dispatch).toHaveBeenCalledWith(actions.pending())
     expect(dispatch).toHaveBeenCalledWith(
-      actions.failed('Internal Server Error')
+      actions.failed('Error: Internal Server Error')
     )
     expect(scope.isDone()).toBeTruthy()
   })

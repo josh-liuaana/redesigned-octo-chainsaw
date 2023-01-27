@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Home /> looks real good 1`] = `
+<div>
+  <header
+    class="header"
+  >
+    <h1>
+      Movie Facts
+    </h1>
+  </header>
+  <nav>
+    <ul>
+      <li>
+        <a
+          href="/movie"
+        >
+          All movies
+        </a>
+      </li>
+      <li>
+        <a
+          href="/category"
+        >
+          All categories
+        </a>
+      </li>
+      <li>
+        <a
+          href="/search"
+        >
+          Search
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <section
+    class="main"
+  >
+    Welcome to movie ... facts~~~
+  </section>
+</div>
+`;

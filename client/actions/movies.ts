@@ -28,7 +28,7 @@ export function fetchMovies(): ThunkAction {
       const data = await api.all()
       dispatch(receive(data))
     } catch (e) {
-      dispatch(failed(e instanceof Error ? e.message : 'Server error'))
+      dispatch(failed(String(e)))
     }
   }
 }

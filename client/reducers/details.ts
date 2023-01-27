@@ -1,5 +1,5 @@
 import { Movie } from '../../common/Movie'
-import { DetailsAction } from '../actions/movie-details'
+import { DetailsAction } from '../actions/details'
 
 interface DetailsState {
   pending: boolean

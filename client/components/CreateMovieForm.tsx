@@ -6,8 +6,6 @@ import * as actions from '../actions/movies'
 
 function CreateMovieForm() {
   const dispatch = useAppDispatch()
-  const { error } = useAppSelector((state) => state.movies)
-
   const navigate = useNavigate()
 
   const [{ title, release_year }, setFormValues] = useState({
@@ -33,7 +31,6 @@ function CreateMovieForm() {
 
   return (
     <>
-      {error != null && <p>Error: {error}</p>}
       <form onSubmit={onSubmit} aria-label="Create movie">
         <div>
           <label>

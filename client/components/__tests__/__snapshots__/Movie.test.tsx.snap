@@ -122,7 +122,7 @@ exports[`<Movie /> What happens if the id doesn't exist tho... 1`] = `
   >
     <p>
       Failed: 
-      Not Found
+      Error: Not Found
     </p>
   </section>
 </div>

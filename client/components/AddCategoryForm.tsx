@@ -30,10 +30,6 @@ function AddCategoryForm({ categories: existingCategories, onSubmit }: Props) {
   const handleChange = (evt: ChangeEvent<HTMLSelectElement>) => {
     const { value } = evt.currentTarget
     const id = Number(value)
-    if (isNaN(id)) {
-      setCategory(null)
-      return
-    }
 
     const category = categories.find((c) => c.id === id)
     if (category != null) {
@@ -52,7 +48,7 @@ function AddCategoryForm({ categories: existingCategories, onSubmit }: Props) {
               // remove any categories that this movie is already in
               (cat) =>
                 existingCategories &&
-                !existingCategories?.some((existing) => existing.id == cat.id)
+                !existingCategories.some((existing) => existing.id == cat.id)
             )
             .map(({ id, name }) => (
               <option key={id} value={id}>

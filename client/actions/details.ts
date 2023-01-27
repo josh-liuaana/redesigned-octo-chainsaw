@@ -36,7 +36,7 @@ export function fetchMovie(id: number): ThunkAction {
       const data = await api.byIdWithCategories(id)
       dispatch(received(data))
     } catch (e) {
-      dispatch(failed(e instanceof Error ? e.message : String(e)))
+      dispatch(failed(String(e)))
     }
   }
 }
@@ -52,7 +52,7 @@ export function deleteCategory(id: number): ThunkAction {
       await api.removeCategoryFromMovie(details.data.id, id)
       dispatch(categoryDeleted(id))
     } catch (e) {
-      dispatch(failed(e instanceof Error ? e.message : String(e)))
+      dispatch(failed(String(e)))
     }
   }
 }
@@ -68,7 +68,7 @@ export function addCategory(category: Category): ThunkAction {
       await api.addCategoryToMovie(details.data.id, category.id)
       dispatch(categoryAdded(category))
     } catch (e) {
-      dispatch(failed(e instanceof Error ? e.message : String(e)))
+      dispatch(failed(String(e)))
     }
   }
 }
