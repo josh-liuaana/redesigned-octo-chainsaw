@@ -3,7 +3,7 @@ import nock from 'nock'
 import App from '../App'
 import { Provider } from 'react-redux'
 import { MemoryRouter as Router } from 'react-router-dom'
-import store from '../../store'
+import { initialiseStore } from '../../store'
 
 import { screen, render, within, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom'
@@ -24,7 +24,7 @@ describe('<CreateMovieForm />', () => {
 
     render(
       <Router initialEntries={['/movie']}>
-        <Provider store={store}>
+        <Provider store={initialiseStore()}>
           <App />
         </Provider>
       </Router>

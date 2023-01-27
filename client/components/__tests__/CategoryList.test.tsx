@@ -3,7 +3,7 @@ import nock from 'nock'
 import App from '../App'
 import { Provider } from 'react-redux'
 import { MemoryRouter as Router } from 'react-router-dom'
-import store from '../../store'
+import { initialiseStore } from '../../store'
 
 import { render, waitFor } from '@testing-library/react'
 
@@ -54,7 +54,7 @@ describe('<Category />', () => {
 
     const { container } = render(
       <Router initialEntries={['/category']}>
-        <Provider store={store}>
+        <Provider store={initialiseStore()}>
           <App />
         </Provider>
       </Router>
