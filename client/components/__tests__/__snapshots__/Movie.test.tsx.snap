@@ -44,7 +44,9 @@ exports[`<Movie /> Loads and shows information about the movie 1`] = `
         2013
         )
       </h2>
-      <form>
+      <form
+        aria-label="Add category to movie"
+      >
         <label>
           <span>
             New category
@@ -77,6 +79,51 @@ exports[`<Movie /> Loads and shows information about the movie 1`] = `
         </li>
       </ul>
     </div>
+  </section>
+</div>
+`;
+
+exports[`<Movie /> What happens if the id doesn't exist tho... 1`] = `
+<div>
+  <header
+    class="header"
+  >
+    <h1>
+      Movie Facts
+    </h1>
+  </header>
+  <nav>
+    <ul>
+      <li>
+        <a
+          href="/movie"
+        >
+          All movies
+        </a>
+      </li>
+      <li>
+        <a
+          href="/category"
+        >
+          All categories
+        </a>
+      </li>
+      <li>
+        <a
+          href="/search"
+        >
+          Search
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <section
+    class="main"
+  >
+    <p>
+      Failed: 
+      Not Found
+    </p>
   </section>
 </div>
 `;

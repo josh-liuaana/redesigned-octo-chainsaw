@@ -1,7 +1,8 @@
 import { ChangeEvent, FormEvent, useCallback, useState } from 'react'
 import { Link } from 'react-router-dom'
 import useSearch from '../hooks/useSearch'
-import useCategories from '../hooks/useCategories'
+import CategoryPicker from './CategoryPicker'
+
 function Search() {
   const { search, results, pending, error } = useSearch()
   const [formData, setFormData] = useState({
@@ -73,61 +74,6 @@ function Search() {
           ))}
       </ol>
     </>
-  )
-}
-
-interface CategoryPickerProps {
-  onChange: (categories: number[]) => void
-  selected: number[]
-}
-
-function CategoryPicker({ onChange, selected }: CategoryPickerProps) {
-  const onCheckboxChange = useCallback(
-    (evt: ChangeEvent<HTMLInputElement>) => {
-      const { value, checked } = evt.currentTarget
-      const id = Number(value)
-      if (isNaN(id)) {
-        return
-      }
-      if (checked) {
-        onChange([...selected, id].sort())
-      } else {
-        onChange(selected.filter((v) => v != id))
-      }
-    },
-    [onChange, selected]
-  )
-
-  const { pending, error, categories } = useCategories()
-
-  if (pending || !categories) {
-    return <>Loading...</>
-  }
-
-  if (error) {
-    return <>Failed to load categories</>
-  }
-
-  return (
-    <label>
-      <span>Category</span>
-      <ul>
-        {categories.map((category) => (
-          <li key={category.name}>
-            <label>
-              <input
-                type="checkbox"
-                name={`category`}
-                onChange={onCheckboxChange}
-                checked={selected.includes(category.id)}
-                value={category.id}
-              />{' '}
-              <span>{category.name}</span>
-            </label>
-          </li>
-        ))}
-      </ul>
-    </label>
   )
 }
 

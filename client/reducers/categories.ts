@@ -16,7 +16,7 @@ const initalState: CategoryState = {
 function reducer(state = initalState, action: CategoryAction): CategoryState {
   switch (action.type) {
     case 'categories/failed':
-      return { ...state, error: action.payload, data: undefined }
+      return { pending: false, error: action.payload, data: undefined }
 
     case 'categories/pending':
       return { pending: true, error: undefined, data: undefined }

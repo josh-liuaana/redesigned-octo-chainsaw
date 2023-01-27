@@ -16,7 +16,7 @@ const initalState: SearchState = {
 function reducer(state = initalState, action: SearchAction): SearchState {
   switch (action.type) {
     case 'search/failed':
-      return { ...state, error: action.payload, results: undefined }
+      return { pending: false, error: action.payload, results: undefined }
 
     case 'search/pending':
       return { pending: true, error: undefined, results: undefined }

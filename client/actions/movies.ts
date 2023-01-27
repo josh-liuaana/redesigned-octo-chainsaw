@@ -37,30 +37,19 @@ export function created(movie: Movie): MovieAction {
   return { type: 'movies/created', payload: movie }
 }
 
-export function addMovie(movie: Movie): ThunkAction {
+export function addMovie(movie: Movie): ThunkAction<number | undefined> {
   return async (dispatch) => {
     dispatch(pending())
     try {
       const data = await api.create(movie)
       dispatch(created(data))
+      return data.id
     } catch (e) {
-      dispatch(failed(e instanceof Error ? e.message : 'Server error'))
+      dispatch(failed((e as Error).message))
     }
   }
 }
 
 export function deleted(id: number): MovieAction {
   return { type: 'movies/delete', payload: id }
-}
-
-export function deleteMovie(id: number): ThunkAction {
-  return async (dispatch) => {
-    dispatch(pending())
-    try {
-      await api.remove(id)
-      dispatch(deleted(id))
-    } catch (e) {
-      dispatch(failed(e instanceof Error ? e.message : 'Server error'))
-    }
-  }
 }

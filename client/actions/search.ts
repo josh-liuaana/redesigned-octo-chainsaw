@@ -31,7 +31,7 @@ export function runSearch(
       const data = await api.search(title, categories)
       dispatch(receive(data))
     } catch (e) {
-      dispatch(failed(e instanceof Error ? e.message : 'Server error'))
+      dispatch(failed((e as Error).message))
     }
   }
 }

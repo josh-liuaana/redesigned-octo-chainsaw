@@ -30,7 +30,7 @@ export function fetchCategories(): ThunkAction {
         const data = await api.all()
         dispatch(receive(data))
       } catch (e) {
-        dispatch(failed(e instanceof Error ? e.message : String(e)))
+        dispatch(failed((e as Error).message))
       }
     }
   }

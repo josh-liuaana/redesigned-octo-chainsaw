@@ -3,7 +3,7 @@ import nock from 'nock'
 import App from '../App'
 import { Provider } from 'react-redux'
 import { MemoryRouter as Router } from 'react-router-dom'
-import store from '../../store'
+import { initialiseStore } from '../../store'
 
 import { render, waitFor, screen } from '@testing-library/react'
 
@@ -36,19 +36,19 @@ describe('<Movie />', () => {
 
     const { container } = render(
       <Router initialEntries={['/movie/12']}>
-        <Provider store={store}>
+        <Provider store={initialiseStore()}>
           <App />
         </Provider>
       </Router>
     )
 
-    await waitFor(() => expect(scope.isDone()).toBe(true))
+    await screen.findByRole('form', { name: 'Add category to movie' })
 
     expect(container).toMatchSnapshot()
   })
 
   it("What happens if the id doesn't exist tho...", async () => {
-    const scope = nock('http://localhost')
+    nock('http://localhost')
       .get('/api/v1/movies/23934?withCategories=true')
       .reply(404, undefined) // oops this should be a 404
 
@@ -63,58 +63,14 @@ describe('<Movie />', () => {
 
     const { container } = render(
       <Router initialEntries={['/movie/23934']}>
-        <Provider store={store}>
+        <Provider store={initialiseStore()}>
           <App />
         </Provider>
       </Router>
     )
 
-    //await waitFor(() => expect(scope.isDone()).toBe(true))
-
-    const loadingIndicator = await screen.findByText('Loading...')
+    const loadingIndicator = await screen.findByText(/Failed/)
     expect(loadingIndicator).toBeVisible()
-    expect(container).toMatchInlineSnapshot(`
-      <div>
-        <header
-          class="header"
-        >
-          <h1>
-            Movie Facts
-          </h1>
-        </header>
-        <nav>
-          <ul>
-            <li>
-              <a
-                href="/movie"
-              >
-                All movies
-              </a>
-            </li>
-            <li>
-              <a
-                href="/category"
-              >
-                All categories
-              </a>
-            </li>
-            <li>
-              <a
-                href="/search"
-              >
-                Search
-              </a>
-            </li>
-          </ul>
-        </nav>
-        <section
-          class="main"
-        >
-          <p>
-            Loading...
-          </p>
-        </section>
-      </div>
-    `)
+    expect(container).toMatchSnapshot()
   })
 })

@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import { MemoryRouter as Router } from 'react-router-dom'
 import { initialiseStore } from '../../store'
 
-import { render, waitFor } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 
 import '@testing-library/jest-dom'
 
@@ -61,6 +61,21 @@ describe('<Category />', () => {
     )
 
     await waitFor(() => expect(scope.isDone()).toBe(true))
+    expect(container).toMatchSnapshot()
+  })
+
+  it('Handles errors', async () => {
+    const scope = nock('http://localhost').get('/api/v1/categories').reply(500)
+
+    const { container } = render(
+      <Router initialEntries={['/category']}>
+        <Provider store={initialiseStore()}>
+          <App />
+        </Provider>
+      </Router>
+    )
+
+    await screen.findByText(/Error! /)
     expect(container).toMatchSnapshot()
   })
 })

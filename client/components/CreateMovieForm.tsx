@@ -1,8 +1,13 @@
 import { useState, FormEvent, ChangeEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import * as api from '../apis/movies'
+import { useAppDispatch, useAppSelector } from '../hooks/redux'
+import * as actions from '../actions/movies'
 
 function CreateMovieForm() {
+  const dispatch = useAppDispatch()
+  const { error } = useAppSelector((state) => state.movies)
+
   const navigate = useNavigate()
 
   const [{ title, release_year }, setFormValues] = useState({
@@ -12,8 +17,10 @@ function CreateMovieForm() {
 
   const onSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault()
-    const { id } = await api.create({ title, release_year })
-    navigate(`/movie/${id}`)
+    const id = await dispatch(actions.addMovie({ title, release_year }))
+    if (id != null) {
+      navigate(`/movie/${id}`)
+    }
   }
 
   const onChange = (evt: ChangeEvent<HTMLInputElement>) => {
@@ -26,6 +33,7 @@ function CreateMovieForm() {
 
   return (
     <>
+      {error != null && <p>Error: {error}</p>}
       <form onSubmit={onSubmit} aria-label="Create movie">
         <div>
           <label>

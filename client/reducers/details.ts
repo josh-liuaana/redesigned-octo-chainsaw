@@ -16,7 +16,7 @@ const initalState: DetailsState = {
 function reducer(state = initalState, action: DetailsAction): DetailsState {
   switch (action.type) {
     case 'details/failed':
-      return { ...state, error: action.payload, data: undefined }
+      return { pending: false, error: action.payload, data: undefined }
 
     case 'details/pending':
       return { pending: true, error: undefined, data: undefined }
@@ -30,7 +30,7 @@ function reducer(state = initalState, action: DetailsAction): DetailsState {
         error: undefined,
         data: state.data && {
           ...state.data,
-          categories: state.data.categories?.filter(
+          categories: state.data.categories!.filter(
             (c) => c.id !== action.payload
           ),
         },
@@ -42,7 +42,7 @@ function reducer(state = initalState, action: DetailsAction): DetailsState {
         error: undefined,
         data: state.data && {
           ...state.data,
-          categories: [...(state.data.categories || []), action.payload].sort(),
+          categories: [...state.data.categories!, action.payload].sort(),
         },
       }
 

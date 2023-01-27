@@ -19,12 +19,12 @@ export default function Movie() {
     addCategory(category)
   }
 
-  if (pending || !details) {
-    return <p>Loading...</p>
-  }
-
   if (error) {
     return <p>Failed: {error}</p>
+  }
+
+  if (pending || !details) {
+    return <p>Loading...</p>
   }
 
   return (

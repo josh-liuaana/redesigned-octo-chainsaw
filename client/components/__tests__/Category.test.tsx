@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import { MemoryRouter as Router } from 'react-router-dom'
 import { initialiseStore } from '../../store'
 
-import { render, waitFor } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 
 import '@testing-library/jest-dom'
 
@@ -38,7 +38,8 @@ describe('<Category />', () => {
       </Router>
     )
 
-    await waitFor(() => expect(scope.isDone()).toBe(true))
+    await screen.findByText(/Black Swan/)
     expect(container).toMatchSnapshot()
+    expect(scope.isDone()).toBe(true)
   })
 })

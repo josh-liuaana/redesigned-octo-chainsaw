@@ -7,12 +7,6 @@ export async function all() {
   return data as Movie[]
 }
 
-export async function byId(id: number) {
-  const res = await request.get(`/api/v1/movies/${id}`)
-  const data = res.body
-  return data as Movie
-}
-
 export async function byIdWithCategories(id: number) {
   const res = await request.get(`/api/v1/movies/${id}?withCategories=true`)
   const data = res.body
@@ -23,10 +17,6 @@ export async function create(movie: Movie) {
   const res = await request.post('/api/v1/movies').send(movie)
   const data = res.body
   return data as Movie
-}
-
-export async function remove(id: number) {
-  await request.delete(`/api/v1/movies/${id}`)
 }
 
 export async function addCategoryToMovie(movieId: number, categoryId: number) {
@@ -46,12 +36,5 @@ export async function search(title: string | undefined, categories: number[]) {
   const res = await request
     .get('/api/v1/movies/search')
     .query({ title, category: categories })
-  return res.body as Movie[]
-}
-
-export async function byCategory(category_id: number) {
-  const res = await request
-    .get(`/api/v1/movies`)
-    .query({ category: category_id })
   return res.body as Movie[]
 }

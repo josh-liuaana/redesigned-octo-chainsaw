@@ -45,7 +45,40 @@ describe('<Search />', () => {
     expect(scope.isDone()).toBeTruthy()
   })
 
-  it('Shows a list of matching results', async () => {
+  it('shows a loading indicator for the category picker', async () => {
+    const scope = nock('http://localhost')
+      .get('/api/v1/categories')
+      .reply(200, [{ id: 1, name: 'Drama' }])
+
+    render(
+      <Router initialEntries={['/search']}>
+        <Provider store={initialiseStore()}>
+          <App />
+        </Provider>
+      </Router>
+    )
+
+    expect(scope.isDone()).not.toBeTruthy()
+    const loadingText = screen.queryByText(/Loading categories/)
+    expect(loadingText).toBeVisible()
+  })
+
+  it('shows an error when failing to load categories', async () => {
+    nock('http://localhost').get('/api/v1/categories').reply(500)
+
+    render(
+      <Router initialEntries={['/search']}>
+        <Provider store={initialiseStore()}>
+          <App />
+        </Provider>
+      </Router>
+    )
+
+    const errorMessage = await screen.findByText(/Failed to load categories/)
+    expect(errorMessage).toBeVisible()
+  })
+
+  it('Searches with title and categories', async () => {
     const scope1 = nock('http://localhost')
       .get('/api/v1/categories')
       .reply(200, [
@@ -90,7 +123,7 @@ describe('<Search />', () => {
     expect(scope2.isDone()).toBeTruthy()
   })
 
-  it('Searches with title and categories', async () => {
+  it('Searches with title', async () => {
     const scope1 = nock('http://localhost')
       .get('/api/v1/categories')
       .reply(200, [
@@ -128,5 +161,88 @@ describe('<Search />', () => {
     ).toBeInTheDocument()
 
     expect(scope2.isDone()).toBeTruthy()
+  })
+
+  it('checking and unchecking a category excludes it', async () => {
+    const scope1 = nock('http://localhost')
+      .get('/api/v1/categories')
+      .reply(200, [
+        { id: 1, name: 'Drama' },
+        { id: 2, name: 'Comedy' },
+      ])
+
+    render(
+      <Router initialEntries={['/search']}>
+        <Provider store={initialiseStore()}>
+          <App />
+        </Provider>
+      </Router>
+    )
+    const checkbox = await screen.findByLabelText('Comedy')
+    expect(checkbox).toBeInTheDocument()
+    expect(checkbox).not.toBeChecked()
+    expect(scope1.isDone()).toBe(true)
+
+    userEvent.click(checkbox)
+    expect(checkbox).toBeChecked()
+
+    userEvent.click(checkbox)
+    expect(checkbox).not.toBeChecked()
+
+    const scope2 = nock('http://localhost')
+      .get('/api/v1/movies/search?title=pe')
+      .reply(200, [
+        { id: 1, title: "The King's Speech", release_year: 2010 },
+        { id: 2, title: 'The Grand Budapest Hotel', release_year: 2014 },
+      ])
+
+    const titleInput = screen.getByLabelText('Title')
+    userEvent.type(titleInput, 'pe')
+    const submitButton = screen.getByRole('button')
+    userEvent.click(submitButton)
+
+    const resultText = await screen.findByText('2 matching results')
+    expect(resultText).toBeInTheDocument()
+    expect(screen.getByText("The King's Speech (2010)")).toBeInTheDocument()
+    expect(
+      screen.getByText('The Grand Budapest Hotel (2014)')
+    ).toBeInTheDocument()
+
+    expect(scope2.isDone()).toBeTruthy()
+  })
+
+  it('Fails when the server is sad', async () => {
+    nock.disableNetConnect()
+    const scope1 = nock('http://localhost')
+      .get('/api/v1/categories')
+      .reply(200, [
+        { id: 1, name: 'Drama' },
+        { id: 2, name: 'Comedy' },
+      ])
+
+    render(
+      <Router initialEntries={['/search']}>
+        <Provider store={initialiseStore()}>
+          <App />
+        </Provider>
+      </Router>
+    )
+
+    await waitFor(() => expect(scope1.isDone()).toBe(true))
+
+    nock('http://localhost').get('/api/v1/movies/search?title=pe').reply(500)
+
+    const titleInput = screen.getByLabelText('Title')
+    userEvent.type(titleInput, 'pe')
+    const submitButton = screen.getByRole('button')
+    userEvent.click(submitButton)
+
+    const errorMessage = await screen.findByText(/Search failed:/)
+    expect(errorMessage).toMatchInlineSnapshot(`
+      <p>
+        Search failed: 
+        Internal Server Error
+      </p>
+    `)
   })
 })

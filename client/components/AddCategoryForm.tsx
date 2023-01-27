@@ -1,6 +1,7 @@
 import { useState, useEffect, FormEvent, ChangeEvent } from 'react'
 import { Category } from '../../common/Movie'
 import * as CategoryApi from '../apis/categories'
+import useCategories from '../hooks/useCategories'
 
 interface Props {
   categories?: Category[]
@@ -10,19 +11,13 @@ interface Props {
 function AddCategoryForm({ categories: existingCategories, onSubmit }: Props) {
   const [category, setCategory] = useState(null as Category | null)
 
-  const [categories, setCategories] = useState([] as Category[])
+  const { categories, error, pending } = useCategories()
+  if (error) {
+    return <>Error loading categories</>
+  }
 
-  useEffect(() => {
-    async function fetchData() {
-      const data = await CategoryApi.all()
-      setCategories(data)
-    }
-
-    fetchData()
-  }, [])
-
-  if (!categories) {
-    return <></>
+  if (pending || !categories) {
+    return <>Loading categories..</>
   }
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
@@ -47,7 +42,7 @@ function AddCategoryForm({ categories: existingCategories, onSubmit }: Props) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} aria-label="Add category to movie">
       <label>
         <span>New category</span>
         <select onChange={handleChange}>

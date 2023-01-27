@@ -1,11 +1,11 @@
 /** @jest-environment jsdom */
-import nock, { load } from 'nock'
+import nock from 'nock'
 import App from '../App'
 import { Provider } from 'react-redux'
 import { MemoryRouter as Router } from 'react-router-dom'
-import store from '../../store'
+import { initialiseStore } from '../../store'
 
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 import '@testing-library/jest-dom'
@@ -41,7 +41,7 @@ describe('Add category to movie', () => {
 
     render(
       <Router initialEntries={['/movie/12']}>
-        <Provider store={store}>
+        <Provider store={initialiseStore()}>
           <App />
         </Provider>
       </Router>

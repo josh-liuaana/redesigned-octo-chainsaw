@@ -61,4 +61,46 @@ describe('<CreateMovieForm />', () => {
       screen.getByRole('heading', { name: 'Big (1984)' })
     ).toBeInTheDocument()
   })
+
+  it('Shows an error message when the server is sad', async () => {
+    const scope1 = nock('http://localhost')
+      .get('/api/v1/movies')
+      .reply(200, [
+        { id: 1, title: 'Get Out', release_year: 2017 },
+        { id: 2, title: 'Some Movie', release_year: 2021 },
+      ])
+
+    const scope2 = nock('http://localhost').post('/api/v1/movies').reply(500)
+
+    render(
+      <Router initialEntries={['/movie']}>
+        <Provider store={initialiseStore()}>
+          <App />
+        </Provider>
+      </Router>
+    )
+
+    const form = await screen.findByRole('form', { name: 'Create movie' })
+    expect(form).toBeInTheDocument()
+    expect(scope1.isDone()).toBe(true)
+
+    const titleField = within(form).getByLabelText('Title')
+    const yearField = within(form).getByLabelText('Release Year')
+    const submit = within(form).getByRole('button', { name: 'create' })
+
+    userEvent.type(titleField, 'Big')
+    userEvent.type(yearField, '1984')
+    userEvent.click(submit)
+
+    await waitFor(() => expect(scope2.isDone()).toBe(true))
+    const errorMessage = await screen.findByText(/Failed: /)
+    expect(errorMessage).toMatchInlineSnapshot(`
+      <section
+        class="main"
+      >
+        Failed: 
+        Internal Server Error
+      </section>
+    `)
+  })
 })
