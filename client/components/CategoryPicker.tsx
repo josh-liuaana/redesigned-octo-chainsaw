@@ -20,11 +20,11 @@ function CategoryPicker({ onChange, selected }: CategoryPickerProps) {
     [onChange, selected]
   )
 
-  const { pending, error, categories } = useCategories()
+  const { loading, error, categories } = useCategories()
   if (error) {
     return <>Failed to load categories</>
   }
-  if (pending || !categories) {
+  if (loading || !categories) {
     return <>Loading categories...</>
   }
 

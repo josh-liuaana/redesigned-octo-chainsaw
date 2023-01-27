@@ -4,7 +4,7 @@ import useSearch from '../hooks/useSearch'
 import CategoryPicker from './CategoryPicker'
 
 function Search() {
-  const { search, results, pending, error } = useSearch()
+  const { search, results, loading, error } = useSearch()
   const [formData, setFormData] = useState({
     title: '',
     categories: [] as number[],
@@ -33,7 +33,7 @@ function Search() {
     [search, formData.title, formData.categories]
   )
 
-  if (pending) {
+  if (loading) {
     return <>Loading...</>
   }
 

@@ -5,14 +5,14 @@ import { Link } from 'react-router-dom'
 import CreateMovieForm from './CreateMovieForm'
 
 function MovieList() {
-  const { pending, error, data } = useAppSelector((state) => state.movies)
+  const { loading, error, data } = useAppSelector((state) => state.movies)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
     dispatch(fetchMovies())
   }, [dispatch])
 
-  if (pending) {
+  if (loading) {
     return <>Loading ...</>
   }
 

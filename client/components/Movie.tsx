@@ -6,7 +6,7 @@ import useDetails from '../hooks/useDetails'
 
 export default function Movie() {
   const { id } = useParams()
-  const { pending, error, details, addCategory, deleteCategory } = useDetails(
+  const { loading, error, details, addCategory, deleteCategory } = useDetails(
     Number(id)
   )
 
@@ -23,7 +23,7 @@ export default function Movie() {
     return <p>Failed: {error}</p>
   }
 
-  if (pending || !details) {
+  if (loading || !details) {
     return <p>Loading...</p>
   }
 

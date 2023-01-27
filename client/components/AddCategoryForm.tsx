@@ -10,12 +10,12 @@ interface Props {
 function AddCategoryForm({ categories: existingCategories, onSubmit }: Props) {
   const [category, setCategory] = useState(null as Category | null)
 
-  const { categories, error, pending } = useCategories()
+  const { categories, error, loading } = useCategories()
   if (error) {
     return <>Error loading categories</>
   }
 
-  if (pending || !categories) {
+  if (loading || !categories) {
     return <>Loading categories..</>
   }
 

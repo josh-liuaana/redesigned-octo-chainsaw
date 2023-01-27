@@ -5,7 +5,7 @@ import * as actions from '../actions/categories'
 function useCategories() {
   const dispatch = useAppDispatch()
   const {
-    pending,
+    loading,
     error,
     data: categories,
   } = useAppSelector((state) => state.categories)
@@ -14,7 +14,7 @@ function useCategories() {
     dispatch(actions.fetchCategories())
   }, [dispatch])
 
-  return { pending, error, categories }
+  return { loading, error, categories }
 }
 
 export default useCategories

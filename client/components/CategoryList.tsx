@@ -2,9 +2,9 @@ import { Link } from 'react-router-dom'
 import useCategories from '../hooks/useCategories'
 
 export default function CategoryList() {
-  const { pending, error, categories } = useCategories()
+  const { loading, error, categories } = useCategories()
 
-  if (pending) {
+  if (loading) {
     return <p>Loading ...</p>
   }
 

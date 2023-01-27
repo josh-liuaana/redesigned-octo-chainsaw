@@ -5,7 +5,7 @@ import type { ThunkAction } from '../store'
 export type MovieAction =
   | { type: 'movies/receive'; payload: Movie[] }
   | { type: 'movies/created'; payload: Movie }
-  | { type: 'movies/pending'; payload: void }
+  | { type: 'movies/loading'; payload: void }
   | { type: 'movies/failed'; payload: string }
   | { type: 'movies/delete'; payload: number }
 
@@ -13,8 +13,8 @@ export function receive(movies: Movie[]): MovieAction {
   return { type: 'movies/receive', payload: movies }
 }
 
-export function pending(): MovieAction {
-  return { type: 'movies/pending' } as MovieAction
+export function loading(): MovieAction {
+  return { type: 'movies/loading' } as MovieAction
 }
 
 export function failed(reason: string): MovieAction {
@@ -23,7 +23,7 @@ export function failed(reason: string): MovieAction {
 
 export function fetchMovies(): ThunkAction {
   return async (dispatch) => {
-    dispatch(pending())
+    dispatch(loading())
     try {
       const data = await api.all()
       dispatch(receive(data))
@@ -39,7 +39,7 @@ export function created(movie: Movie): MovieAction {
 
 export function addMovie(movie: Movie): ThunkAction<number | undefined> {
   return async (dispatch) => {
-    dispatch(pending())
+    dispatch(loading())
     try {
       const data = await api.create(movie)
       dispatch(created(data))

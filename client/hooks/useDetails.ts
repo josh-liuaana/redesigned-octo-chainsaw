@@ -6,7 +6,7 @@ import * as actions from '../actions/details'
 function useDetails(id: number) {
   const dispatch = useAppDispatch()
   const {
-    pending,
+    loading,
     error,
     data: details,
   } = useAppSelector((state) => state.details)
@@ -22,7 +22,7 @@ function useDetails(id: number) {
     dispatch(actions.addCategory(c))
   }
 
-  return { pending, error, details, deleteCategory, addCategory }
+  return { loading, error, details, deleteCategory, addCategory }
 }
 
 export default useDetails

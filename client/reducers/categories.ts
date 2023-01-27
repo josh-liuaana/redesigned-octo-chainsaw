@@ -2,13 +2,13 @@ import { Category } from '../../common/Movie'
 import { CategoryAction } from '../actions/categories'
 
 interface CategoryState {
-  pending: boolean
+  loading: boolean
   error: string | undefined
   data: Category[] | undefined
 }
 
 const initalState: CategoryState = {
-  pending: false,
+  loading: false,
   error: undefined,
   data: undefined,
 }
@@ -16,13 +16,13 @@ const initalState: CategoryState = {
 function reducer(state = initalState, action: CategoryAction): CategoryState {
   switch (action.type) {
     case 'categories/failed':
-      return { pending: false, error: action.payload, data: undefined }
+      return { loading: false, error: action.payload, data: undefined }
 
-    case 'categories/pending':
-      return { pending: true, error: undefined, data: undefined }
+    case 'categories/loading':
+      return { loading: true, error: undefined, data: undefined }
 
     case 'categories/receive':
-      return { pending: false, error: undefined, data: action.payload }
+      return { loading: false, error: undefined, data: action.payload }
 
     default:
       return state

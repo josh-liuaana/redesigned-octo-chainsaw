@@ -5,7 +5,7 @@ import type { ThunkAction } from '../store'
 export type SearchAction =
   | { type: 'search/receive'; payload: Movie[] }
   | { type: 'search/created'; payload: Movie }
-  | { type: 'search/pending'; payload: void }
+  | { type: 'search/loading'; payload: void }
   | { type: 'search/failed'; payload: string }
   | { type: 'search/delete'; payload: number }
 
@@ -13,8 +13,8 @@ export function receive(movies: Movie[]): SearchAction {
   return { type: 'search/receive', payload: movies }
 }
 
-export function pending(): SearchAction {
-  return { type: 'search/pending' } as SearchAction
+export function loading(): SearchAction {
+  return { type: 'search/loading' } as SearchAction
 }
 
 export function failed(reason: string): SearchAction {
@@ -26,7 +26,7 @@ export function runSearch(
   categories: number[]
 ): ThunkAction {
   return async (dispatch) => {
-    dispatch(pending())
+    dispatch(loading())
     try {
       const data = await api.search(title, categories)
       dispatch(receive(data))

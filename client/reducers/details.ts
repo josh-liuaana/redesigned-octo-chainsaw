@@ -2,13 +2,13 @@ import { Movie } from '../../common/Movie'
 import { DetailsAction } from '../actions/details'
 
 interface DetailsState {
-  pending: boolean
+  loading: boolean
   error: string | undefined
   data: Movie | undefined
 }
 
 const initalState: DetailsState = {
-  pending: false,
+  loading: false,
   error: undefined,
   data: undefined,
 }
@@ -22,17 +22,17 @@ const initalState: DetailsState = {
 function reducer(state = initalState, action: DetailsAction): DetailsState {
   switch (action.type) {
     case 'details/failed':
-      return { pending: false, error: action.payload, data: undefined }
+      return { loading: false, error: action.payload, data: undefined }
 
-    case 'details/pending':
-      return { pending: true, error: undefined, data: undefined }
+    case 'details/loading':
+      return { loading: true, error: undefined, data: undefined }
 
     case 'details/receive':
-      return { pending: false, error: undefined, data: action.payload }
+      return { loading: false, error: undefined, data: action.payload }
 
     case 'details/category-deleted':
       return {
-        pending: false,
+        loading: false,
         error: undefined,
         data: state.data && {
           ...state.data,
@@ -44,7 +44,7 @@ function reducer(state = initalState, action: DetailsAction): DetailsState {
 
     case 'details/category-added':
       return {
-        pending: false,
+        loading: false,
         error: undefined,
         data: state.data && {
           ...state.data,

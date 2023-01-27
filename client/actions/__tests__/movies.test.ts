@@ -1,11 +1,11 @@
 import * as actions from '../movies'
 import nock from 'nock'
 
-describe('pending action creator', () => {
+describe('loading action creator', () => {
   it('creates an action object', () => {
-    expect(actions.pending()).toMatchInlineSnapshot(`
+    expect(actions.loading()).toMatchInlineSnapshot(`
       {
-        "type": "movies/pending",
+        "type": "movies/loading",
       }
     `)
   })
@@ -26,7 +26,7 @@ describe('fetchMovies', () => {
     const dispatch = jest.fn()
     const thunk = actions.fetchMovies()
     await thunk(dispatch, jest.fn())
-    expect(dispatch).toHaveBeenCalledWith(actions.pending())
+    expect(dispatch).toHaveBeenCalledWith(actions.loading())
     expect(dispatch).toHaveBeenCalledWith(actions.receive(mockData))
     expect(scope.isDone()).toBeTruthy()
   })
@@ -39,7 +39,7 @@ describe('fetchMovies', () => {
 
     await thunk(dispatch, jest.fn())
 
-    expect(dispatch).toHaveBeenCalledWith(actions.pending())
+    expect(dispatch).toHaveBeenCalledWith(actions.loading())
     expect(dispatch).toHaveBeenCalledWith(
       actions.failed('Error: Internal Server Error')
     )

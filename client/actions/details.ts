@@ -3,14 +3,14 @@ import { ThunkAction } from '../store'
 import * as api from '../apis/movies'
 
 export type DetailsAction =
-  | { type: 'details/pending'; payload: void }
+  | { type: 'details/loading'; payload: void }
   | { type: 'details/receive'; payload: Movie }
   | { type: 'details/failed'; payload: string }
   | { type: 'details/category-deleted'; payload: number }
   | { type: 'details/category-added'; payload: Category }
 
-export function pending(): DetailsAction {
-  return { type: 'details/pending', payload: undefined }
+export function loading(): DetailsAction {
+  return { type: 'details/loading', payload: undefined }
 }
 
 export function failed(reason: string): DetailsAction {
@@ -31,7 +31,7 @@ export function categoryAdded(category: Category): DetailsAction {
 
 export function fetchMovie(id: number): ThunkAction {
   return async (dispatch) => {
-    dispatch(pending())
+    dispatch(loading())
     try {
       const data = await api.byIdWithCategories(id)
       dispatch(received(data))

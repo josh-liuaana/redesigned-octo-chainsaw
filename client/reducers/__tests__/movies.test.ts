@@ -15,7 +15,7 @@ describe('Movies reducer', () => {
       {
         "data": [],
         "error": undefined,
-        "pending": true,
+        "loading": true,
       }
     `)
   })
@@ -31,28 +31,28 @@ describe('Movies reducer', () => {
       {
         "data": [],
         "error": "Oops!",
-        "pending": false,
+        "loading": false,
       }
     `)
   })
 
-  it('sets pending state', () => {
+  it('sets loading state', () => {
     const state = reducer(
-      { data: [], error: undefined, pending: false },
-      actions.pending()
+      { data: [], error: undefined, loading: false },
+      actions.loading()
     )
     expect(state).toMatchInlineSnapshot(`
       {
         "data": [],
         "error": undefined,
-        "pending": true,
+        "loading": true,
       }
     `)
   })
 
   it('creates a movie in redux state', () => {
     const state = reducer(
-      { data: [], error: undefined, pending: false },
+      { data: [], error: undefined, loading: false },
       actions.created({
         id: 5,
         title: 'Puss in Boots: The Last Wish',
@@ -70,7 +70,7 @@ describe('Movies reducer', () => {
           },
         ],
         "error": undefined,
-        "pending": false,
+        "loading": false,
       }
     `)
   })
@@ -83,7 +83,7 @@ describe('Movies reducer', () => {
           { id: 2, title: 'The Princess Bride', release_year: 1987 },
         ],
         error: undefined,
-        pending: false,
+        loading: false,
       },
       actions.deleted(2)
     )
@@ -98,7 +98,7 @@ describe('Movies reducer', () => {
           },
         ],
         "error": undefined,
-        "pending": false,
+        "loading": false,
       }
     `)
   })

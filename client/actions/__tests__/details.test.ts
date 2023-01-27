@@ -18,7 +18,7 @@ describe('addCategory', () => {
     nock.disableNetConnect()
     const dispatch = jest.fn()
     const getState = jest.fn(() => {
-      return { details: { data: null, pending: true, error: undefined } } as any
+      return { details: { data: null, loading: true, error: undefined } } as any
     })
 
     addCategory({ id: 2, name: 'Drama' })(dispatch, getState)
@@ -31,7 +31,7 @@ describe('deleteCategory', () => {
     nock.disableNetConnect()
     const dispatch = jest.fn()
     const getState = jest.fn(() => {
-      return { details: { data: null, pending: true, error: undefined } } as any
+      return { details: { data: null, loading: true, error: undefined } } as any
     })
 
     deleteCategory(1)(dispatch, getState)
