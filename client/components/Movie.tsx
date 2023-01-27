@@ -1,96 +1,70 @@
-import { useEffect, useState, UIEvent } from 'react'
+import { useEffect, UIEvent } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { Movie as MovieData, Category } from '../../common/Movie'
-import * as api from '../apis/movies'
+import { Category } from '../../common/Movie'
+import { useAppDispatch, useAppSelector } from '../hooks'
+import * as actions from '../actions/movie-details'
 import AddCategoryForm from './AddCategoryForm'
 
-function useMovieData(id: number) {
-  const [movie, setMovie] = useState<MovieData | null>(null)
+function useDetails(id: number) {
+  const dispatch = useAppDispatch()
+  const {
+    pending,
+    error,
+    data: details,
+  } = useAppSelector((state) => state.details)
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const data = await api.byIdWithCategories(Number(id))
-        setMovie(data)
-      } catch (e) {
-        setMovie(null)
-      }
-    }
+    dispatch(actions.fetchMovie(id))
+  }, [id, dispatch])
 
-    fetchData()
-  }, [id])
-
-  const removeCategory = (id: number) => {
-    setMovie((previous) => {
-      return (
-        previous && {
-          ...previous,
-          categories: previous.categories?.filter((cat) => cat.id !== id),
-        }
-      )
-    })
+  const deleteCategory = (id: number) => {
+    dispatch(actions.deleteCategory(id))
+  }
+  const addCategory = (c: Category) => {
+    dispatch(actions.addCategory(c))
   }
 
-  const addCategory = (category: Category) => {
-    setMovie((previous) => {
-      if (!previous) {
-        return null
-      }
-
-      const categories = previous?.categories || []
-
-      return {
-        ...previous,
-        categories: [...categories, category].sort((a, b) => a.id - b.id),
-      }
-    })
-  }
-
-  return { movie, addCategory, removeCategory }
+  return { pending, error, details, deleteCategory, addCategory }
 }
 
 export default function Movie() {
   const { id } = useParams()
-  const { movie, addCategory, removeCategory } = useMovieData(Number(id))
+  const { pending, error, details, addCategory, deleteCategory } = useDetails(
+    Number(id)
+  )
 
-  const onDeleteClicked = async (evt: UIEvent<HTMLButtonElement>) => {
+  const handleDeleteClicked = async (evt: UIEvent<HTMLButtonElement>) => {
     const { value } = evt.currentTarget
-    if (isNaN(Number(id))) {
-      return
-    }
-
-    await api.removeCategoryFromMovie(Number(id), Number(value))
-    removeCategory(Number(value))
+    deleteCategory(Number(value))
   }
 
   const handleAddCategory = async (category: Category) => {
-    if (!movie || !movie.id) {
-      return
-    }
-
-    await api.addCategoryToMovie(movie.id, category.id)
     addCategory(category)
   }
 
-  if (movie == null) {
+  if (pending || !details) {
     return <p>Loading...</p>
+  }
+
+  if (error) {
+    return <p>Failed: {error}</p>
   }
 
   return (
     <div>
       <h2>
-        {movie.title} ({movie.release_year})
+        {details.title} ({details.release_year})
       </h2>
       <AddCategoryForm
-        categories={movie.categories}
+        categories={details.categories}
         onSubmit={handleAddCategory}
       />
-      {movie.categories && movie.categories.length ? (
+      {details.categories && details.categories.length ? (
         <ul>
-          {movie.categories.map((category) => (
+          {details.categories.map((category) => (
             <li key={category.id}>
               <button
-                onClick={onDeleteClicked}
+                onClick={handleDeleteClicked}
                 value={category.id}
                 aria-label={`delete category ${category.name}`}
               >
