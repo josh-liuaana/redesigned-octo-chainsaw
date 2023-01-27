@@ -1,35 +1,7 @@
-import { ChangeEvent, FormEvent, useCallback, useEffect, useState } from 'react'
+import { ChangeEvent, FormEvent, useCallback, useState } from 'react'
 import { Link } from 'react-router-dom'
-import * as actions from '../actions/search'
-import * as categoryActions from '../actions/categories'
-import { useAppDispatch, useAppSelector } from '../hooks'
-
-function useSearch() {
-  const dispatch = useAppDispatch()
-  const { results, pending, error } = useAppSelector((state) => state.search)
-
-  function search(title: string | undefined, categories: number[]) {
-    dispatch(actions.runSearch(title, categories))
-  }
-
-  return { results, pending, error, search }
-}
-
-function useCategories() {
-  const dispatch = useAppDispatch()
-  const {
-    pending,
-    error,
-    data: categories,
-  } = useAppSelector((state) => state.categories)
-
-  useEffect(() => {
-    dispatch(categoryActions.fetchCategories())
-  }, [dispatch])
-
-  return { pending, error, categories }
-}
-
+import useSearch from '../hooks/useSearch'
+import useCategories from '../hooks/useCategories'
 function Search() {
   const { search, results, pending, error } = useSearch()
   const [formData, setFormData] = useState({

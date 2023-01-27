@@ -1,19 +1,8 @@
-import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import * as actions from '../actions/categories'
-import { useAppDispatch, useAppSelector } from '../hooks'
+import useCategories from '../hooks/useCategories'
 
 export default function CategoryList() {
-  const dispatch = useAppDispatch()
-  const {
-    pending,
-    error,
-    data: categories,
-  } = useAppSelector((state) => state.categories)
-
-  useEffect(() => {
-    dispatch(actions.fetchCategories())
-  }, [dispatch])
+  const { pending, error, categories } = useCategories()
 
   if (pending) {
     return <p>Loading ...</p>

@@ -1,31 +1,8 @@
-import { useEffect, UIEvent } from 'react'
+import { UIEvent } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { Category } from '../../common/Movie'
-import { useAppDispatch, useAppSelector } from '../hooks'
-import * as actions from '../actions/movie-details'
 import AddCategoryForm from './AddCategoryForm'
-
-function useDetails(id: number) {
-  const dispatch = useAppDispatch()
-  const {
-    pending,
-    error,
-    data: details,
-  } = useAppSelector((state) => state.details)
-
-  useEffect(() => {
-    dispatch(actions.fetchMovie(id))
-  }, [id, dispatch])
-
-  const deleteCategory = (id: number) => {
-    dispatch(actions.deleteCategory(id))
-  }
-  const addCategory = (c: Category) => {
-    dispatch(actions.addCategory(c))
-  }
-
-  return { pending, error, details, deleteCategory, addCategory }
-}
+import useDetails from '../hooks/useDetails'
 
 export default function Movie() {
   const { id } = useParams()

@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { fetchMovies } from '../actions/movies'
-import { useAppDispatch, useAppSelector } from '../hooks'
+import { useAppDispatch, useAppSelector } from '../hooks/redux'
 import { Link } from 'react-router-dom'
 import CreateMovieForm from './CreateMovieForm'
 
