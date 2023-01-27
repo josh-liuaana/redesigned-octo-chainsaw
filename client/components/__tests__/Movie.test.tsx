@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import { MemoryRouter as Router } from 'react-router-dom'
 import { initialiseStore } from '../../store'
 
-import { render, waitFor, screen } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 
 import '@testing-library/jest-dom'
 
@@ -43,7 +43,7 @@ describe('<Movie />', () => {
     )
 
     await screen.findByRole('form', { name: 'Add category to movie' })
-
+    expect(scope.isDone()).toBe(true)
     expect(container).toMatchSnapshot()
   })
 

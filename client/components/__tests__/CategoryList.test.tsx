@@ -76,6 +76,7 @@ describe('<Category />', () => {
     )
 
     await screen.findByText(/Error! /)
+    expect(scope.isDone()).toBe(true)
     expect(container).toMatchSnapshot()
   })
 })

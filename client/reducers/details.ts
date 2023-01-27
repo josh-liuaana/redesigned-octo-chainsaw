@@ -13,6 +13,12 @@ const initalState: DetailsState = {
   data: undefined,
 }
 
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+// TODO: this is a bit awkward because we have used an optional property `categories`
+// in an instance where we are pretty sure that property exists. We could use a different
+// type or just live with slightly weird coverage stats... in this case I'm using a non-null
+// assertion but I'll probably revisit this in time
+
 function reducer(state = initalState, action: DetailsAction): DetailsState {
   switch (action.type) {
     case 'details/failed':

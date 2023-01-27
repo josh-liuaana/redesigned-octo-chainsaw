@@ -1,7 +1,6 @@
 import { useState, FormEvent, ChangeEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
-import * as api from '../apis/movies'
-import { useAppDispatch, useAppSelector } from '../hooks/redux'
+import { useAppDispatch } from '../hooks/redux'
 import * as actions from '../actions/movies'
 
 function CreateMovieForm() {

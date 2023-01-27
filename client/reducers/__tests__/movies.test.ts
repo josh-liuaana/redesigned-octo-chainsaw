@@ -9,6 +9,7 @@ const mockData = [
 
 describe('Movies reducer', () => {
   it('initialises to empty state', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const state = reducer(undefined, { type: '@@INIT' } as any)
     expect(state).toMatchInlineSnapshot(`
       {

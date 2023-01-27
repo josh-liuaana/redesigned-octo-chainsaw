@@ -2,7 +2,6 @@
 import request from 'supertest'
 import server from '../../server'
 import { byId, byIdWithMovies, getAll } from '../../db/categories'
-import { byIdWithCategories } from '../../db/movies'
 
 /**
  * In each test we use supertest to load our server module and fake a request. NB I'm using

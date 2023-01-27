@@ -1,6 +1,5 @@
-import { useState, useEffect, FormEvent, ChangeEvent } from 'react'
+import { useState, FormEvent, ChangeEvent } from 'react'
 import { Category } from '../../common/Movie'
-import * as CategoryApi from '../apis/categories'
 import useCategories from '../hooks/useCategories'
 
 interface Props {
