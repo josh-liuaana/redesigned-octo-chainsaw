@@ -1,3 +1,4 @@
+import { describe, it, expect, vi } from 'vitest'
 import * as actions from '../movies'
 import nock from 'nock'
 
@@ -23,9 +24,9 @@ describe('fetchMovies', () => {
       .get('/api/v1/movies')
       .reply(200, mockData)
 
-    const dispatch = jest.fn()
+    const dispatch = vi.fn()
     const thunk = actions.fetchMovies()
-    await thunk(dispatch, jest.fn())
+    await thunk(dispatch, vi.fn())
     expect(dispatch).toHaveBeenCalledWith(actions.loading())
     expect(dispatch).toHaveBeenCalledWith(actions.receive(mockData))
     expect(scope.isDone()).toBeTruthy()
@@ -34,10 +35,10 @@ describe('fetchMovies', () => {
   it('dispatchs failed if the server responds with an error', async () => {
     const scope = nock('http://localhost').get('/api/v1/movies').reply(500)
 
-    const dispatch = jest.fn()
+    const dispatch = vi.fn()
     const thunk = actions.fetchMovies()
 
-    await thunk(dispatch, jest.fn())
+    await thunk(dispatch, vi.fn())
 
     expect(dispatch).toHaveBeenCalledWith(actions.loading())
     expect(dispatch).toHaveBeenCalledWith(

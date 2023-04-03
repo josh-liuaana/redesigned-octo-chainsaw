@@ -1,8 +1,10 @@
+import { beforeEach, afterAll, describe, it, expect, vi } from 'vitest'
 import Path from 'node:path/posix'
 
 const env = { ...process.env }
+
 beforeEach(() => {
-  jest.resetModules()
+  vi.resetModules()
   process.env = { ...env }
 })
 

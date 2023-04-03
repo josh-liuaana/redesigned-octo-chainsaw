@@ -1,6 +1,15 @@
 import * as api from '../movies'
 import nock from 'nock'
 
+import { describe, it, expect, afterEach } from 'vitest'
+import { cleanup } from '@testing-library/react'
+
+import matchers from '@testing-library/jest-dom/matchers'
+
+expect.extend(matchers)
+
+afterEach(cleanup)
+
 /**
  * Normally I wouldn't write these tests or tests like this at all,
  * we can get the same coverage from integration tests and there's

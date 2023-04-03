@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`<Category /> Handles errors 1`] = `
+exports[`<Category /> > Handles errors 1`] = `
 <div>
   <header
     class="header"
@@ -45,7 +45,7 @@ exports[`<Category /> Handles errors 1`] = `
 </div>
 `;
 
-exports[`<Category /> Shows information about the category 1`] = `
+exports[`<Category /> > Shows information about the category 1`] = `
 <div>
   <header
     class="header"

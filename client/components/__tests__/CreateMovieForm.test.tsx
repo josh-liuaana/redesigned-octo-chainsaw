@@ -1,13 +1,25 @@
-/** @jest-environment jsdom */
+// @vitest-environment jsdom
 import nock from 'nock'
 import App from '../App'
 import { Provider } from 'react-redux'
 import { MemoryRouter as Router } from 'react-router-dom'
 import { initialiseStore } from '../../store'
 
-import { screen, render, within, waitFor } from '@testing-library/react'
-import '@testing-library/jest-dom'
+import { describe, it, expect, afterEach } from 'vitest'
+import {
+  render,
+  screen,
+  within,
+  cleanup,
+  waitFor,
+} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+
+import matchers from '@testing-library/jest-dom/matchers'
+
+expect.extend(matchers)
+
+afterEach(cleanup)
 
 describe('<CreateMovieForm />', () => {
   it('Creates a movie', async () => {

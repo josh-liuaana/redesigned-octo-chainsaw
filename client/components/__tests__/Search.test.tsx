@@ -1,13 +1,18 @@
-/** @jest-environment jsdom */
+// @vitest-environment jsdom
+
+import { describe, it, expect, afterEach } from 'vitest'
 import nock from 'nock'
 import App from '../App'
 import { Provider } from 'react-redux'
 import { MemoryRouter as Router } from 'react-router-dom'
 import { initialiseStore } from '../../store'
 
-import { screen, render, waitFor } from '@testing-library/react'
+import { screen, render, cleanup, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import '@testing-library/jest-dom'
+import matchers from '@testing-library/jest-dom/matchers'
+expect.extend(matchers)
+
+afterEach(cleanup)
 
 /**
  * For our components we're mostly going to write integration tests, running
@@ -131,7 +136,7 @@ describe('<Search />', () => {
         { id: 2, name: 'Comedy' },
       ])
 
-    render(
+    const screen = render(
       <Router initialEntries={['/search']}>
         <Provider store={initialiseStore()}>
           <App />
@@ -171,7 +176,7 @@ describe('<Search />', () => {
         { id: 2, name: 'Comedy' },
       ])
 
-    render(
+    const screen = render(
       <Router initialEntries={['/search']}>
         <Provider store={initialiseStore()}>
           <App />

@@ -4,11 +4,15 @@ import App from '../App'
 import { Provider } from 'react-redux'
 import { MemoryRouter as Router } from 'react-router-dom'
 import { initialiseStore } from '../../store'
-
-import { render, screen, waitFor } from '@testing-library/react'
+import { describe, it, expect, afterEach } from 'vitest'
+import { render, screen, cleanup, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import '@testing-library/jest-dom'
+import matchers from '@testing-library/jest-dom/matchers'
+
+expect.extend(matchers)
+
+afterEach(cleanup)
 
 describe('Add category to movie', () => {
   it('sends a request and updates UI', async () => {

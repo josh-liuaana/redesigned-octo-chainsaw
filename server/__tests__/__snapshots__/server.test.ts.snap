@@ -1,17 +1,16 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`server wildcard rule serves index.html 1`] = `
+exports[`server wildcard rule > serves index.html 1`] = `
 "<!DOCTYPE html>
-<html lang="en">
+<html lang=\\"en\\">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Template • Collection</title>
-    <link rel="stylesheet" href="/styles.css" />
+    <meta charset=\\"UTF-8\\" />
+    <title>React and web APIs!</title>
+    <script type=\\"module\\" crossorigin src=\\"/assets/index-20551c5d.js\\"></script>
   </head>
   <body>
-    <section id="app" class="app-container"></section>
-    <script src="/bundle.js"></script>
+    <div id=\\"app\\"></div>
+    
   </body>
 </html>
 "

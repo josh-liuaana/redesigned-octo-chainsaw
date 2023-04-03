@@ -1,6 +1,6 @@
-/** @jest-environment node */
+// @vitest-environment node
+import { describe, it, expect } from 'vitest'
 import request from 'supertest'
-import server from '../server'
 
 /**
  * This is not necessarily a test I'm usually keen to write, but
@@ -8,6 +8,8 @@ import server from '../server'
  */
 describe('server wildcard rule', () => {
   it('serves index.html', async () => {
+    process.env.NODE_ENV = 'production'
+    const { default: server } = await import('../server')
     const res = await request(server).get('/movies')
     expect(res.status).toBe(200)
     expect(res.headers['content-type']).toMatch(/text\/html/)

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`<Movie /> Loads and shows information about the movie 1`] = `
+exports[`<Movie /> > Loads and shows information about the movie 1`] = `
 <div>
   <header
     class="header"
@@ -83,7 +83,7 @@ exports[`<Movie /> Loads and shows information about the movie 1`] = `
 </div>
 `;
 
-exports[`<Movie /> What happens if the id doesn't exist tho... 1`] = `
+exports[`<Movie /> > What happens if the id doesn't exist tho... 1`] = `
 <div>
   <header
     class="header"

@@ -1,13 +1,17 @@
-/** @jest-environment jsdom */
+// @vitest-environment jsdom
 import nock from 'nock'
 import App from '../App'
 import { Provider } from 'react-redux'
 import { MemoryRouter as Router } from 'react-router-dom'
 import { initialiseStore } from '../../store'
+import { describe, it, expect, afterEach } from 'vitest'
+import { render, screen, cleanup } from '@testing-library/react'
 
-import { render, screen } from '@testing-library/react'
+import matchers from '@testing-library/jest-dom/matchers'
 
-import '@testing-library/jest-dom'
+expect.extend(matchers)
+
+afterEach(cleanup)
 
 describe('<Category />', () => {
   it('Shows information about the category', async () => {

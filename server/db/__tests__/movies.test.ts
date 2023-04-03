@@ -1,3 +1,7 @@
+/* eslint-disable jest/no-standalone-expect */
+// @vitest-environment node
+
+import { describe, it, expect, beforeAll, afterAll, beforeEach } from 'vitest'
 import connection from '../../db/connection'
 import * as movies from '../movies'
 
@@ -26,8 +30,8 @@ beforeAll(() => {
   return connection.migrate.latest()
 })
 
-beforeEach(() => {
-  return connection.seed.run()
+beforeEach(async () => {
+  await connection.seed.run()
 })
 
 afterAll(async () => {

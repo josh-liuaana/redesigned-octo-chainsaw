@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`<Home /> looks real good 1`] = `
+exports[`<Home /> > looks real good 1`] = `
 <div>
   <header
     class="header"

@@ -1,3 +1,5 @@
+import { describe, it, expect } from 'vitest'
+
 import reducer from '../movies'
 import * as actions from '../../actions/movies'
 

@@ -1,13 +1,16 @@
-/** @jest-environment jsdom */
+// @vitest-environment jsdom
 import nock from 'nock'
 import App from '../App'
 import { Provider } from 'react-redux'
 import { MemoryRouter as Router } from 'react-router-dom'
 import { initialiseStore } from '../../store'
 
-import { render, screen } from '@testing-library/react'
+import { describe, it, expect, afterEach } from 'vitest'
+import { screen, render, cleanup } from '@testing-library/react'
+import matchers from '@testing-library/jest-dom/matchers'
+expect.extend(matchers)
 
-import '@testing-library/jest-dom'
+afterEach(cleanup)
 
 describe('<Movie />', () => {
   it('Loads and shows information about the movie', async () => {

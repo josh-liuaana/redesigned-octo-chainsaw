@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { describe, it, expect, vi } from 'vitest'
 import nock from 'nock'
 
 import { addCategory, deleteCategory } from '../details'
@@ -16,8 +17,8 @@ import { addCategory, deleteCategory } from '../details'
 describe('addCategory', () => {
   it("doesn't update if no movie is loaded", async () => {
     nock.disableNetConnect()
-    const dispatch = jest.fn()
-    const getState = jest.fn(() => {
+    const dispatch = vi.fn()
+    const getState = vi.fn(() => {
       return { details: { data: null, loading: true, error: undefined } } as any
     })
 
@@ -29,8 +30,8 @@ describe('addCategory', () => {
 describe('deleteCategory', () => {
   it("doesn't update if no movie is loaded", async () => {
     nock.disableNetConnect()
-    const dispatch = jest.fn()
-    const getState = jest.fn(() => {
+    const dispatch = vi.fn()
+    const getState = vi.fn(() => {
       return { details: { data: null, loading: true, error: undefined } } as any
     })
 

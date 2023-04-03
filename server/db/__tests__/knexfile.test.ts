@@ -1,3 +1,4 @@
+import { describe, it, expect, vi } from 'vitest'
 import config from '../knexfile'
 
 /**
@@ -8,14 +9,14 @@ import config from '../knexfile'
 describe('afterCreate PRAGMA', () => {
   it('enforces foreign keys (development)', () => {
     const cb = {}
-    const db = { run: jest.fn() }
+    const db = { run: vi.fn() }
     config.development.pool.afterCreate(db, cb)
     expect(db.run).toHaveBeenCalledWith('PRAGMA foreign_keys = ON', cb)
   })
 
   it('enforces foreign keys (production)', () => {
     const cb = {}
-    const db = { run: jest.fn() }
+    const db = { run: vi.fn() }
     config.production.pool.afterCreate(db, cb)
     expect(db.run).toHaveBeenCalledWith('PRAGMA foreign_keys = ON', cb)
   })

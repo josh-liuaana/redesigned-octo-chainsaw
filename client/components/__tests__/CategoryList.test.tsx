@@ -5,9 +5,14 @@ import { Provider } from 'react-redux'
 import { MemoryRouter as Router } from 'react-router-dom'
 import { initialiseStore } from '../../store'
 
-import { render, screen, waitFor } from '@testing-library/react'
+import { describe, it, expect, afterEach } from 'vitest'
+import { render, screen, waitFor, cleanup } from '@testing-library/react'
 
-import '@testing-library/jest-dom'
+import matchers from '@testing-library/jest-dom/matchers'
+
+expect.extend(matchers)
+
+afterEach(cleanup)
 
 describe('<Category />', () => {
   it('Shows information about the category', async () => {

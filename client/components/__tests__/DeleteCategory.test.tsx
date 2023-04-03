@@ -1,13 +1,22 @@
-/** @jest-environment jsdom */
+// @vitest-environment jsdom */
 import nock from 'nock'
 import App from '../App'
 import { Provider } from 'react-redux'
 import { MemoryRouter as Router } from 'react-router-dom'
 import { initialiseStore } from '../../store'
+import { describe, it, expect, afterEach } from 'vitest'
+import {
+  render,
+  screen,
+  fireEvent,
+  cleanup,
+  waitFor,
+} from '@testing-library/react'
 
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import matchers from '@testing-library/jest-dom/matchers'
+expect.extend(matchers)
 
-import '@testing-library/jest-dom'
+afterEach(cleanup)
 
 describe('Delete category from movie', () => {
   it('sends a request to delete the category', async () => {

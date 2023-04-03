@@ -1,4 +1,5 @@
-/** @jest-environment node */
+// @vitest-environment node
+import { describe, it, expect, vi, beforeEach } from 'vitest'
 import request from 'supertest'
 
 import server from '../../server'
@@ -15,15 +16,15 @@ import {
   removeCategoryFromMovie,
 } from '../../db/movies'
 
-jest.mock('../../db/movies')
+vi.mock('../../db/movies')
 
 beforeEach(() => {
-  jest.resetAllMocks()
+  vi.resetAllMocks()
 })
 
 describe('/', () => {
   it('responds with a list of movies', async () => {
-    jest.mocked(getAll).mockResolvedValue([
+    vi.mocked(getAll).mockResolvedValue([
       { id: 1, title: 'The Great Escape', release_year: 1964 },
       { id: 2, title: 'Return to Oz', release_year: 1971 },
       { id: 3, title: 'Around the World in 80 Days', release_year: 1973 },
@@ -40,7 +41,7 @@ describe('/', () => {
   })
 
   it('responds with a list of movies and their categories', async () => {
-    jest.mocked(allWithCategories).mockResolvedValue([
+    vi.mocked(allWithCategories).mockResolvedValue([
       {
         id: 1,
         title: 'The Great Escape',
@@ -73,21 +74,17 @@ describe('/', () => {
   })
 
   it('/?withCategories=true fails when the database is sad', async () => {
-    jest.spyOn(console, 'error').mockImplementation(() => {})
+    vi.spyOn(console, 'error').mockImplementation(() => {})
 
-    jest
-      .mocked(allWithCategories)
-      .mockRejectedValue(new Error('Database Error'))
+    vi.mocked(allWithCategories).mockRejectedValue(new Error('Database Error'))
     const res = await request(server).get('/api/v1/movies?withCategories=true')
     expect(res.status).toBe(500)
   })
 
   it('filters to a specific category', async () => {
-    jest
-      .mocked(byCategory)
-      .mockResolvedValue([
-        { id: 3, title: 'Special Movie', release_year: 1923 },
-      ])
+    vi.mocked(byCategory).mockResolvedValue([
+      { id: 3, title: 'Special Movie', release_year: 1923 },
+    ])
     const res = await request(server).get('/api/v1/movies?category=7')
     expect(res.body).toMatchInlineSnapshot(`
       [
@@ -101,9 +98,9 @@ describe('/', () => {
   })
 
   it('/?category=id fails when the db is sad', async () => {
-    jest.spyOn(console, 'error').mockImplementation(() => {})
+    vi.spyOn(console, 'error').mockImplementation(() => {})
 
-    jest.mocked(byCategory).mockRejectedValue(new Error('Database Error'))
+    vi.mocked(byCategory).mockRejectedValue(new Error('Database Error'))
 
     const res = await request(server).get('/api/v1/movies?category=7')
 
@@ -111,9 +108,9 @@ describe('/', () => {
   })
 
   it('responds with a 500', async () => {
-    jest.spyOn(console, 'error').mockImplementation(() => {})
+    vi.spyOn(console, 'error').mockImplementation(() => {})
 
-    jest.mocked(getAll).mockRejectedValue(new Error('Database Error'))
+    vi.mocked(getAll).mockRejectedValue(new Error('Database Error'))
     const res = await request(server).get('/api/v1/movies')
     expect(res.statusCode).toBe(500)
   })
@@ -121,7 +118,7 @@ describe('/', () => {
 
 describe('/:id', () => {
   it('responds with a specific movie', async () => {
-    jest.mocked(byId).mockResolvedValue({
+    vi.mocked(byId).mockResolvedValue({
       id: 12,
       title: '12 Years a Slave',
       release_year: 2013,
@@ -137,16 +134,16 @@ describe('/:id', () => {
   })
 
   it('responds with a 404', async () => {
-    jest.mocked(byId).mockResolvedValue(undefined)
+    vi.mocked(byId).mockResolvedValue(undefined)
 
     const res = await request(server).get('/api/v1/movies/999')
     expect(res.statusCode).toBe(404)
   })
 
   it('responds with a 500', async () => {
-    jest.spyOn(console, 'error').mockImplementation(() => {})
+    vi.spyOn(console, 'error').mockImplementation(() => {})
 
-    jest.mocked(byId).mockRejectedValue(new Error('Database Error'))
+    vi.mocked(byId).mockRejectedValue(new Error('Database Error'))
     const res = await request(server).get('/api/v1/movies/999')
     expect(res.statusCode).toBe(500)
   })
@@ -154,7 +151,7 @@ describe('/:id', () => {
 
 describe('/:id withCategories', () => {
   it('responds with a specific movie', async () => {
-    jest.mocked(byIdWithCategories).mockResolvedValue({
+    vi.mocked(byIdWithCategories).mockResolvedValue({
       categories: [
         {
           id: 3,
@@ -188,7 +185,7 @@ describe('/:id withCategories', () => {
 
 describe('creating a movie', () => {
   it('adds a movie to the database', async () => {
-    jest.mocked(create).mockResolvedValue(30)
+    vi.mocked(create).mockResolvedValue(30)
     const res = await request(server).post('/api/v1/movies').send({
       title: 'Ghostbusters',
       release_year: 2016,
@@ -203,8 +200,8 @@ describe('creating a movie', () => {
   })
 
   it('fails when the database is sad', async () => {
-    jest.spyOn(console, 'error').mockImplementation(() => {})
-    jest.mocked(create).mockRejectedValue(new Error('Database Error'))
+    vi.spyOn(console, 'error').mockImplementation(() => {})
+    vi.mocked(create).mockRejectedValue(new Error('Database Error'))
 
     const res = await request(server).post('/api/v1/movies').send({
       title: 'Ghostbusters',
@@ -216,7 +213,7 @@ describe('creating a movie', () => {
 
 describe('search', () => {
   it('searches the database for matching movies (1 category)', async () => {
-    jest.mocked(search).mockResolvedValue([])
+    vi.mocked(search).mockResolvedValue([])
     const res = await request(server).get(
       '/api/v1/movies/search?title=V&category=1'
     )
@@ -225,7 +222,7 @@ describe('search', () => {
   })
 
   it('searches the database for matching movies', async () => {
-    jest.mocked(search).mockResolvedValue([])
+    vi.mocked(search).mockResolvedValue([])
     const res = await request(server).get(
       '/api/v1/movies/search?title=V&category=1&category=2'
     )
@@ -234,7 +231,7 @@ describe('search', () => {
   })
 
   it('fails when the database is sad', async () => {
-    jest.mocked(search).mockRejectedValue('Database Error')
+    vi.mocked(search).mockRejectedValue('Database Error')
     const res = await request(server).get(
       '/api/v1/movies/search?title=V&category=1&category=2'
     )
@@ -255,14 +252,14 @@ describe('search', () => {
 
 describe('deleting a movie', () => {
   it('adds a movie to the database', async () => {
-    jest.mocked(delete$).mockResolvedValue()
+    vi.mocked(delete$).mockResolvedValue()
     const res = await request(server).delete('/api/v1/movies/2')
     expect(res.statusCode).toBe(200)
     expect(delete$).toHaveBeenCalledWith(2)
   })
 
   it('fails when the database is sad', async () => {
-    jest.mocked(delete$).mockRejectedValue(new Error('Database Error'))
+    vi.mocked(delete$).mockRejectedValue(new Error('Database Error'))
     const res = await request(server).delete('/api/v1/movies/2')
     expect(res.statusCode).toBe(500)
   })
@@ -270,7 +267,7 @@ describe('deleting a movie', () => {
 
 describe('Adding a category to a movie', () => {
   it('adds the category in the database', async () => {
-    jest.mocked(addCategoryToMovie).mockResolvedValue()
+    vi.mocked(addCategoryToMovie).mockResolvedValue()
     // I feel like American Hustle was a comedy
     const res = await request(server)
       .post('/api/v1/movies/13/categories')
@@ -279,9 +276,9 @@ describe('Adding a category to a movie', () => {
     expect(addCategoryToMovie).toHaveBeenCalledWith(13, 5)
   })
   it('responds 500 if the database is sad', async () => {
-    jest
-      .mocked(addCategoryToMovie)
-      .mockRejectedValue(new Error('Database is sad'))
+    vi.mocked(addCategoryToMovie).mockRejectedValue(
+      new Error('Database is sad')
+    )
 
     const res = await request(server)
       .post('/api/v1/movies/13/categories')
@@ -293,16 +290,16 @@ describe('Adding a category to a movie', () => {
 
 describe('Removing a category from a movie', () => {
   it('removes the category from the movie', async () => {
-    jest.mocked(removeCategoryFromMovie).mockResolvedValue()
+    vi.mocked(removeCategoryFromMovie).mockResolvedValue()
     // ... and I don't think it was historical
     const res = await request(server).delete('/api/v1/movies/13/categories/7')
     expect(res.status).toBe(204)
     expect(removeCategoryFromMovie).toHaveBeenCalledWith(13, 7)
   })
   it('responds 500 if the database is sad', async () => {
-    jest
-      .mocked(removeCategoryFromMovie)
-      .mockRejectedValue(new Error('Database is sad'))
+    vi.mocked(removeCategoryFromMovie).mockRejectedValue(
+      new Error('Database is sad')
+    )
 
     const res = await request(server).delete('/api/v1/movies/13/categories/5')
     expect(res.status).toBe(500)

@@ -1,3 +1,13 @@
+import {
+  describe,
+  it,
+  expect,
+  beforeAll,
+  beforeEach,
+  afterAll,
+  vi,
+} from 'vitest'
+
 import connection from '../../db/connection'
 import * as categories from '../categories'
 
@@ -5,8 +15,8 @@ beforeAll(() => {
   return connection.migrate.latest()
 })
 
-beforeEach(() => {
-  return connection.seed.run()
+beforeEach(async () => {
+  await connection.seed.run()
 })
 
 afterAll(async () => {
