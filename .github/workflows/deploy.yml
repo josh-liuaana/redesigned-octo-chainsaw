@@ -19,4 +19,5 @@ jobs:
         uses: dokku/github-action@master
         with:
           git_remote_url: 'ssh://dokku@devacademy.nz:22/movie-facts'
+          branch: 'main'
           ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
