@@ -8,11 +8,7 @@ import { MemoryRouter as Router } from 'react-router-dom'
 import { initialiseStore } from '../../store'
 
 import { screen, render, cleanup, waitFor } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import matchers from '@testing-library/jest-dom/matchers'
-expect.extend(matchers)
-
-afterEach(cleanup)
+import setupApp from '../../test-utils'
 
 /**
  * For our components we're mostly going to write integration tests, running
@@ -36,13 +32,7 @@ describe('<Search />', () => {
       .get('/api/v1/categories')
       .reply(200, [{ id: 1, name: 'Drama' }])
 
-    render(
-      <Router initialEntries={['/search']}>
-        <Provider store={initialiseStore()}>
-          <App />
-        </Provider>
-      </Router>
-    )
+    setupApp('/search')
 
     const checkbox = await screen.findByLabelText('Drama')
     expect(checkbox).toBeInTheDocument()
@@ -55,13 +45,7 @@ describe('<Search />', () => {
       .get('/api/v1/categories')
       .reply(200, [{ id: 1, name: 'Drama' }])
 
-    render(
-      <Router initialEntries={['/search']}>
-        <Provider store={initialiseStore()}>
-          <App />
-        </Provider>
-      </Router>
-    )
+    setupApp('/search')
 
     expect(scope.isDone()).not.toBeTruthy()
     const loadingText = screen.queryByText(/Loading categories/)
@@ -71,13 +55,7 @@ describe('<Search />', () => {
   it('shows an error when failing to load categories', async () => {
     nock('http://localhost').get('/api/v1/categories').reply(500)
 
-    render(
-      <Router initialEntries={['/search']}>
-        <Provider store={initialiseStore()}>
-          <App />
-        </Provider>
-      </Router>
-    )
+    setupApp('/search')
 
     const errorMessage = await screen.findByText(/Failed to load categories/)
     expect(errorMessage).toBeVisible()
@@ -91,19 +69,14 @@ describe('<Search />', () => {
         { id: 2, name: 'Comedy' },
       ])
 
-    render(
-      <Router initialEntries={['/search']}>
-        <Provider store={initialiseStore()}>
-          <App />
-        </Provider>
-      </Router>
-    )
+    const { user } = setupApp('/search')
+
     const checkbox = await screen.findByLabelText('Comedy')
     expect(checkbox).toBeInTheDocument()
     expect(checkbox).not.toBeChecked()
     expect(scope1.isDone()).toBe(true)
 
-    userEvent.click(checkbox)
+    await user.click(checkbox)
     expect(checkbox).toBeChecked()
 
     const scope2 = nock('http://localhost')
@@ -114,9 +87,9 @@ describe('<Search />', () => {
       ])
 
     const titleInput = screen.getByLabelText('Title')
-    userEvent.type(titleInput, 'pe')
+    await user.type(titleInput, 'pe')
     const submitButton = screen.getByRole('button')
-    userEvent.click(submitButton)
+    await user.click(submitButton)
 
     const resultText = await screen.findByText('2 matching results')
     expect(resultText).toBeInTheDocument()
@@ -136,13 +109,7 @@ describe('<Search />', () => {
         { id: 2, name: 'Comedy' },
       ])
 
-    const screen = render(
-      <Router initialEntries={['/search']}>
-        <Provider store={initialiseStore()}>
-          <App />
-        </Provider>
-      </Router>
-    )
+    const { user } = setupApp('/search')
 
     await waitFor(() => expect(scope1.isDone()).toBe(true))
 
@@ -154,9 +121,9 @@ describe('<Search />', () => {
       ])
 
     const titleInput = screen.getByLabelText('Title')
-    userEvent.type(titleInput, 'pe')
+    await user.type(titleInput, 'pe')
     const submitButton = screen.getByRole('button')
-    userEvent.click(submitButton)
+    await user.click(submitButton)
 
     const resultText = await screen.findByText('2 matching results')
     expect(resultText).toBeInTheDocument()
@@ -176,22 +143,17 @@ describe('<Search />', () => {
         { id: 2, name: 'Comedy' },
       ])
 
-    const screen = render(
-      <Router initialEntries={['/search']}>
-        <Provider store={initialiseStore()}>
-          <App />
-        </Provider>
-      </Router>
-    )
+    const { user } = setupApp('/search')
+
     const checkbox = await screen.findByLabelText('Comedy')
     expect(checkbox).toBeInTheDocument()
     expect(checkbox).not.toBeChecked()
     expect(scope1.isDone()).toBe(true)
 
-    userEvent.click(checkbox)
+    await user.click(checkbox)
     expect(checkbox).toBeChecked()
 
-    userEvent.click(checkbox)
+    await user.click(checkbox)
     expect(checkbox).not.toBeChecked()
 
     const scope2 = nock('http://localhost')
@@ -202,9 +164,9 @@ describe('<Search />', () => {
       ])
 
     const titleInput = screen.getByLabelText('Title')
-    userEvent.type(titleInput, 'pe')
+    await user.type(titleInput, 'pe')
     const submitButton = screen.getByRole('button')
-    userEvent.click(submitButton)
+    await user.click(submitButton)
 
     const resultText = await screen.findByText('2 matching results')
     expect(resultText).toBeInTheDocument()
@@ -225,22 +187,16 @@ describe('<Search />', () => {
         { id: 2, name: 'Comedy' },
       ])
 
-    render(
-      <Router initialEntries={['/search']}>
-        <Provider store={initialiseStore()}>
-          <App />
-        </Provider>
-      </Router>
-    )
+    const { user } = setupApp('/search')
 
     await waitFor(() => expect(scope1.isDone()).toBe(true))
 
     nock('http://localhost').get('/api/v1/movies/search?title=pe').reply(500)
 
     const titleInput = screen.getByLabelText('Title')
-    userEvent.type(titleInput, 'pe')
+    await user.type(titleInput, 'pe')
     const submitButton = screen.getByRole('button')
-    userEvent.click(submitButton)
+    await user.click(submitButton)
 
     const errorMessage = await screen.findByText(/Search failed:/)
     expect(errorMessage).toMatchInlineSnapshot(`
