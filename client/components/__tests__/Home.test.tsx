@@ -1,10 +1,10 @@
 // @vitest-environment jsdom
 import { describe, it, expect } from 'vitest'
-import { mount } from '../../test-utils'
+import setup from '../../test-utils'
 
 describe('<Home />', () => {
   it('looks real good', () => {
-    const { container } = mount()
+    const { container } = setup()
     expect(container).toMatchSnapshot()
   })
 })

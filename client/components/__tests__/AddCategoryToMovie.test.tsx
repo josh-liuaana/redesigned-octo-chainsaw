@@ -1,18 +1,8 @@
 /** @jest-environment jsdom */
 import nock from 'nock'
-import App from '../App'
-import { Provider } from 'react-redux'
-import { MemoryRouter as Router } from 'react-router-dom'
-import { initialiseStore } from '../../store'
-import { describe, it, expect, afterEach } from 'vitest'
-import { render, screen, cleanup, waitFor } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-
-import matchers from '@testing-library/jest-dom/matchers'
-
-expect.extend(matchers)
-
-afterEach(cleanup)
+import { describe, it, expect } from 'vitest'
+import { screen, waitFor } from '@testing-library/react'
+import setup from '../../test-utils'
 
 describe('Add category to movie', () => {
   it('sends a request and updates UI', async () => {
@@ -43,23 +33,18 @@ describe('Add category to movie', () => {
         },
       ])
 
-    render(
-      <Router initialEntries={['/movie/12']}>
-        <Provider store={initialiseStore()}>
-          <App />
-        </Provider>
-      </Router>
-    )
+    const { user } = setup('/movie/12')
 
     await waitFor(() => expect(loadCategories.isDone()).toBe(true))
 
     const select = await screen.findByLabelText('New category')
     expect(select).toBeVisible()
-    userEvent.selectOptions(select, 'History')
-    userEvent.click(screen.getByRole('button', { name: 'Submit' }))
+
     const createRequest = nock('http://localhost')
       .post('/api/v1/movies/12/categories')
       .reply(201)
+    await user.selectOptions(select, 'History')
+    await user.click(screen.getByRole('button', { name: 'Submit' }))
 
     const deleteLabel = await screen.findByRole('button', {
       name: 'delete category History',
@@ -87,13 +72,7 @@ describe('Add category to movie', () => {
       .get('/api/v1/categories')
       .reply(500)
 
-    render(
-      <Router initialEntries={['/movie/12']}>
-        <Provider store={initialiseStore()}>
-          <App />
-        </Provider>
-      </Router>
-    )
+    setup('/movie/12')
 
     const errorMessage = await screen.findByText(/Error loading categories/)
     expect(errorMessage).toBeVisible()
@@ -128,18 +107,13 @@ describe('Add category to movie', () => {
         },
       ])
 
-    render(
-      <Router initialEntries={['/movie/12']}>
-        <Provider store={initialiseStore()}>
-          <App />
-        </Provider>
-      </Router>
-    )
+    const { user } = setup('/movie/12')
 
     const select = await screen.findByLabelText('New category')
     expect(select).toBeVisible()
-    userEvent.selectOptions(select, 'History')
-    userEvent.click(screen.getByRole('button', { name: 'Submit' }))
+    user.selectOptions(select, 'History')
+    user.click(screen.getByRole('button', { name: 'Submit' }))
+
     const createRequest = nock('http://localhost')
       .post('/api/v1/movies/12/categories')
       .reply(500)

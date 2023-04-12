@@ -1,6 +1,6 @@
 // @vitest-environment node
 import { describe, it, expect } from 'vitest'
-import request from 'supertest'
+import { default as request } from 'supertest'
 
 /**
  * This is not necessarily a test I'm usually keen to write, but

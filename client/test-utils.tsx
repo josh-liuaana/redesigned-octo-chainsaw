@@ -1,14 +1,25 @@
-import { ReactNode } from 'react'
-import { Provider } from 'react-redux'
+import { afterEach, expect } from 'vitest'
+import { cleanup, render } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { MemoryRouter as Router } from 'react-router-dom'
-import { render } from '@testing-library/react'
+import { Provider } from 'react-redux'
 import { initialiseStore } from './store'
+import matchers from '@testing-library/jest-dom/matchers'
 import App from './components/App'
 
-export function mount(element: ReactNode = <App />, location = '/') {
-  return render(
+expect.extend(matchers)
+
+afterEach(cleanup)
+
+export default function setup(location = '/') {
+  const container = render(
     <Router initialEntries={[location]}>
-      <Provider store={initialiseStore()}>{element}</Provider>
+      <Provider store={initialiseStore()}>
+        <App />
+      </Provider>
     </Router>
   )
+
+  const user = userEvent.setup()
+  return { user, ...container }
 }
