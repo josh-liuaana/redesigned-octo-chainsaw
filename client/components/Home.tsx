@@ -1,3 +1,8 @@
-export default function Home() {
-  return <>Welcome to movie ... facts~~~</>
+function Home() {
+  
+  return (
+    <><p>MOOVIES 2.0</p></>
+  )
 }
+
+export default Home

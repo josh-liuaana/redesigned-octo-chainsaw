@@ -1,12 +1,9 @@
 import express from 'express'
-import movies from './routes/movies'
-import categories from './routes/categories'
 
 const server = express()
 
 server.use(express.json())
-server.use('/api/v1/movies', movies)
-server.use('/api/v1/categories', categories)
+// server.use('/api/v1/movies', movies)
 
 if (process.env.NODE_ENV === 'production') {
   server.use('/assets', express.static('/app/dist/assets'))

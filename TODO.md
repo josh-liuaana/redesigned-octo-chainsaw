@@ -1,8 +1,0 @@
-- missing jest-environment-jsdom
-- missing @types/supertest
-- we need ts-node in dependencies not in devDependencies (or we need to build the backend)
-- tsconfig: ts-node: { transpileOnly: true }
-- remove knex migrations from build
-- Procfile: release task should do migrations
-- this is a thunks repo, should use the thunk boilerplate
-- missing nock

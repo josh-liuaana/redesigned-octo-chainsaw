@@ -1,7 +1,7 @@
 {
-  "name": "movie-facts",
-  "version": "0.1.0",
-  "description": "Some facts about movies",
+  "name": "moo-vies-2.0",
+  "version": "0.0.1",
+  "description": "My favourite movies",
   "repository": "https://https://github.com/dev-academy-challenges/todo-full-stack",
   "main": "server/index.ts",
   "scripts": {
