@@ -15,7 +15,8 @@
     "dev:client": "vite",
     "dev:server": "nodemon server/index.ts",
     "knex": "knex --knexfile ./server/db/knexfile.js",
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx ."
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx .",
+    "preview": "vite preview"
   },
   "keywords": [
     "fullstack"
