@@ -6,7 +6,6 @@ body {
   padding: 20px;
   font: 14px;
   font-family: 'Dongle', sans-serif;
-
 }
 
 html {
@@ -17,7 +16,18 @@ html {
   font-family: 'Dongle', sans-serif;
   font-size: 50px;
   margin: 0px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+/* MOVIE TILE */
+
+.movie {
+  display: flex;
+  margin: 10px;
   padding: 15px;
+  background-color: #e2e2e2;
+  flex-direction: column;
 }
 
 .movie-title {
@@ -31,16 +41,8 @@ html {
   flex-wrap: wrap;
 }
 
-.movie {
-  display: flex;
-  margin: 10px;
-  padding: 15px;
-  background-color: #e2e2e2;
-  flex-direction: column;
-}
-
 .movie:hover {
-    box-shadow: 8px 8px 15px 1px #8d8d8d;
+  box-shadow: 8px 8px 15px 1px #8d8d8d;
 }
 
 .movie img {
@@ -50,4 +52,99 @@ html {
 
 .movie button {
   margin-top: 10px;
+}
+
+/* SEARCH RESULT TILE */
+
+.search-result-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.search-movie {
+  display: flex;
+  flex-direction: column;
+  margin: 8px;
+  padding: 12px;
+  background-color: #e2e2e2;
+}
+
+.search-movie img {
+  max-width: 250px;
+  align-self: center;
+  margin-bottom: 8px;
+}
+
+.search-movie:hover {
+  box-shadow: 8px 8px 15px 1px #8d8d8d
+}
+
+.search-title {
+  text-align: center;
+  font-size: 25px;
+  margin: 0px
+}
+
+/* BUTTON STYLES */
+
+.button {
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  background-color: white;
+  color: black;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  border: none;
+}
+
+.search-button {
+  border: 2px solid #008CBA;
+  margin-left: 10px;
+}
+
+.search-button:hover {
+  background-color: #008CBA;
+  color: white;
+}
+
+.delete-button {
+  border: 2px solid red
+}
+
+.delete-button:hover {
+  background-color: red;
+  color: white;
+}
+
+.green-button {
+  border: 2px solid #3b853f;
+  width: 100%;
+}
+
+.green-button:hover {
+  background-color: #3b853f;
+  color: white;
+}
+
+/* FORM TINGZ */
+
+.form-container {
+  margin-left: 10px;
+}
+
+.form-label {
+  font-size: 40px;
+}
+
+input[type=text] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
 }

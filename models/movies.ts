@@ -9,7 +9,18 @@ export interface Movie extends MovieData{
   img: string
 }
 
+export interface ImdbMovie {
+  title: string
+  description: string
+  id: string
+  image: string
+  resultType: string
+}
+
 export type Action = 
   | { type: 'ERROR', payload: string }
   | { type: 'SET_MOVIES', payload: Movie[] }
   | { type: 'DEL_MOVIE', payload: number}
+
+export type ImdbAction = 
+  | { type: 'IMDB_SEARCH', payload: ImdbMovie[]}

@@ -3,7 +3,7 @@ import { Movie } from "../../models/movies"
 import { deleteMovieThunk } from "../actions/movies"
 
 interface Props {
-   movie: Movie
+  movie: Movie
 }
 
 function SingleMovie({ movie }: Props) {
@@ -18,7 +18,7 @@ function SingleMovie({ movie }: Props) {
       <div className="movie">
         <h2 className="movie-title">{movie.title}</h2>
         <img src={movie.img} alt={`movie poster for ${movie.title}`}/>
-        <button onClick={() => handleDelete(movie.id)}>Delete</button>
+        <button className="button delete-button" onClick={() => handleDelete(movie.id)}>Delete</button>
       </div>
     </>
   )
