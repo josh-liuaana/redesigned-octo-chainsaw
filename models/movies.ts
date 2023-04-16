@@ -10,5 +10,6 @@ export interface Movie extends MovieData{
 }
 
 export type Action = 
+  | { type: 'ERROR', payload: string }
   | { type: 'SET_MOVIES', payload: Movie[] }
-  | { type: 'ERROR', payload: string}
+  | { type: 'DEL_MOVIE', payload: number}

@@ -4,7 +4,9 @@ body {
   left: 0;
   margin: 0;
   padding: 20px;
-  font: 14px "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font: 14px;
+  font-family: 'Dongle', sans-serif;
+
 }
 
 html {
@@ -12,12 +14,16 @@ html {
 }
 
 .title {
-  font-family: 'Tilt Prism', cursive;
-  font-size: 50px
+  font-family: 'Dongle', sans-serif;
+  font-size: 50px;
+  margin: 0px;
+  padding: 15px;
 }
 
 .movie-title {
   text-align: center;
+  margin: 0px;
+  font-size: 40px
 }
 
 .movie-container {
@@ -26,9 +32,11 @@ html {
 }
 
 .movie {
+  display: flex;
   margin: 10px;
   padding: 15px;
   background-color: #e2e2e2;
+  flex-direction: column;
 }
 
 .movie:hover {
@@ -37,4 +45,9 @@ html {
 
 .movie img {
   max-width: 250px;
+  align-self: center;
+}
+
+.movie button {
+  margin-top: 10px;
 }
