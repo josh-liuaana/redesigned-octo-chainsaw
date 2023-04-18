@@ -7,6 +7,7 @@
   | SingleMovie | View for individual movie tile for watchlist movie |
   | Search | Form for searching the external imdp-api |
   | SearchResult | View for individual movie tile for imdb-api search results |
+  | Loading | Loading screen |
 
 ## Reducers (Client Side)
 
@@ -14,6 +15,7 @@
   | --- | --- |
   | moviesReducer | Store the array of movies from the db |
   | imdbReducer | Store the array of movies from the imdb-api |
+  | loading | Request and Receive movie, null payloads - no info going to or from the store |
 
 ## Actions (Client Side)
 #### File name: movies.ts
@@ -29,6 +31,11 @@
   | --- | --- | --- |
   | IMDB_SEARCH | ImdbMovie[] | Accesses the external API updates store with array of search results | 
 
+#### File name: loading.ts
+  | type | data | purpose |
+  | --- | --- |
+  | REQUEST_MOVIES | boolean | When the external api search run rriggers to loading screen |
+  | RECEIVE_MOVIES | boolean | Stops the loading screen and renders the movie data
 
 ## API (Client - Server)
 

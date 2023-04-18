@@ -26,3 +26,7 @@ export type Action =
 
 export type ImdbAction = 
   | { type: 'IMDB_SEARCH', payload: ImdbMovie[]}
+
+export type LoadingAction = 
+  | { type: 'REQUEST_MOVIES', payload: null }
+  | { type: 'RECEIVE_MOVIES', payload: null }
