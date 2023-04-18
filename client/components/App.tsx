@@ -5,6 +5,7 @@ import { useAppDispatch } from '../hooks/redux'
 import { getMovies } from '../actions/movies'
 
 import Home from './Home'
+import Search from './Search'
 
 
 function App() {
@@ -19,10 +20,12 @@ function App() {
       <header className="header">
         <h1 className='title'>Mooo-vies 2.0</h1>
       </header>
-      <nav></nav>
+      <nav>
+      </nav>
       <section className="main">
         <Routes>
-          <Route index element={<Home />} />
+          <Route path='/' element={<Home />} />
+          <Route path='/search' element={<Search/>} />
         </Routes>
       </section>
     </>

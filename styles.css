@@ -23,6 +23,7 @@ html {
 /* MOVIE TILE */
 
 .movie {
+  width: 275px;
   display: flex;
   margin: 10px;
   padding: 15px;
@@ -33,7 +34,10 @@ html {
 .movie-title {
   text-align: center;
   margin: 0px;
-  font-size: 40px
+  font-size: 40px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  max-width: 100%
 }
 
 .movie-container {
@@ -46,7 +50,7 @@ html {
 }
 
 .movie img {
-  max-width: 250px;
+  width: 90%;
   align-self: center;
 }
 
@@ -110,6 +114,25 @@ html {
   color: white;
 }
 
+.reverse-button, .sort-button {
+  border: 2px solid #008CBA;
+  margin-left: 8px;
+}
+
+.reverse-button:hover, .sort-button:hover {
+  background-color: #008CBA;
+  color: white;
+}
+
+.home-button {
+  border: 2px solid #008CBA;
+}
+
+.home-button:hover {
+  background-color: #008CBA;
+  color: white;
+}
+
 .delete-button {
   border: 2px solid red
 }
@@ -142,9 +165,86 @@ html {
 input[type=text] {
   width: 100%;
   padding: 12px 20px;
-  margin: 8px 0;
+  margin-bottom: 8px;
+  /* margin: 8px 0; */
   display: inline-block;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
+}
+
+/* MODAL */
+
+.modal-container {
+  box-shadow: 8px 8px 15px 1px #8d8d8d;
+  position: absolute;
+  inset: 150px;
+  border: 1px solid rgb(204, 204, 204);
+  background-color: #e2e2e2;
+  overflow: auto;
+  border-radius: 15px;
+  outline: none;
+  padding: 10px;
+  width: 50%;
+  left: 25%
+}
+
+.modal-contents {
+  display: flex;
+  max-height: 100%;
+}
+
+.modal-image-container {
+  max-width: 45%;
+  position: relative;
+}
+
+.close {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  background-color: red;
+  color: white;
+  padding: 5px 10px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none
+}
+
+.modal-image {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 5px;
+}
+
+.modal-form-container {
+  /* padding-left: 15px; */
+  border-left: 2px solid #c6c3c1;
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+  align-items: center;
+  flex-direction: column;
+}
+
+.modal-form-container h2{
+  font-size: 35px;
+  margin: 0px;
+  text-align: center;
+}
+
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.label {
+  font-size: 35px;
+  text-align: center;
+}
+
+.form-checkbox {
+  text-align: center;
 }

@@ -1,8 +1,8 @@
-export interface MovieData {
+export interface Movie extends MovieData {
   id: number
 }
 
-export interface Movie extends MovieData{
+export interface MovieData {
   title: string
   imdb_id: string
   watched: boolean
@@ -21,6 +21,8 @@ export type Action =
   | { type: 'ERROR', payload: string }
   | { type: 'SET_MOVIES', payload: Movie[] }
   | { type: 'DEL_MOVIE', payload: number}
+  | { type: 'ADD_MOVIE', payload: Movie}
+  | { type: 'ALPHA_SORT', payload: null}
 
 export type ImdbAction = 
   | { type: 'IMDB_SEARCH', payload: ImdbMovie[]}

@@ -24,4 +24,16 @@ router.delete('/:id', async (req, res) => {
   }
 })
 
+router.post('/', async (req, res) => {
+  const movie = req.body
+  try {
+    const newMovie = await db.insertMovie(movie)
+    console.log(newMovie)
+    res.json(newMovie[0])
+  } catch (error) {
+    console.error('Route error: ', error)
+    res.sendStatus(500)
+  }
+})
+
 export default router

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import { useState } from "react"
 import Movies from "./Movies"
 import Search from "./Search"
@@ -7,15 +8,23 @@ function Home() {
   
   return (
     <>
-      {!showSearch &&
-        <button className='button search-button' onClick={() => setShowSearch(!showSearch)}>Search on imdb</button>
-      }
       {showSearch
-        ? <Search />
-        : <Movies />
+        ? 
+          <Search />
+        : 
+        <>
+          <Link to='/search'>
+            <button className='button search-button' onClick={() => setShowSearch(true)}>Search on imdb</button>
+          </Link>
+          <Movies />
+        </>
       }
     </>
   )
 }
+
+<Link to='/search'>
+Search
+</Link>
 
 export default Home

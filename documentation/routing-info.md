@@ -35,7 +35,8 @@
 | Method | Endpoint | Protected | Usage | Response |
 | --- | --- | --- | --- | --- |
 | Get | /api/v1/movies | No | Get a list of movies from the DB | Array of Objects (object = Movie) |
-| Delete | /api/v1/movies | No | Delete a movie from the DB | id |
+| Delete | /api/v1/movies/:id | No | Delete a movie from the DB | id |
+| Post | /api/v1/movies | No | Add movie to database | Array of single object (object = Movie) |
 
 
 
