@@ -11,7 +11,7 @@ export default function moviesReducers(state = initialState, action: Action) {
       return payload
 
     case ALPHA_SORT:
-      state.sort((a, b) => a.title.localeCompare(b.title))
+      state.sort((a, b) => b.title.localeCompare(a.title))
       return [...state]
 
     case DEL_MOVIE:
