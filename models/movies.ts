@@ -17,11 +17,17 @@ export interface ImdbMovie {
   resultType: string
 }
 
+interface UpdatePayload {
+  id: number
+  seen: boolean
+}
+
 export type Action = 
   | { type: 'ERROR', payload: string }
   | { type: 'SET_MOVIES', payload: Movie[] }
   | { type: 'DEL_MOVIE', payload: number}
   | { type: 'ADD_MOVIE', payload: Movie}
+  | { type: 'UPDATE_MOVIE', payload: UpdatePayload}
   | { type: 'ALPHA_SORT', payload: null}
 
 export type ImdbAction = 

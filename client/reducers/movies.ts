@@ -1,5 +1,5 @@
 import type { Action, Movie } from "../../models/movies";
-import { ERROR, SET_MOVIES, DEL_MOVIE, ADD_MOVIE, ALPHA_SORT } from '../actions/movies'
+import { ERROR, SET_MOVIES, DEL_MOVIE, ADD_MOVIE, ALPHA_SORT, UPDATE_MOVIE } from '../actions/movies'
 
 const initialState = [] as Movie[]
 
@@ -19,6 +19,14 @@ export default function moviesReducers(state = initialState, action: Action) {
 
     case ADD_MOVIE:
       return [...state, payload]
+
+    case UPDATE_MOVIE:
+      return state.map((movie) => {
+        if (movie.id === payload.id) {
+          movie.watched = payload.seen
+        }
+        return movie
+      })
 
     case ERROR:
       return payload

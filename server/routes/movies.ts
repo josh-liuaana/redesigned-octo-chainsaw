@@ -35,4 +35,16 @@ router.post('/', async (req, res) => {
   }
 })
 
+router.patch('/:id', async (req, res) => {
+  const id = Number(req.params.id)
+  const seen = req.body.seen
+  try {
+    await db.updateMovie(id, seen)
+    res.sendStatus(200)
+  } catch (error) {
+    console.error('Route error: ', error)
+    res.sendStatus(500)
+  }
+})
+
 export default router

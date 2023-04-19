@@ -18,3 +18,7 @@ export async function postOneMovie(movie: MovieData) {
   const movieFromDb = res.body
   return movieFromDb
 }
+
+export async function patchMovie(id: number, seen: boolean) {
+  await request.patch(`${movieUrl}/${id}`).send({seen})
+}

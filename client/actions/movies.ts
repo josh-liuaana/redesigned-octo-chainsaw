@@ -1,11 +1,12 @@
 import { Action, Movie, MovieData } from "../../models/movies";
-import { fetchMovies, removeMovie, postOneMovie } from "../apis/movies";
+import { fetchMovies, removeMovie, postOneMovie, patchMovie } from "../apis/movies";
 import { ThunkAction } from "../store";
 
 export const SET_MOVIES = 'SET_MOVIES'
 export const ALPHA_SORT = 'ALPHA_SORT'
 export const DEL_MOVIE = 'DEL_MOVIE'
 export const ADD_MOVIE = 'ADD_MOVIE'
+export const UPDATE_MOVIE = 'UPDATE_MOVIE'
 export const ERROR = 'ERROR'
 
 // simps
@@ -35,6 +36,13 @@ export function saveMovie(movie: Movie): Action {
   return {
     type: ADD_MOVIE,
     payload: movie
+  }
+}
+
+export function updateMovie(id: number, seen: boolean): Action {
+  return {
+    type: UPDATE_MOVIE,
+    payload: {id, seen}
   }
 }
 
@@ -77,6 +85,18 @@ export function addMovieThunk(movie: MovieData): ThunkAction {
       const movieFromDb = await postOneMovie(movie)
       dispatch(saveMovie(movieFromDb))
     } catch(err) {
+      console.error('Action booboo: ', err)
+      dispatch(error(String(err)))
+    }
+  }
+}
+
+export function updateSeenThunk(id: number, seen: boolean): ThunkAction {
+  return async (dispatch) => {
+    try {
+      await patchMovie(id, seen)
+      dispatch(updateMovie(id, seen))
+    } catch (err) {
       console.error('Action booboo: ', err)
       dispatch(error(String(err)))
     }

@@ -245,6 +245,8 @@ input[type=text] {
   margin-left: 10px;
   align-items: center;
   flex-direction: column;
+  justify-content: space-evenly;
+  align-content: center;
 }
 
 .modal-form-container h2{
@@ -266,6 +268,13 @@ input[type=text] {
 
 .form-checkbox {
   text-align: center;
+  cursor: pointer;
+  font-size: 30px;
+}
+
+.checkmark {
+  height: 30px;
+  width: 30px
 }
 
 /* LOADING */

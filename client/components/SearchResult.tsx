@@ -31,30 +31,22 @@ function SearchResult({ movie }: Props) {
     setIsChecked(event.target.checked);
   }
 
-  function openModal() {
-    setIsOpen(true);
-  }
-
-  function closeModal() {
-    setIsOpen(false);
-  }
-
   return (
     <>
       <div className="search-movie">
         <h3 className="search-title">{movie.title}</h3>
         <img src={movie.image} alt={`movie poster for ${movie.title}`} />
-        <button className="button green-button" onClick={openModal}>Add</button>
+        <button className="button green-button" onClick={() => {setIsOpen(true)}}>Add</button>
 
         <Modal
         isOpen={modalIsOpen}
-        onRequestClose={closeModal}
+        onRequestClose={() => setIsOpen(false)}
         className='modal-container'
         contentLabel="Add Movie Modal"
         >
           <div className="modal-contents">
             <div className="modal-image-container">
-              <button  onClick={() => closeModal()}className="close">X</button>
+              <button  onClick={() => setIsOpen(false)}className="close">X</button>
               <img className="modal-image" src={movie.image} alt={`movie poster for ${movie.title}`} />
             </div>
             <div className="modal-form-container">
@@ -65,6 +57,7 @@ function SearchResult({ movie }: Props) {
                 </div>
                 <div className="form-checkbox">
                     <input type="checkbox" id="watched" name="watched" checked={isChecked} onChange={toggleHandler}/>
+                    <span className="checkmark"></span>
                 </div>
                 <div>
                   <button type='submit' className="button green-button modal-submit-button">Add to your watchlist</button>
