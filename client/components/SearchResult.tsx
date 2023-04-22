@@ -5,8 +5,9 @@ import { ChangeEvent, useState } from "react"
 import { useAppDispatch } from "../hooks/redux"
 import { addMovieThunk } from "../actions/movies"
 import { ImdbMovie } from "../../models/movies"
-import SearchInfo from "./SearchInfo"
 import { detailsThunk } from "../actions/imdb"
+
+import SearchInfo from "./SearchInfo"
 
 interface Props {
   movie: ImdbMovie
