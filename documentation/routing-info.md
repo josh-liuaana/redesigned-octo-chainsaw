@@ -72,5 +72,5 @@
 Update table migration with timestamp  
 Something like:
 ```js
-  table.timestamp('date_addeds').defaultTo(knex.fn.now());
+  table.timestamp('date_added').defaultTo(knex.fn.now())
 ```

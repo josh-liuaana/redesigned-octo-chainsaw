@@ -26,6 +26,7 @@ router.delete('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
   const movie = req.body
+  movie.date_added = Date.now()
   try {
     const newMovie = await db.insertMovie(movie)
     res.json(newMovie[0])
