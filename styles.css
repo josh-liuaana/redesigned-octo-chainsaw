@@ -171,6 +171,17 @@ body {
   color: white;
 }
 
+.blue-button {
+  margin-top: 10px;
+  border: 2px solid #008CBA;
+  width: 100%;
+}
+
+.blue-button:hover {
+  background-color: #008CBA;
+  color: white;
+}
+
 /* FORM TINGZ */
 
 .form-container {
@@ -298,4 +309,48 @@ input[type=text] {
 
 .loading-gif {
   height: 85vh;
+}
+
+/* SEARCH INFO */
+
+.info-modal {
+  box-shadow: 8px 8px 15px 1px #8d8d8d;
+  position: absolute;
+  inset: 40px;
+  border: 1px solid rgb(204, 204, 204);
+  background-color: #e2e2e2;
+  overflow: auto;
+  border-radius: 15px;
+  outline: none;
+  padding: 10px;
+}
+
+.info-component {
+  max-height: 90vh;
+}
+
+.info-container {
+  display: flex;
+}
+
+.info-container img {
+  max-height: 100%
+}
+
+.info-details {
+  margin-left: 20px;
+}
+
+.info-details p {
+  font-size: 40px;
+  margin: 0px;
+}
+
+.info-details h1 {
+  font-size: 75px;
+  margin: 0px;
+}
+
+.trailer-button {
+  margin-bottom: 10px;
 }

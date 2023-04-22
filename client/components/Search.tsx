@@ -1,28 +1,36 @@
 import { ChangeEvent, FormEvent, useState } from "react"
 import { Link } from "react-router-dom"
 
-import { useAppDispatch, useAppSelector } from "../hooks/redux"
 import { searchImdb } from "../apis/imdb"
+import { useAppDispatch, useAppSelector } from "../hooks/redux"
 import { ImdbMovie } from '../../models/movies'
 
 import SearchResult from "./SearchResult"
 import Loading from "./Loading"
 import { receiveMovies, requestMovies } from "../actions/loading"
+import { searchThunk } from "../actions/imdb"
 
 
 function Search() {
   const dispatch = useAppDispatch()
   const displayLoading = useAppSelector((state => state.loading)) 
+  const imdbSearchData = useAppSelector<ImdbMovie[]>((state => state.imdb))
 
   const [search, setSearch] = useState('' as string)
-  const [imdbData, setImdbData] = useState([] as ImdbMovie[])
   const [showSearch, setShowSearch] = useState(true as Boolean)
+  // NO THUNKY
+  const [imdbData, setImdbData] = useState([] as ImdbMovie[])
 
   const handleSubmit = async (evt: FormEvent) => {
     evt.preventDefault()
     dispatch(requestMovies())
-    const searchResults = await searchImdb(search)
-    setImdbData(searchResults)
+
+    // NO THUNKY
+    // const searchResults = await searchImdb(search)
+    // setImdbData(searchResults)
+
+    // THUNKY 
+    await dispatch(searchThunk(search))
     dispatch(receiveMovies())
     setShowSearch(false)
   }
@@ -52,8 +60,16 @@ function Search() {
               <input className="button green-button" type='submit' value='Search' />
             </form>
           : 
+            // NO THUNKY 
+            // <div className="search-result-container">
+            //   {imdbData && imdbData.map((movie: ImdbMovie) => (
+            //     <SearchResult movie={movie} key={movie.id}/>
+            //   ))}
+            // </div>
+
+            // THUNKY
             <div className="search-result-container">
-              {imdbData && imdbData.map((movie: ImdbMovie) => (
+              {imdbSearchData && imdbSearchData.map((movie: ImdbMovie) => (
                 <SearchResult movie={movie} key={movie.id}/>
               ))}
             </div>

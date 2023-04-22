@@ -5,6 +5,8 @@ import { ChangeEvent, useState } from "react"
 import { useAppDispatch } from "../hooks/redux"
 import { addMovieThunk } from "../actions/movies"
 import { ImdbMovie } from "../../models/movies"
+import SearchInfo from "./SearchInfo"
+import { detailsThunk } from "../actions/imdb"
 
 interface Props {
   movie: ImdbMovie
@@ -14,6 +16,7 @@ function SearchResult({ movie }: Props) {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const [modalIsOpen, setIsOpen] = useState(false)
+  const [infoModal, setInfoModal] = useState(false)
   const [isChecked, setIsChecked] = useState(false)
 
   const handleAdd = (movie: ImdbMovie) => {
@@ -28,7 +31,12 @@ function SearchResult({ movie }: Props) {
   }
 
   const toggleHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    setIsChecked(event.target.checked);
+    setIsChecked(event.target.checked)
+  }
+
+  const handleInfo = async (id: string) => {
+    await dispatch(detailsThunk(id))
+    setInfoModal(true)
   }
 
   return (
@@ -36,7 +44,17 @@ function SearchResult({ movie }: Props) {
       <div className="search-movie">
         <h3 className="search-title">{movie.title}</h3>
         <img src={movie.image} alt={`movie poster for ${movie.title}`} />
-        <button className="button green-button" onClick={() => {setIsOpen(true)}}>Add</button>
+        <button className="button green-button" onClick={() => setIsOpen(true)}>Add</button>
+        <button className="button blue-button" onClick={() => handleInfo(movie.id)}>Info</button>
+
+        <Modal
+          isOpen={infoModal}
+          onRequestClose={() => setInfoModal(false)}
+          className='info-modal'
+          contentLabel='Info Modal'
+        >
+          <SearchInfo />
+        </Modal>
 
         <Modal
         isOpen={modalIsOpen}

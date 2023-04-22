@@ -17,6 +17,25 @@ export interface ImdbMovie {
   resultType: string
 }
 
+export interface Similars {
+  id: string
+  title: string
+  image: string
+  imDbRating: string
+}
+
+export interface ImdbDetails {
+  id: string
+  title: string
+  image: string
+  plot: string
+  genres: string
+  contentRating: string
+  imDbRating: string
+  metacriticRating: string
+  similars: Similars[]
+}
+
 interface UpdatePayload {
   id: number
   seen: boolean
@@ -32,6 +51,7 @@ export type Action =
 
 export type ImdbAction = 
   | { type: 'IMDB_SEARCH', payload: ImdbMovie[]}
+  | { type: 'IMDB_DETAILS', payload: ImdbDetails}
 
 export type LoadingAction = 
   | { type: 'REQUEST_MOVIES', payload: null }

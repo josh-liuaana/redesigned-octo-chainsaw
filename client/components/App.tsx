@@ -6,6 +6,7 @@ import { getMovies } from '../actions/movies'
 
 import Home from './Home'
 import Search from './Search'
+import SearchInfo from './SearchInfo'
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/search' element={<Search/>} />
+          <Route path='/:id' element={<SearchInfo/>} />
         </Routes>
       </section>
     </>

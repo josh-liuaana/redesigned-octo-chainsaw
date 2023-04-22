@@ -1,5 +1,5 @@
 import type { ImdbAction, ImdbMovie } from "../../models/movies";
-import { IMDB_SEARCH } from "../actions/imdb";
+import { IMDB_DETAILS, IMDB_SEARCH } from "../actions/imdb";
 
 const initialState = [] as ImdbMovie[]
 
