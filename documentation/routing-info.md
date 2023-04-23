@@ -28,9 +28,14 @@
 
   | type | data | purpose |
   | --- | --- | --- |
-  | SET_MOVIES | Movies[] | For retrieving the movies from the server response |
+  | SET_MOVIES | Movie[] | For retrieving the movies from the server response |
   | DEL_MOVIE | id | For deleting a movie from the watchlist, db and the store |
+  | ADD_MOVIE | Movie | Adding a movie to the database |
+  | UPDATE_MOVIE | id | Updating the seen status of a db movie |
   | ERROR | message | For error handling, sends error message |
+  | ALPHA_SORT | null | sort movieList alphabetically |
+  | DATE_SORT | null | sort movieList be date added to db |
+
 
 #### File name: imdb.ts
   | type | data | purpose |
@@ -67,10 +72,4 @@
   | imdb_id | String |
   | watched | Boolean |
   | img | String |
-  | data_added | Timestamp |
-
-Update table migration with timestamp  
-Something like:
-```js
-  table.timestamp('date_added').defaultTo(knex.fn.now())
-```
+  | data_added | Number |
