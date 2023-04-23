@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useAppSelector } from "../hooks/redux"
 import { Movie } from "../../models/movies"
-import { alphaSort } from "../actions/movies"
+import { alphaSort, dateSort } from "../actions/movies"
 import { useAppDispatch } from "../hooks/redux"
 
 import SingleMovie from "./SingleMovie"
@@ -17,11 +17,16 @@ function Movies() {
   function sort() {
     dispatch(alphaSort())
   }
+
+  function timeSort() {
+    dispatch(dateSort())
+  }
   
   return (
     <>
       <button className='button reverse-button' onClick={() => setListOrder(!listOrder)}>Reverse Order</button>
       <button className='button sort-button' onClick={sort}>Sort alphabetically</button>
+      <button className='button sort-button' onClick={timeSort}>Sort by date added</button>
       <div className="movie-container">
         {
         listOrder

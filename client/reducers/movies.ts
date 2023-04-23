@@ -1,5 +1,5 @@
 import type { Action, Movie } from "../../models/movies";
-import { ERROR, SET_MOVIES, DEL_MOVIE, ADD_MOVIE, ALPHA_SORT, UPDATE_MOVIE } from '../actions/movies'
+import { ERROR, SET_MOVIES, DEL_MOVIE, ADD_MOVIE, ALPHA_SORT, UPDATE_MOVIE, DATE_SORT } from '../actions/movies'
 
 const initialState = [] as Movie[]
 
@@ -12,6 +12,10 @@ export default function moviesReducers(state = initialState, action: Action) {
 
     case ALPHA_SORT:
       state.sort((a, b) => b.title.localeCompare(a.title))
+      return [...state]
+
+    case DATE_SORT:
+      state.sort((a, b) => b.date_added - a.date_added)
       return [...state]
 
     case DEL_MOVIE:

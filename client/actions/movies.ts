@@ -4,6 +4,7 @@ import { ThunkAction } from "../store";
 
 export const SET_MOVIES = 'SET_MOVIES'
 export const ALPHA_SORT = 'ALPHA_SORT'
+export const DATE_SORT = 'DATE_SORT'
 export const DEL_MOVIE = 'DEL_MOVIE'
 export const ADD_MOVIE = 'ADD_MOVIE'
 export const UPDATE_MOVIE = 'UPDATE_MOVIE'
@@ -21,6 +22,13 @@ export function setMovies(movies: Movie[]): Action {
 export function alphaSort(): Action {
   return {
     type: ALPHA_SORT,
+    payload: null
+  }
+}
+
+export function dateSort(): Action {
+  return {
+    type: DATE_SORT,
     payload: null
   }
 }

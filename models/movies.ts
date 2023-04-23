@@ -7,6 +7,7 @@ export interface MovieData {
   imdb_id: string
   watched: boolean
   img: string
+  date_added: number
 }
 
 export interface ImdbMovie {
@@ -48,6 +49,7 @@ export type Action =
   | { type: 'ADD_MOVIE', payload: Movie}
   | { type: 'UPDATE_MOVIE', payload: UpdatePayload}
   | { type: 'ALPHA_SORT', payload: null}
+  | { type: 'DATE_SORT', payload: null }
 
 export type ImdbAction = 
   | { type: 'IMDB_SEARCH', payload: ImdbMovie[]}
