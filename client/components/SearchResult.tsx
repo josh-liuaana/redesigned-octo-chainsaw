@@ -5,7 +5,7 @@ import { ChangeEvent, useState } from "react"
 import { useAppDispatch } from "../hooks/redux"
 import { addMovieThunk } from "../actions/movies"
 import { ImdbMovie } from "../../models/movies"
-import { detailsThunk } from "../actions/imdb"
+import { detailsThunk, trailerThunk } from "../actions/imdb"
 
 import SearchInfo from "./SearchInfo"
 
@@ -36,7 +36,8 @@ function SearchResult({ movie }: Props) {
   }
 
   const handleInfo = async (id: string) => {
-    await dispatch(detailsThunk(id))
+    dispatch(detailsThunk(id))
+    dispatch(trailerThunk(id))
     setInfoModal(true)
   }
 

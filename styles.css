@@ -354,3 +354,15 @@ input[type=text] {
 .trailer-button {
   margin-bottom: 10px;
 }
+
+.trailer-info-container {
+  display: flex;
+  flex-direction: column;
+  height: 80vh;
+}
+
+.trailer-container {
+}
+
+.trailer-video {
+}

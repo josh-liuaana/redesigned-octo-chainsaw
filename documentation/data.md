@@ -35,3 +35,12 @@
     similars: Similars[]
   }
 ```
+
+```js
+  ImdbTrailer {
+    imDbId: string
+    title: string
+    videoUrl: string
+    videoId: string
+  }
+```

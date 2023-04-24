@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom"
 import { useAppDispatch } from "../hooks/redux"
 
 import { Movie } from "../../models/movies"
@@ -9,13 +10,14 @@ interface Props {
 
 function SingleMovie({ movie }: Props) {
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
 
   const handleDelete = (id: number) => {
     dispatch(deleteMovieThunk(id))
   }
 
-  const handleDetails = () => {
-    alert('movie details')
+  const handleDetails = (id: string) => {
+    navigate(`/details/${id}`)
   }
 
   const handleWatched = (id: number, seen: boolean) => {
@@ -34,7 +36,7 @@ function SingleMovie({ movie }: Props) {
           <i className="movie-butt fa-solid fa-trash fa-xl" role="button" style={{color: "#9e0000"}} onClick={() => handleDelete(movie.id)} />
         </div>
         <img src={movie.img} alt={`movie poster for ${movie.title}`}/>
-        <button className="button info-button" onClick={() => handleDetails()}>Movie Details</button>
+        <button className="button info-button" onClick={() => handleDetails(movie.imdb_id)}>Movie Details</button>
       </div>
     </>
   )

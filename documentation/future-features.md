@@ -28,8 +28,12 @@ Create different branches with a different framework implemented
   - Protected individual watchlists
 
 ## DB's
+- Avoid duplicate movies being adding
 - Second Database
   - User DB to link watchlists to users
+
+## Watchlist comparison
+- Compate the watchlists of two users and find common movies
 
 ---
 

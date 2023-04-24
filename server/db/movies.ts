@@ -10,7 +10,7 @@ export function delMovie(id: number, db = connection): Promise<number> {
 }
 
 export function insertMovie(movie: MovieData, db = connection): Promise<Movie[]> {
-  return db('movies').insert(movie).returning(['id', 'title', 'imdb_id', 'watched', 'img', 'date_added'])
+  return db('movies').insert({...movie, date_added: Date.now()}).returning(['id', 'title', 'imdb_id', 'watched', 'img', 'date_added'])
 }
 
 export function updateMovie(id: number, seen: boolean, db = connection): Promise<void> {

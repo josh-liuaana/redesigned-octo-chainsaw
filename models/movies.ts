@@ -1,5 +1,6 @@
 export interface Movie extends MovieData {
   id: number
+  date_added: number
 }
 
 export interface MovieData {
@@ -7,7 +8,6 @@ export interface MovieData {
   imdb_id: string
   watched: boolean
   img: string
-  date_added: number
 }
 
 export interface ImdbMovie {
@@ -37,6 +37,13 @@ export interface ImdbDetails {
   similars: Similars[]
 }
 
+export interface ImdbTrailer {
+  imDbId: string
+  title: string
+  videoUrl: string
+  videoId: string
+}
+
 interface UpdatePayload {
   id: number
   seen: boolean
@@ -54,6 +61,7 @@ export type Action =
 export type ImdbAction = 
   | { type: 'IMDB_SEARCH', payload: ImdbMovie[]}
   | { type: 'IMDB_DETAILS', payload: ImdbDetails}
+  | { type: 'IMDB_TRAILER', payload: ImdbTrailer}
 
 export type LoadingAction = 
   | { type: 'REQUEST_MOVIES', payload: null }

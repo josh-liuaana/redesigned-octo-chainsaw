@@ -6,6 +6,7 @@ const initialState = {} as ImdbDetails
 export default function detailsReducer(state = initialState, action: ImdbAction) {
   const { type, payload } = action
   switch(type) {
+    
     case IMDB_DETAILS:
       return payload
 
