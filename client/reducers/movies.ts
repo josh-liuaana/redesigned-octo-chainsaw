@@ -11,11 +11,11 @@ export default function moviesReducers(state = initialState, action: Action) {
       return payload
 
     case ALPHA_SORT:
-      state.sort((a, b) => b.title.localeCompare(a.title))
+      state.sort((a, b) => a.title.localeCompare(b.title))
       return [...state]
 
     case DATE_SORT:
-      state.sort((a, b) => b.date_added - a.date_added)
+      state.sort((a, b) => a.date_added - b.date_added)
       return [...state]
 
     case DEL_MOVIE:
@@ -27,7 +27,10 @@ export default function moviesReducers(state = initialState, action: Action) {
     case UPDATE_MOVIE:
       return state.map((movie) => {
         if (movie.id === payload.id) {
-          movie.watched = payload.seen
+          // bad 
+          // movie.watched = payload.seen
+          // good
+          return { ...movie, watched: payload.seen }
         }
         return movie
       })
