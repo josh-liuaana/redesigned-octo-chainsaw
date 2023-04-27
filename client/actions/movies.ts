@@ -1,5 +1,5 @@
 import { Action, Movie, MovieData } from "../../models/movies";
-import { fetchMovies, removeMovie, postOneMovie, patchMovie } from "../apis/movies";
+import { fetchMovies, removeMovie, postMovie, patchMovie } from "../apis/movies";
 import { ThunkAction } from "../store";
 
 export const SET_MOVIES = 'SET_MOVIES'
@@ -90,7 +90,7 @@ export function deleteMovieThunk(id: number): ThunkAction {
 export function addMovieThunk(movie: MovieData): ThunkAction {
   return async (dispatch) => {
     try {
-      const movieFromDb = await postOneMovie(movie)
+      const movieFromDb = await postMovie(movie)
       dispatch(saveMovie(movieFromDb))
     } catch(err) {
       console.error('Action booboo: ', err)
