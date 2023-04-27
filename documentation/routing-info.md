@@ -64,7 +64,7 @@
 | --- | --- | --- | --- | --- | --- |
 | Get | fetchMovies | /api/v1/movies | No | Get a list of movies from the DB | Array of Objects (object = Movie) |
 | Delete | removeMovie | /api/v1/movies/:id | No | Delete a movie from the DB | id |
-| Post | postOneMovie | /api/v1/movies | No | Add movie to database | Array of single object (object = Movie) |
+| Post | postMovie | /api/v1/movies | No | Add movie to database | Array of single object (object = Movie) |
 | Patch | patchMovie | /api/v1/movies/:id | No | Update seen status of movie | status(200) |
 
 ---
