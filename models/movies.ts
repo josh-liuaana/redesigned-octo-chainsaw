@@ -6,7 +6,7 @@ export interface Movie extends MovieData {
 export interface MovieData {
   title: string
   imdb_id: string
-  watched: boolean
+  watched: boolean | number
   img: string
 }
 

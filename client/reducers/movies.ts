@@ -27,9 +27,6 @@ export default function moviesReducers(state = initialState, action: Action) {
     case UPDATE_MOVIE:
       return state.map((movie) => {
         if (movie.id === payload.id) {
-          // bad 
-          // movie.watched = payload.seen
-          // good
           return { ...movie, watched: payload.seen }
         }
         return movie
