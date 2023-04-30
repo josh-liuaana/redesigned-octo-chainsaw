@@ -5,7 +5,7 @@ function Loading() {
 
   return (
     <div className="loading-container">
-      <img className="loading-gif" src='/client/assets/Otto.gif'></img>
+      <img className="loading-gif" src='/client/assets/otto.gif'></img>
     </div>
   )
 }

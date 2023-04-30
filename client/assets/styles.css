@@ -9,12 +9,37 @@ body {
   background-color: #c6c3c1;
 }
 
+/* NAVBAR */
+
+.header {
+  width: 90vw;
+  /* display: flex; */
+  align-items: center;
+  height: 70px;
+  overflow: hidden;
+}
+
+.header img{
+  max-height: 80%;
+  padding-bottom: 20px;
+  float: left;
+}
+
 .title {
+  float: left;
   font-family: 'Dongle', sans-serif;
   font-size: 50px;
   margin: 0px;
   padding-left: 15px;
   padding-right: 15px;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.login-button {
+  display: flex;
+  float: right;
+  align-self: center;
 }
 
 /* MOVIE TILE */
@@ -186,6 +211,7 @@ body {
 
 .form-container {
   margin-left: 10px;
+  max-width: 65%
 }
 
 .form-label {

@@ -18,26 +18,31 @@ function Nav() {
   }
   
   return (
-    <>      
+    <>
       <header className="header">
+        <Link to="/">
+          <img src="/client/assets/cow.png" alt="cow"/>
+        </Link>
         <h1 className='title'>Mooo-vies 2.0</h1>
+        <div className="login-button">
+          <IfAuthenticated>
+            <Link to="/" onClick={handleSignOut}>
+              <button className="delete-button">
+                Logout
+              </button>
+            </Link>
+            <img src={user?.picture} />
+            <p>{user?.given_name}</p>
+          </IfAuthenticated>
+          <IfNotAuthenticated>
+            <Link to="/" onClick={handleSignIn}>
+              <button className="green-button">
+                Login
+              </button>
+            </Link>
+          </IfNotAuthenticated>
+        </div>
       </header>
-      <IfAuthenticated>
-        <Link to="/" onClick={handleSignOut}>
-          <button>
-            Logout
-          </button>
-        </Link>
-        <img src={user?.picture} />
-        <p>{user?.given_name}</p>
-      </IfAuthenticated>
-      <IfNotAuthenticated>
-        <Link to="/" onClick={handleSignIn}>
-          <button>
-            Login
-          </button>
-        </Link>
-      </IfNotAuthenticated>
     </>
   )
 }
