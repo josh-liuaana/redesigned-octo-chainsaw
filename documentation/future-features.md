@@ -11,6 +11,10 @@
 - Implement vitest
 - Test the full stack
   - Create the front and back end testing suites
+  <details style="padding-top: 0.5em">
+    <summary>Notes</summary>
+    <p style="padding-top: 0.5em">Currently the server side testing is working as it should, as are most of the client side tests. The component tests are still unfinished</p>
+  </details>
 
 ---
 
@@ -26,6 +30,13 @@ Create different branches with a different framework implemented
 ## Auth
 - Auth0 integration
   - Protected individual watchlists
+  <details style="padding-top: 0.5em">
+  <summary>Notes</summary>
+  <p style="padding-top: 0.5em">Post route now passes with auth id, and succesfully inserts into the db</p>
+  <p>Next steps include providing protection to all routes so that only logged in users can add movies to their watchlists, and the correct user can access and alter their own data (GET, DELETE, UPDATE)</p>
+  </details>
+
+---
 
 ## DB's
 - Avoid duplicate movies being adding

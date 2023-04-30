@@ -1,6 +1,6 @@
 [Back to Readme](/README.md)
 
-### Data shapes / Interface
+### Data shapes / Interfaces
 
 ```js
   Movie {

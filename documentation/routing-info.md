@@ -75,7 +75,7 @@
 | --- | --- | --- | --- | --- |
 | Get | searchImdb | https://imdb-api.com/en/API/SearchMovie | Search imdb movie database for list of movies | ImdbMovie[] |
 | Get | movieInfo | https://imdb-api.com/en/API/Title | Search imdb for individual movie information | ImdbDetails |
-| Get | getTrailer | https://imdb-api.com/en/API/YouTubeTrailer | Search imdb to get teh youtube trailer for a given movie | ImdbTrailer |
+| Get | getTrailer | https://imdb-api.com/en/API/YouTubeTrailer | Search imdb to get the youtube trailer for a given movie | ImdbTrailer |
 
 ---
 
@@ -89,4 +89,5 @@
   | imdb_id | String |
   | watched | Boolean |
   | img | String |
-  | data_added | Number |
+  | date_added | Number |
+  | added_by_user (auth0Id) | String | 
