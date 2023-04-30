@@ -23,8 +23,4 @@ function Home() {
   )
 }
 
-<Link to='/search'>
-Search
-</Link>
-
 export default Home

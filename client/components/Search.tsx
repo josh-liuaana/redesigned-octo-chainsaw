@@ -53,11 +53,11 @@ function Search() {
         :
         showSearch 
           ? 
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} aria-label="Add movie">
               <label className="form-label">Search movie
                 <input type="text" name='search' onChange={handleChange} placeholder="Lord of the Rings..."/>
               </label>
-              <input className="button green-button" type='submit' value='Search' />
+              <input role="button" className="button green-button" type='submit' value='Search' />
             </form>
           : 
             // NO THUNKY 

@@ -9,6 +9,7 @@ import Search from './Search'
 import SearchInfo from './SearchInfo'
 import Trailer from './Trailer'
 import Details from './Details'
+import Nav from './Nav'
 
 
 function App() {
@@ -20,10 +21,9 @@ function App() {
   
   return (
     <>
-      <header className="header">
-        <h1 className='title'>Mooo-vies 2.0</h1>
-      </header>
+
       <nav>
+        <Nav />
       </nav>
       <section className="main">
         <Routes>
