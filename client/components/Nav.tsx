@@ -16,15 +16,6 @@ function Nav() {
     evt.preventDefault()
     logout()
   }
-
-  const pictureCheck = (image: string) => {
-    if (image.includes('gravatar')) {
-      console.log('stock image')
-      return "./cow.png"
-    } else {
-      return image
-    }
-  }
   
   return (
     <>      
