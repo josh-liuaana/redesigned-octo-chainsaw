@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom"
-import Modal from 'react-modal'
 import { ChangeEvent, useState } from "react"
+import { useAuth0 } from "@auth0/auth0-react"
+import Modal from 'react-modal'
 
 import { useAppDispatch } from "../hooks/redux"
 import { addMovieThunk } from "../actions/movies"
@@ -14,20 +15,22 @@ interface Props {
 }
 
 function SearchResult({ movie }: Props) {
+  const { getAccessTokenSilently } = useAuth0() 
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const [modalIsOpen, setIsOpen] = useState(false)
   const [infoModal, setInfoModal] = useState(false)
   const [isChecked, setIsChecked] = useState(false)
 
-  const handleAdd = (movie: ImdbMovie) => {
+  const handleAdd = async (movie: ImdbMovie) => {
     const formattedMovie = {
       imdb_id: movie.id,
       title: movie.title,
       img: movie.image,
       watched: isChecked
-    }    
-    dispatch(addMovieThunk(formattedMovie))
+    }
+    const token = await getAccessTokenSilently()
+    dispatch(addMovieThunk(formattedMovie, token))
     navigate('/')
   }
 

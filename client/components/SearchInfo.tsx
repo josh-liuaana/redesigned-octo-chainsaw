@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 
 import { ImdbDetails } from "../../models/movies";
 import { addMovieThunk } from "../actions/movies";
@@ -6,20 +7,22 @@ import { useAppSelector, useAppDispatch } from "../hooks/redux";
 import { useState } from "react";
 
 function SearchInfo() {
+  const { getAccessTokenSilently } = useAuth0()
   const imdbDetails = useAppSelector((state => state.details))
   const imdbTrailer = useAppSelector((state => state.trailer))
   const [showTrailer, setShowTrailer] = useState(false)
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
-  const handleAdd = (movie: ImdbDetails) => {
+  const handleAdd = async (movie: ImdbDetails) => {
     const formattedMovie = {
       imdb_id: imdbDetails.id,
       title: imdbDetails.title,
       img: imdbDetails.image,
       watched: false
     }
-    dispatch(addMovieThunk(formattedMovie))
+    const token = await getAccessTokenSilently()
+    dispatch(addMovieThunk(formattedMovie, token))
     navigate('/')
   }
 

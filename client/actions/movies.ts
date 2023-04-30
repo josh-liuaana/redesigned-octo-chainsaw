@@ -87,10 +87,10 @@ export function deleteMovieThunk(id: number): ThunkAction {
   }
 }
 
-export function addMovieThunk(movie: MovieData): ThunkAction {
+export function addMovieThunk(movie: MovieData, token: string): ThunkAction {
   return async (dispatch) => {
     try {
-      const movieFromDb = await postMovie(movie)
+      const movieFromDb = await postMovie(movie, token)
       dispatch(saveMovie(movieFromDb))
     } catch(err) {
       console.error('Action booboo: ', err)

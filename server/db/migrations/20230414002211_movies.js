@@ -6,6 +6,7 @@ exports.up = function (knex) {
     table.boolean('watched')
     table.string('img')
     table.timestamp('date_added').defaultTo(Date.now())
+    table.string('added_by_user')
   })
 }
 

@@ -1,22 +1,25 @@
 import { useAppSelector, useAppDispatch } from "../hooks/redux"
 import { useNavigate } from "react-router-dom"
+import { useAuth0 } from "@auth0/auth0-react"
 
 import { addMovieThunk } from "../actions/movies"
 
 function Trailer() {
+  const { getAccessTokenSilently } = useAuth0()
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const imdbTrailer = useAppSelector(state => state.trailer)
   const imdbDetails = useAppSelector(state => state.details)
 
-  const handleAdd = () => {
+  const handleAdd = async () => {
     const formattedMovie = {
       imdb_id: imdbTrailer.imDbId,
       title: imdbTrailer.title,
       img: imdbDetails.image,
       watched: false
-    }    
-    dispatch(addMovieThunk(formattedMovie))
+    }
+    const token = await getAccessTokenSilently()
+    dispatch(addMovieThunk(formattedMovie, token))
     navigate('/')
   }
   

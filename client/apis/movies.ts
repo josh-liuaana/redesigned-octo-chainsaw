@@ -13,8 +13,8 @@ export async function removeMovie(id: number) {
   await request.delete(`${movieUrl}/${id}`)
 }
 
-export async function postMovie(movie: MovieData) {
-  const res = await request.post(movieUrl).send(movie)
+export async function postMovie(movie: MovieData, token: string) {
+  const res = await request.post(movieUrl).set('Authorization', `Bearer ${token}`).send(movie)
   const movieFromDb = res.body
   return movieFromDb
 }

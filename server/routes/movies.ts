@@ -1,4 +1,7 @@
 import express from "express";
+
+import checkJwt, { JwtRequest } from '../auth0'
+
 const router = express.Router()
 
 import * as db from '../db/movies'
@@ -24,8 +27,13 @@ router.delete('/:id', async (req, res) => {
   }
 })
 
-router.post('/', async (req, res) => {
-  const movie = req.body
+// Protect the add route (initially)
+// Gameplan will be to protect all, so that you can only see and modify your own watchlists
+router.post('/', checkJwt, async (req: JwtRequest, res) => {
+  const movieData = req.body
+  const auth0Id = req.auth?.sub
+  const movie = {...movieData, added_by_user: auth0Id}
+
   try {
     const newMovie = await db.insertMovie(movie)
     res.json(newMovie[0])
