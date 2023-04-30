@@ -7,6 +7,7 @@ import { useAppDispatch } from "../hooks/redux"
 import { addMovieThunk } from "../actions/movies"
 import { ImdbMovie } from "../../models/movies"
 import { detailsThunk, trailerThunk } from "../actions/imdb"
+import { IfAuthenticated } from "./Authenticated"
 
 import SearchInfo from "./SearchInfo"
 
@@ -49,7 +50,9 @@ function SearchResult({ movie }: Props) {
       <div className="search-movie">
         <h3 className="search-title">{movie.title}</h3>
         <img src={movie.image} alt={`movie poster for ${movie.title}`} />
-        <button className="button green-button" onClick={() => setIsOpen(true)}>Add</button>
+          <IfAuthenticated>
+            <button className="button green-button" onClick={() => setIsOpen(true)}>Add</button>
+          </IfAuthenticated>
         <button className="button blue-button" onClick={() => handleInfo(movie.id)}>Info</button>
 
         <Modal

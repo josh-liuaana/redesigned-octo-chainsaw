@@ -1,10 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useState } from "react";
 
 import { ImdbDetails } from "../../models/movies";
 import { addMovieThunk } from "../actions/movies";
 import { useAppSelector, useAppDispatch } from "../hooks/redux";
-import { useState } from "react";
+import { IfAuthenticated } from "./Authenticated"
 
 function SearchInfo() {
   const { getAccessTokenSilently } = useAuth0()
@@ -54,7 +55,9 @@ function SearchInfo() {
               <div>
                 {/* <button onClick={() => setShowTrailer(!showTrailer)} className="button blue-button trailer-button" >Watch Trailer</button> */}
                 <button onClick={() => trailerNavigate(imdbDetails.id)} className="button blue-button trailer-button" >Watch Trailer</button>
-                <button type='submit' onClick={() => handleAdd(imdbDetails)} className="button green-button modal-submit-button">Add to your watchlist</button>
+                <IfAuthenticated>
+                  <button type='submit' onClick={() => handleAdd(imdbDetails)} className="button green-button modal-submit-button">Add to your watchlist</button>
+                </IfAuthenticated>
               </div>
             </div>
           </div>

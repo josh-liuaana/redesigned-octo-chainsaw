@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { useAuth0 } from "@auth0/auth0-react"
 
 import { addMovieThunk } from "../actions/movies"
+import { IfAuthenticated } from "./Authenticated"
 
 function Trailer() {
   const { getAccessTokenSilently } = useAuth0()
@@ -30,7 +31,9 @@ function Trailer() {
           <iframe allow="fullscreen" className="trailer-video" title={imdbTrailer.title} src={"https://www.youtube.com/embed/" + imdbTrailer.videoId} />
         </div>
         <div>
-          <button type='submit' onClick={() => handleAdd()} className="button green-button modal-submit-button">Add to your watchlist</button>
+          <IfAuthenticated>
+            <button type='submit' onClick={() => handleAdd()} className="button green-button modal-submit-button">Add to your watchlist</button>
+          </IfAuthenticated>
         </div>
       </div>
     </>
