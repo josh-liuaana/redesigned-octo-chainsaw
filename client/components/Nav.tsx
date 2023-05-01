@@ -21,7 +21,7 @@ function Nav() {
     <>
       <header className="header">
         <Link to="/">
-          <img src="/client/assets/cow.png" alt="cow"/>
+          <img src="/cow.png" alt="cow"/>
         </Link>
         <h1 className='title'>Mooo-vies 2.0</h1>
         <div className="login-button">

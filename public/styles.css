@@ -211,7 +211,7 @@ body {
 
 .form-container {
   margin-left: 10px;
-  max-width: 65%
+  /* max-width: 65% */
 }
 
 .form-label {
