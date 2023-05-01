@@ -3,6 +3,8 @@ import { MouseEvent, useState } from "react"
 import { useAuth0 } from "@auth0/auth0-react"
 
 import { IfAuthenticated, IfNotAuthenticated } from "./Authenticated"
+// @ts-ignore
+import cow from '../public/cow.png'
 
 function Nav() {
   const { user, loginWithRedirect, logout } = useAuth0()
@@ -21,7 +23,8 @@ function Nav() {
     <>
       <header className="header">
         <Link to="/">
-          <img src="/cow.png" alt="cow"/>
+          {/* <img src="/client/public/cow.png" alt="cow"/> */}
+          <img src={cow} alt="cow"/>
         </Link>
         <h1 className='title'>Mooo-vies 2.0</h1>
         <div className="login-button">
