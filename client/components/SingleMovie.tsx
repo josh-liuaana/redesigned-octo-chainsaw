@@ -29,11 +29,11 @@ function SingleMovie({ movie }: Props) {
       <div className="movie">
         <div className="movie-img-container">
           {movie.watched
-            ? <i className="movie-butt fa-regular fa-eye fa-xl" style={{color: "#006400"}} role="button" onClick={() => handleWatched(movie.id, false)}></i>
-            : <i className="movie-butt fa-regular fa-eye-slash fa-xl" style={{color: "#9e0000"}} role="button" onClick={() => handleWatched(movie.id, true)}></i>
+            ? <i className="movie-butt fa-regular fa-eye fa-xl" tabIndex={0} onKeyDown={() => {handleWatched(movie.id, false)}} style={{color: "#006400"}} role="button" onClick={() => handleWatched(movie.id, false)}></i>
+            : <i className="movie-butt fa-regular fa-eye-slash fa-xl" tabIndex={0} onKeyDown={() => {handleWatched(movie.id, true)}} style={{color: "#9e0000"}} role="button" onClick={() => handleWatched(movie.id, true)}></i>
           }
           <h2 className="movie-title">{movie.title}</h2>
-          <i className="movie-butt fa-solid fa-trash fa-xl" role="button" style={{color: "#9e0000"}} onClick={() => handleDelete(movie.id)} />
+          <i className="movie-butt fa-solid fa-trash fa-xl" tabIndex={0} onKeyDown={() => {handleDelete(movie.id)}} role="button" style={{color: "#9e0000"}} onClick={() => handleDelete(movie.id)} />
         </div>
         <img src={movie.img} alt={`movie poster for ${movie.title}`}/>
         <button className="button info-button" onClick={() => handleDetails(movie.imdb_id)}>Movie Details</button>

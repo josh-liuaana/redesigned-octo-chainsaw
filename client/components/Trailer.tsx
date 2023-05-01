@@ -27,6 +27,7 @@ function Trailer() {
   return (
     <>
       <div className="trailer-info-container">
+        <button>Back to movie list</button>
         <div className="trailer-container">
           <iframe allow="fullscreen" className="trailer-video" title={imdbTrailer.title} src={"https://www.youtube.com/embed/" + imdbTrailer.videoId} />
         </div>

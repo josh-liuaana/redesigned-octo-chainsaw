@@ -8,9 +8,9 @@ function Details() {
   const dispatch = useAppDispatch()
   const details = useAppSelector(state => state.details)
 
-  id && useEffect(() => {
-    dispatch(detailsThunk(id))
-  }, [])
+  useEffect(() => {
+    dispatch(detailsThunk(id as string))
+  }, [dispatch, id])
   
   const similarMovies = details.similars  
   

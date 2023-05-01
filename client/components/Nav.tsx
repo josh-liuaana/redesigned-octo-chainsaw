@@ -1,9 +1,8 @@
 import { Link } from "react-router-dom"
-import { MouseEvent, useState } from "react"
+import { MouseEvent } from "react"
 import { useAuth0 } from "@auth0/auth0-react"
 
 import { IfAuthenticated, IfNotAuthenticated } from "./Authenticated"
-// @ts-ignore
 import cow from '../public/cow.png'
 
 function Nav() {
@@ -34,7 +33,7 @@ function Nav() {
                 Logout
               </button>
             </Link>
-            <img src={user?.picture} />
+            <img src={user?.picture} alt='user'/>
             <p>{user?.given_name}</p>
           </IfAuthenticated>
           <IfNotAuthenticated>

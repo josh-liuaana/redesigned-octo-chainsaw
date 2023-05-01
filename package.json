@@ -26,12 +26,13 @@
   "eslintConfig": {
     "extends": "@devacademy/eslint-config/react",
     "ignorePatterns": [
-      "bundle.js"
+      "bundle.js",
+      "dist/*"
     ]
   },
   "devDependencies": {
     "@auth0/auth0-react": "^1.12.0",
-    "@devacademy/eslint-config": "^1.6.0",
+    "@devacademy/eslint-config": "^1.9.1",
     "@redux-devtools/extension": "^3.2.3",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4",

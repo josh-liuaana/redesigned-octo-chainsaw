@@ -16,6 +16,7 @@ describe('test environment working', () => {
 
 describe('Movie reducer', () => {
   it('initialises original empty state', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const state = moviesReducer(undefined, { type: '@@INIT'} as any)
     expect(state).toEqual([])
   })

@@ -1,7 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from "react"
 import { Link } from "react-router-dom"
 
-import { searchImdb } from "../apis/imdb"
 import { useAppDispatch, useAppSelector } from "../hooks/redux"
 import { ImdbMovie } from '../../models/movies'
 
@@ -17,19 +16,12 @@ function Search() {
   const imdbSearchData = useAppSelector<ImdbMovie[]>((state => state.imdb))
 
   const [search, setSearch] = useState('' as string)
-  const [showSearch, setShowSearch] = useState(true as Boolean)
-  // NO THUNKY
-  const [imdbData, setImdbData] = useState([] as ImdbMovie[])
+  const [showSearch, setShowSearch] = useState(true as boolean)
 
   const handleSubmit = async (evt: FormEvent) => {
     evt.preventDefault()
     dispatch(requestMovies())
 
-    // NO THUNKY
-    // const searchResults = await searchImdb(search)
-    // setImdbData(searchResults)
-
-    // THUNKY 
     await dispatch(searchThunk(search))
     dispatch(receiveMovies())
     setShowSearch(false)
@@ -57,17 +49,9 @@ function Search() {
               <label className="form-label">Search movie
                 <input type="text" name='search' onChange={handleChange} placeholder="Lord of the Rings..."/>
               </label>
-              <input role="button" className="button green-button" type='submit' value='Search' />
+              <input className="button green-button" type='submit' value='Search' />
             </form>
           : 
-            // NO THUNKY 
-            // <div className="search-result-container">
-            //   {imdbData && imdbData.map((movie: ImdbMovie) => (
-            //     <SearchResult movie={movie} key={movie.id}/>
-            //   ))}
-            // </div>
-
-            // THUNKY
             <div className="search-result-container">
               {imdbSearchData && imdbSearchData.map((movie: ImdbMovie) => (
                 <SearchResult movie={movie} key={movie.id}/>

@@ -1,7 +1,5 @@
 import request from "superagent";
-import type {} from '../../models/movies'
 
-const imdbURL = 'https://imdb-api.com/en/API'
 const url = '/api/v1/imdb'
 
 export async function searchImdb(movie: string) {

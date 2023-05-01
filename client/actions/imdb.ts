@@ -1,5 +1,4 @@
 import { ThunkAction } from '../store'
-import { ImdbAction } from '../../models/movies'
 import { getTrailer, movieInfo, searchImdb } from '../apis/imdb'
 
 export const IMDB_SEARCH = 'IMDB_SEARCH'

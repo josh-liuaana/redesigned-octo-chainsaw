@@ -1,5 +1,5 @@
 import request from "superagent";
-import type { Movie, MovieData } from '../../models/movies'
+import type { MovieData } from '../../models/movies'
 
 const movieUrl = '/api/v1/movies'
 

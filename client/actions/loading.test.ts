@@ -1,6 +1,5 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect } from "vitest";
 import * as loadingActions from './loading'
-import nock from 'nock'
 
 describe('test environment working', () => {
   it('I think you will find this test suite is quite operational', () => {

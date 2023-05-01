@@ -19,6 +19,8 @@
     /* Type Checking */
     "strict": true /* Enable all strict
     "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */,
-    "noEmit": true
+    "noEmit": true,
+
+    "types": ["vite/client"]
   }
 }
