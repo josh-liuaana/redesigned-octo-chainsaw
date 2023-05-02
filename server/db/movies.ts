@@ -10,9 +10,19 @@ export function delMovie(id: number, db = connection): Promise<number> {
 }
 
 export function insertMovie(movie: MovieData, db = connection): Promise<Movie[]> {
-  return db('movies').insert({...movie, date_added: Date.now()}).returning(['id', 'title', 'imdb_id', 'watched', 'img', 'date_added'])
+  return db('movies').insert({...movie, date_added: Date.now()}).returning(['id', 'title', 'imdb_id', 'watched', 'img', 'date_added', 'added_by_user'])
 }
 
 export function updateMovie(id: number, seen: boolean, db = connection): Promise<void> {
   return db('movies').where({ id }).update({ watched: seen})
+}
+
+export function usersMovies(db = connection) {
+  return db('movies').join('users', 'users.auth0_id', 'added_by_user').select(
+    'movies.id AS id', 'title', 'imdb_id', 'watched', 'img', 'date_added', 'given_name', 'auth0_id'
+  )
+}
+
+export function singleUserMovies(id: number, db = connection) {
+  return db('movies').join('users', 'users.auth0_id', 'added_by_user').where('users.id', id).select('movies.id AS id', 'title', 'imdb_id', 'watched', 'img', 'date_added', 'given_name', 'auth0_id')
 }

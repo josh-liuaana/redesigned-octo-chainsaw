@@ -16,6 +16,27 @@ router.get('/', async (req, res) => {
   }
 })
 
+router.get('/users', async (req, res) => {
+  try {
+    const movies = await db.usersMovies()
+    res.json(movies)
+  } catch (error) {
+    console.error('Route error: ', error)
+    res.sendStatus(500)
+  }
+})
+
+router.get('/users/:id', async (req, res) => {
+  const id = Number(req.params.id)
+  try {
+    const movies = await db.singleUserMovies(id)
+    res.json(movies)
+  } catch (error) {
+    console.error('Route error:', error)
+    res.sendStatus(500)
+  }
+})
+
 router.delete('/:id', async (req, res) => {
   const id = Number(req.params.id)
   try {
@@ -33,7 +54,6 @@ router.post('/', checkJwt, async (req: JwtRequest, res) => {
   const movieData = req.body
   const auth0Id = req.auth?.sub
   const movie = {...movieData, added_by_user: auth0Id}
-
   try {
     const newMovie = await db.insertMovie(movie)
     res.json(newMovie[0])
