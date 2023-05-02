@@ -1,13 +1,24 @@
-export interface Movie extends MovieData {
-  id: number
-  date_added: number
-}
-
 export interface MovieData {
   title: string
   imdb_id: string
   watched: boolean | number
   img: string
+}
+
+export interface Movie extends MovieData {
+  id: number
+  date_added: number
+}
+
+export interface UserData {
+  name: string
+  email: string
+  given_name: string
+  auth0_id: string
+}
+
+export interface User extends UserData {
+  id: number
 }
 
 export interface ImdbMovie {
