@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 
 import { useAppDispatch } from '../hooks/redux'
 import { getMovies } from '../actions/movies'
+import { getUsers } from '../actions/users'
 
 import Home from './Home'
 import Search from './Search'
@@ -17,6 +18,7 @@ function App() {
 
   useEffect(() => {
     dispatch(getMovies())
+    dispatch(getUsers())
   }, [dispatch])
   
   return (

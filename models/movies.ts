@@ -69,6 +69,12 @@ export type Action =
   | { type: 'ALPHA_SORT', payload: null }
   | { type: 'DATE_SORT', payload: null }
 
+export type UserAction =
+  | { type: 'ERROR', payload: string }
+  | { type: 'SET_USERS', payload: User[]}
+  | { type: 'DEL_USER', payload: number}
+  | { type: 'ADD_USER', payload: User}
+
 export type ImdbAction = 
   | { type: 'IMDB_SEARCH', payload: ImdbMovie[]}
   | { type: 'IMDB_DETAILS', payload: ImdbDetails}
