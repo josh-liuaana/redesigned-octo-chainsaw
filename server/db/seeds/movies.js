@@ -26,7 +26,7 @@ exports.seed = async function (knex) {
       watched: false,
       img: 'https://m.media-amazon.com/images/M/MV5BOTgxMDQwMDk0OF5BMl5BanBnXkFtZTgwNjU5OTg2NDE@._V1_Ratio0.6757_AL_.jpg',
       date_added: 1682205263115,
-      added_by_user: 'google-oauth2|112967448831376942358',
+      added_by_user: 'auth0|644de85d62ba788931f2db19',
     },
     {
       id: 4,
@@ -35,7 +35,7 @@ exports.seed = async function (knex) {
       watched: false,
       img: 'https://m.media-amazon.com/images/M/MV5BMTZlYzk3NzQtMmViYS00YWZmLTk5ZTEtNWE0NGVjM2MzYWU1XkEyXkFqcGdeQXVyNDg4NjY5OTQ@._V1_Ratio0.6757_AL_.jpg',
       date_added: 1682205263121,
-      added_by_user: 'google-oauth2|112967448831376942358',
+      added_by_user: 'auth0|644de85d62ba788931f2db19',
     },
     {
       id: 5,
