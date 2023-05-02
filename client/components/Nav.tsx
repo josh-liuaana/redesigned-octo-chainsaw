@@ -12,7 +12,7 @@ function Nav() {
     evt.preventDefault()
     loginWithRedirect()
   }
-
+  
   const handleSignOut = (evt: MouseEvent<HTMLAnchorElement>) => {
     evt.preventDefault()
     logout()
@@ -22,7 +22,6 @@ function Nav() {
     <>
       <header className="header">
         <Link to="/">
-          {/* <img src="/client/public/cow.png" alt="cow"/> */}
           <img src={cow} alt="cow"/>
         </Link>
         <h1 className='title'>Mooo-vies 2.0</h1>
