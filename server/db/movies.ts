@@ -27,8 +27,16 @@ export function singleUserMovies(id: number, db = connection) {
   return db('movies').join('users', 'users.auth0_id', 'added_by_user').where('users.id', id).select('movies.id AS id', 'title', 'imdb_id', 'watched', 'img', 'date_added', 'given_name', 'auth0_id')
 }
 
+export function getAllIds(db = connection) {
+  return db('users').select('auth0_id')
+}
+
 export function getAllUsers(db = connection): Promise<User[]> {
   return db('users').select('*')
+}
+
+export function getSingleUser(auth0_id: string, db = connection) {
+  return db('users').select('*').where({ auth0_id }).first()
 }
 
 export function addUser(user: UserData, db = connection): Promise<User[]> {

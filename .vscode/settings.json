@@ -1,0 +1,36 @@
+{
+  "colorTabs.config": [
+    {
+      "regex": "server/routes/.*"
+    },
+    {
+      "regex": "server/db/.*"
+    },
+    {
+      "regex": "client/actions/.*"
+    },
+    {
+      "regex": "client/apis/.*"
+    },
+    {
+      "regex": "client/components/.*"
+    },
+    {
+      "regex": "client/reducers/.*"
+    },
+    {
+      "regex": "client/styles/.*"
+    },
+    {
+      "regex": ".*/web/.*"
+    },
+    {
+      "regex": ".*/mobile/.*"
+    }
+  ],
+  "workbench.colorCustomizations": {
+    "tab.activeBorder": "#15E660",
+    "statusBar.background": "#15E660",
+    "statusBar.foreground": "#ffffff"
+  }
+}
