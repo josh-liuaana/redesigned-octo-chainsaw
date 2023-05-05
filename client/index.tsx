@@ -5,7 +5,6 @@ import store from './store'
 import Modal from 'react-modal'
 
 import App from './components/App'
-import './styles/index.css'
 import { Auth0Provider } from '@auth0/auth0-react'
 
 Modal.setAppElement(document.getElementById('app') as HTMLElement)
