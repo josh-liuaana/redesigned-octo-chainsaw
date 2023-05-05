@@ -1,23 +1,44 @@
 import { Link } from "react-router-dom"
-import { MouseEvent } from "react"
+import { MouseEvent, useEffect, useState } from "react"
 import { useAuth0 } from "@auth0/auth0-react"
+import { useAppDispatch, useAppSelector } from "../hooks/redux"
 
 import { IfAuthenticated, IfNotAuthenticated } from "./Authenticated"
-import cow from '../public/cow.png'
+import cow from '../../images/cow.png'
+import { User } from "../../models/movies"
 
 function Nav() {
+  const usersId = useAppSelector(state => state.users as Partial<User>[])
   const { user, loginWithRedirect, logout } = useAuth0()
+  const [loggedInUser, setLoggedInUser] = useState({} as User)
 
-  const handleSignIn = (evt: MouseEvent<HTMLAnchorElement>) => {
+  const handleSignIn = async (evt: MouseEvent<HTMLAnchorElement>) => {
     evt.preventDefault()
     loginWithRedirect()
   }
-  
+
   const handleSignOut = (evt: MouseEvent<HTMLAnchorElement>) => {
     evt.preventDefault()
-    logout()
+    logout({ returnTo: window.location.origin })
   }
-  
+
+  useEffect(() => {    
+    user && setLoggedInUser({
+      name: user.name,
+      email: user.email,
+      given_name: user.given_name,
+      auth0_id: user.sub
+    } as User)
+
+    const getUserData = async () => {
+      const idFound = usersId.find(userId => userId.auth0_id === user?.sub)
+      !idFound && alert('add more dets please')
+    }
+
+    user && getUserData()
+
+  }, [user, usersId])
+
   return (
     <>
       <header className="header">

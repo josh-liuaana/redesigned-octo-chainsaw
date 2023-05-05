@@ -1,4 +1,4 @@
-import otto from '../public/otto.gif'
+import otto from '../../images/otto.gif'
 
 function Loading() {
   return (

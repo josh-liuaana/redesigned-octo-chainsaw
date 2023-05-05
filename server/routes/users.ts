@@ -6,8 +6,19 @@ import * as db from '../db/movies'
 
 router.get('/', async (req, res) => {
   try {
-    const users = await db.getAllUsers()
+    const users = await db.getAllIds()
     res.json(users)
+  } catch (error) {
+    console.error('Route error:', error)
+    res.sendStatus(500)
+  }
+})
+
+router.get('/:auth0_id', async (req, res) => {
+  const auth0_id = req.params.auth0_id
+  try {
+    const user = await db.getSingleUser(auth0_id)    
+    res.json(user)
   } catch (error) {
     console.error('Route error:', error)
     res.sendStatus(500)

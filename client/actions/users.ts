@@ -1,9 +1,10 @@
 import { User, UserAction, UserData} from '../../models/movies'
-import { fetchUsers, postUser, removeUser } from '../apis/users'
+import { fetchSingleUser, fetchUserIds, postUser, removeUser } from '../apis/users'
 import { ThunkAction } from '../store'
 
 export const ERROR = 'ERROR'
-export const SET_USERS = 'SET_USERS' 
+export const SET_USER_IDS = 'SET_USER_IDS'
+export const SET_ACTIVE_USER = 'SET_ACTIVE_USER' 
 export const DEL_USER = 'DEL_USER'
 export const ADD_USER = 'ADD_USER'
 
@@ -14,10 +15,17 @@ export function error(message: string): UserAction {
   }
 }
 
-export function setUsers(users: User[]): UserAction {
+export function setUserIds(userIds: Partial<User>[]): UserAction {
   return {
-    type: SET_USERS,
-    payload: users
+    type: SET_USER_IDS,
+    payload: userIds
+  }
+}
+
+export function setActiveUser(user: User): UserAction {
+  return {
+    type: SET_ACTIVE_USER,
+    payload: user
   }
 }
 
@@ -35,12 +43,23 @@ export function saveUser(user: User): UserAction {
   }
 }
 
-
-export function getUsers(): ThunkAction {
+export function getUserIds(): ThunkAction {
   return async (dispatch) => {
     try {
-      const usersArray = await fetchUsers()
-      dispatch(setUsers(usersArray))
+      const userIds = await fetchUserIds()
+      dispatch(setUserIds(userIds))
+    } catch (err) {
+      console.error('Action booboo:', err)
+      dispatch(error(String(err)))
+    }
+  }
+}
+
+export function  getSingleUser(auth0_id: string): ThunkAction {
+  return async (dispatch) => {
+    try {
+      const user = await fetchSingleUser(auth0_id)
+      dispatch(setActiveUser(user))
     } catch (err) {
       console.error('Action booboo:', err)
       dispatch(error(String(err)))

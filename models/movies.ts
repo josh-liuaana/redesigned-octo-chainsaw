@@ -71,7 +71,8 @@ export type Action =
 
 export type UserAction =
   | { type: 'ERROR', payload: string }
-  | { type: 'SET_USERS', payload: User[]}
+  | { type: 'SET_USER_IDS', payload: Partial<User>[] }
+  | { type: 'SET_ACTIVE_USER', payload: User}
   | { type: 'DEL_USER', payload: number}
   | { type: 'ADD_USER', payload: User}
 
