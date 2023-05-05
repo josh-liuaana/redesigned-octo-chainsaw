@@ -55,7 +55,7 @@ export function getUserIds(): ThunkAction {
   }
 }
 
-export function  getSingleUser(auth0_id: string): ThunkAction {
+export function getSingleUser(auth0_id: string): ThunkAction {
   return async (dispatch) => {
     try {
       const user = await fetchSingleUser(auth0_id)
