@@ -4,15 +4,18 @@
   | name | purpose |
   | --- | --- |
   | App | Apps entry point/base component |
-  | Home | Basic Homepage with links to search, watchlist auto displays |
-  | Movies | Movies watchlist container |
-  | SingleMovie | View for individual movie tile for watchlist movie |
+  | Authenticated | Component to identify if user is authenticated |
   | Details | Details of individual movie on the watchlist |
+  | Home | Basic Homepage with links to search, watchlist auto displays |
+  | Loading | Loading screen | 
+  | Movies | Movies watchlist container |
+  | Nav | Navbar component, incl login details |
   | Search | Form for searching the external imdp-api |
   | SearchInfo | Details of individual movie from imdb search |
   | SearchResult | View for individual movie tile for imdb-api search results |
+  | SingleMovie | View for individual movie tile for watchlist movie |
   | Trailer | Movie trailer container |
-  | Loading | Loading screen | 
+  | User | Component with user information |
 
   ---
 
@@ -56,16 +59,32 @@
   | REQUEST_MOVIES | boolean | When the external api search run triggers to loading screen |
   | RECEIVE_MOVIES | boolean | Stops the loading screen and renders the movie data |
 
+#### File name: users.ts
+  | type | data | purpose |
+  | --- | --- | --- |
+  | SET_USER_IDS | Auth0_id[] | retrieve all user Auth0_ids |
+
 ---
 
 ## API (Client - Server)
+
+#### Movies
 
 | Method | API Function Name | Endpoint | Protected | Usage | Response |
 | --- | --- | --- | --- | --- | --- |
 | Get | fetchMovies | /api/v1/movies | No | Get a list of movies from the DB | Array of Objects (object = Movie) |
 | Delete | removeMovie | /api/v1/movies/:id | No | Delete a movie from the DB | id |
-| Post | postMovie | /api/v1/movies | No | Add movie to database | Array of single object (object = Movie) |
+| Post | postMovie | /api/v1/movies | Yes | Add movie to database | Array of single object (object = Movie) |
 | Patch | patchMovie | /api/v1/movies/:id | No | Update seen status of movie | status(200) |
+
+#### Users
+
+| Method | API Function Name | Endpoint | Protected | Usage | Response |
+| --- | --- | --- | --- | --- | --- |
+| Get | fetchUserIds | /api/v1/users | No | Get a list of user Auth0_id | Array of Objects (object = Partial`<User>`) |
+| Get | fetchSingleUser | /api/v1/users/:id | No | Get a single users user info | Promise User |
+| Delete | removeUser | /api/v1/users/:id | No | Delete a single user from the user table | id |
+| Post | postUser | /api/v1/users | No | Add a new user (with Auth0 info) | User |
 
 ---
 
@@ -91,3 +110,12 @@
   | img | String |
   | date_added | Number |
   | added_by_user (auth0Id) | String | 
+
+#### Table name: users
+  | Column Name | Data Type |
+  | --- | --- |
+  | id | Integer |
+  | name | String |
+  | email | String |
+  | given_name | String |
+  | auth0_id | String |
